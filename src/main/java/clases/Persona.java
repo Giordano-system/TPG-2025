@@ -7,7 +7,7 @@ package clases;
  * @version 1.0
  */
 
-public class Persona {
+public abstract class Persona {
     protected String nombre;
     protected String apellido;
     protected String dni;
