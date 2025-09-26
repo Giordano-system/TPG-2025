@@ -14,7 +14,7 @@ public abstract class Paciente extends Persona implements IPacientesComparables 
     private final String rangoEtario; // "Niño", "Joven", "Mayor"
     private final int numHistoriaClinica; // >0
     private ArrayList<Medico> consultasMedicas;
-
+    private Habitacion habitacionInternacion;
 
     /**
      * Constructor de la clase Paciente.
@@ -33,6 +33,7 @@ public abstract class Paciente extends Persona implements IPacientesComparables 
         this.rangoEtario = rangoEtario;
         this.numHistoriaClinica = numHistoriaClinica;
         this.consultasMedicas = new ArrayList<Medico>();
+        this.habitacionInternacion = null;
     }
 
     /**
@@ -51,16 +52,61 @@ public abstract class Paciente extends Persona implements IPacientesComparables 
         return  numHistoriaClinica;
     }
 
+    /**
+     * Get del atributo consultasMedicas.
+     * @return ArrayList de médicos que atendieron al paciente.
+     */
+
     public ArrayList<Medico> getConsultasMedicas() {
         return consultasMedicas;
     }
+
+    /**
+     * Agrega un médico al ArrayList de consultas médicas del paciente.
+     * @param medico Médico que atendió al paciente. Instancia de una subclase de Medico.
+     */
 
     public void addConsultaMedica(Medico medico) {
         this.consultasMedicas.add(medico);
     }
 
+    /**
+     * Limpia el ArrayList de consultas médicas del paciente.
+     */
+
     public void clearConsultasMedicas() {
         this.consultasMedicas.clear();
     }
 
+    /**
+     * Set del atributo habitacionInternacion.
+     * @param habitacion Instancia de la habitación de internación del paciente. Habitacion != null
+     */
+
+    public void setHabitacionInternacion(Habitacion habitacion) {
+        habitacion.ocupar();
+        this.habitacionInternacion = habitacion;
+    }
+
+    /**
+     * Get del atributo habitacionInternacion.
+     * @return Instancia de la habitación de internación del paciente. Habitacion o null si no está internado.
+     */
+
+    public Habitacion getHabitacionInternacion() {
+
+        return this.habitacionInternacion;
+    }
+
+    /**
+     * Libera la habitación de internación del paciente y devuelve la instancia de la habitación liberada.
+     * No se verifica que sea null, ya que de esto se encarga la clinica a la hora del egreso del paciente.
+     * @return Instancia de la habitación liberada.
+     */
+
+    public Habitacion clearHabitacionInternacion() {
+        Habitacion h = this.habitacionInternacion;
+        this.habitacionInternacion = null;
+        return h;
+    }
 }
