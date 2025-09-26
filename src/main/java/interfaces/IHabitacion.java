@@ -13,7 +13,7 @@ public interface IHabitacion {
      * Ocupa la habitación.
      */
 
-    public void ocupar() throws HabitacionOcupadaException;
+    public void ocupar();
 
     /**
      * Desocupa la habitación.
