@@ -19,27 +19,24 @@ public interface IPacientesComparables {
     boolean comparoPaciente(Paciente p);
 
     /**
-     * Compara al paciente actualmente en la sala de espera con un paciente mayor.
-     * @param p Paciente que esta actualmente en la sala de espera. Instancia de una subclase de Paciente.
+     * Compara al paciente que acaba de ingresar con un paciente mayor (que ya estaba en la sala).
      * @return true si quien se queda en la sala de espera es el paciente que ya estaba, false en caso contrario.
      */
 
-    boolean comparoMayores(Paciente p);
+    boolean comparoMayores();
 
     /**
-     * Compara al paciente en la sala de espera con un paciente joven.
-     * @param p Paciente que esta actualmente en la sala de espera. Instancia de una subclase de Paciente.
+     * Compara al paciente que acaba de ingresar con un paciente joven (que ya estaba en la sala).
      * @return true si quien se queda en la sala de espera es el paciente que ya estaba, false en caso contrario.
      */
 
 
-    boolean comparoJovenes(Paciente p);
+    boolean comparoJovenes();
 
     /**
-     * Compara al paciente en la sala de espera con un paciente nino.
-     * @param p Paciente que esta actualmente en la sala de espera. Instancia de una subclase de Paciente.
+     * Compara al paciente que acaba de ingresar con un paciente niño (que ya estaba en la sala).
      * @return true si quien se queda en la sala de espera es el paciente que ya estaba, false en caso contrario.
      */
 
-    boolean comparoNinos(Paciente p);
+    boolean comparoNinos();
 }
