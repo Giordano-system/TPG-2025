@@ -21,7 +21,7 @@ public abstract class Paciente extends Persona implements IPacientesComparables 
      * @param numero int>0
      * @param telefono String!=""
      * @param ciudad String!=""
-     * @param rangoEtario String = "Niño", "Joven" o "Mayor"
+     * @param rangoEtario String = "Nino", "Joven" o "Mayor"
      * @param numHistoriaClinica int>0
      */
 
@@ -46,6 +46,4 @@ public abstract class Paciente extends Persona implements IPacientesComparables 
     public int getNumHistoriaClinica() {
         return  numHistoriaClinica;
     }
-
-
 }
