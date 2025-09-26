@@ -94,19 +94,14 @@ public abstract class Paciente extends Persona implements IPacientesComparables 
      */
 
     public Habitacion getHabitacionInternacion() {
-
         return this.habitacionInternacion;
     }
 
     /**
-     * Libera la habitación de internación del paciente y devuelve la instancia de la habitación liberada.
-     * No se verifica que sea null, ya que de esto se encarga la clinica a la hora del egreso del paciente.
-     * @return Instancia de la habitación liberada.
-     */
+     * El paciente ya no va a tener una habitación de internación, debido a que este metodo solo es llamado en el egreso del paciente.
+    */
 
-    public Habitacion clearHabitacionInternacion() {
-        Habitacion h = this.habitacionInternacion;
+    public void clearHabitacionInternacion() {
         this.habitacionInternacion = null;
-        return h;
     }
 }
