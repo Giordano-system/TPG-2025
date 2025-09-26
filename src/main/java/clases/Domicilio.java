@@ -51,6 +51,14 @@ public class Domicilio {
         Numero = numero;
     }
 
+	@Override
+	public String toString()
+	{
+		return "Domicilio [Calle=" + Calle + ", Numero=" + Numero + "]";
+	}
+    
+    
+
 
 
 }

@@ -29,7 +29,7 @@ public abstract class Paciente extends Persona implements IPacientesComparables 
      */
 
     public Paciente(String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad, String rangoEtario, int numHistoriaClinica) {
-        super.Persona(nombre, apellido, dni, calle, numero, telefono, ciudad);
+        super(nombre, apellido, dni, calle, numero, telefono, ciudad);
         this.rangoEtario = rangoEtario;
         this.numHistoriaClinica = numHistoriaClinica;
         this.consultasMedicas = new ArrayList<Medico>();

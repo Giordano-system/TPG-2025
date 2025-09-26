@@ -1,5 +1,7 @@
 package clases;
 
+import interfaces.Interfaz_Persona;
+
 /**
  * Clase que representa a una persona con atributos como nombre, apellido, domicilio, teléfono y ciudad.
  * Contiene un constructor para inicializar estos atributos.
@@ -7,7 +9,7 @@ package clases;
  * @version 1.0
  */
 
-public abstract class Persona {
+public abstract class Persona implements Interfaz_Persona {
     protected String nombre;
     protected String apellido;
     protected String dni;
@@ -26,7 +28,7 @@ public abstract class Persona {
      * @param ciudad String!=""
      */
 
-    public void Persona(String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad) {
+    public Persona(String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
@@ -41,7 +43,7 @@ public abstract class Persona {
      */
 
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
     /**
@@ -50,7 +52,7 @@ public abstract class Persona {
      */
 
     public String getApellido() {
-        return apellido;
+        return this.apellido;
     }
 
     /**
@@ -59,7 +61,7 @@ public abstract class Persona {
      */
 
     public String getDni() {
-        return dni;
+        return this.dni;
     }
 
     /**
@@ -68,7 +70,7 @@ public abstract class Persona {
      */
 
     public Domicilio getDomicilio() {
-        return domicilio;
+        return this.domicilio;
     }
 
     /**
@@ -88,7 +90,7 @@ public abstract class Persona {
      */
 
     public String getTelefono() {
-        return telefono;
+        return this.telefono;
     }
 
     /**
@@ -106,7 +108,7 @@ public abstract class Persona {
      */
 
     public String getCiudad() {
-        return ciudad;
+        return this.ciudad;
     }
 
 
