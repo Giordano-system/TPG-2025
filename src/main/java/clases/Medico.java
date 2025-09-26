@@ -1,5 +1,7 @@
 package clases;
 
+import interfaces.Interfaz_Medico;
+
 /**
  * Clase que representa a un médico, que es una persona con un número de matrícula y una especialidad.
  * Hereda de la clase Persona.
@@ -8,9 +10,10 @@ package clases;
  */
 
 
-public abstract class Medico extends Persona{
+public abstract class Medico extends Persona implements Interfaz_Medico{
     private final int numMatricula; // >0
-    private String especialidad; // String = "Clinica", "Cirugia" o "Pediatria"
+    private String especialidad; // Clinica, Cirugia o Pediatria
+    private static double sueldo = 20000;
 
     /**
      * Constructor de la clase Medico.
@@ -22,11 +25,10 @@ public abstract class Medico extends Persona{
      * @param telefono String!="".
      * @param ciudad String!="".
      * @param numMatricula int>0.
-     * @param especialidad String = "Clinica", "Cirugia" o "Pediatria".
+     * @param especialidad == Clinica || especialidad == Cirugia || especialidad == Pediatria
      */
-
     public Medico(String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad, int numMatricula, String especialidad) {
-        super.Persona(nombre, apellido, dni, calle, numero, telefono, ciudad);
+        super(nombre, apellido, dni, calle, numero, telefono, ciudad);
         this.numMatricula = numMatricula;
         this.especialidad = especialidad;
     }
@@ -35,20 +37,29 @@ public abstract class Medico extends Persona{
      * Get del atributo numMatricula.
      * @return Número de matrícula del médico. Int>0.
      */
+	@Override
+	public int getMatricula()
+	{
+		return this.numMatricula;
+	}
+	
+	
+	/**
+	 * Get del atributo especialidad
+	 * @return Tipo de especialidad del médico
+	 */
+	public String getEspecialidad()
+	{
+		return this.especialidad;
+	}
 
-    public int getNumMatricula() {
-        return numMatricula;
-    }
-
-    /**
-     * Get del atributo especialidad.
-     * @return Especialidad del médico. String = "Clinica", "Cirugia" o "Pediatria".
-     */
-
-    public String getEspecialidad() {
-        return especialidad;
-    }
-
-
-
+	/**
+	 * Get del atributo sueldo
+	 * @return sueldo base de todos los médicos
+	 */
+	@Override
+	public double getSueldo()
+	{
+		return sueldo;
+	}
 }
