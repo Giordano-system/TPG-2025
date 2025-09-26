@@ -1,6 +1,7 @@
 package clases;
 
 import interfaces.IPacientesComparables;
+import java.util.ArrayList;
 
 /**
  * Clase que representa a un paciente, que es una persona con un rango etario.
@@ -12,6 +13,8 @@ import interfaces.IPacientesComparables;
 public abstract class Paciente extends Persona implements IPacientesComparables {
     private final String rangoEtario; // "Niño", "Joven", "Mayor"
     private final int numHistoriaClinica; // >0
+    private ArrayList<Medico> consultasMedicas;
+
 
     /**
      * Constructor de la clase Paciente.
@@ -29,6 +32,7 @@ public abstract class Paciente extends Persona implements IPacientesComparables 
         super.Persona(nombre, apellido, dni, calle, numero, telefono, ciudad);
         this.rangoEtario = rangoEtario;
         this.numHistoriaClinica = numHistoriaClinica;
+        this.consultasMedicas = new ArrayList<Medico>();
     }
 
     /**
@@ -46,4 +50,17 @@ public abstract class Paciente extends Persona implements IPacientesComparables 
     public int getNumHistoriaClinica() {
         return  numHistoriaClinica;
     }
+
+    public ArrayList<Medico> getConsultasMedicas() {
+        return consultasMedicas;
+    }
+
+    public void addConsultaMedica(Medico medico) {
+        this.consultasMedicas.add(medico);
+    }
+
+    public void clearConsultasMedicas() {
+        this.consultasMedicas.clear();
+    }
+
 }
