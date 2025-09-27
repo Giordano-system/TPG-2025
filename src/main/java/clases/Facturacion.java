@@ -3,7 +3,7 @@ package clases;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class ModuloFacturacion {
+public class Facturacion {
 	
 /**
  * Clase que genera y guarda facturas de los clientes.
@@ -24,7 +24,7 @@ public class ModuloFacturacion {
  * Constructor base de la clase.
  * @param paciente Paciente !=null
  */
-	public ModuloFacturacion(Paciente paciente) {
+	public Facturacion(Paciente paciente) {
 		this.nroFactura+= contFacturas+1;
 		this.consultasMedicas=paciente.getConsultasMedicas();
 		for (int i=0; i<this.consultasMedicas.size(); i++) {
@@ -38,7 +38,7 @@ public class ModuloFacturacion {
  * @param dias
  */
 	
-	public ModuloFacturacion(Paciente paciente, int dias) {
+	public Facturacion(Paciente paciente, int dias) {
 		this(paciente);
 		this.costoInternacion= this.paciente.getHabitacionInternacion().devolverCosto(dias);	
 		this.total+=this.costoInternacion;
