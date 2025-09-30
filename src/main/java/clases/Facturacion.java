@@ -53,7 +53,9 @@ public class Facturacion {
 	private String ArmaConsultas() {
 		String aux="";
 		for (int i=0; i<this.consultasMedicas.size(); i++)
-			aux+= "\nNombre Medico: " + consultasMedicas.get(i).getNombre() + "     Especialidad: " + consultasMedicas.get(i).getEspecialidad() + "     Subtotal: $" + consultasMedicas.get(i).getSueldo()*1.20;
+			aux+= "\nNombre Medico: " + consultasMedicas.get(i).getNombre() + 
+				  "     Especialidad: " + consultasMedicas.get(i).getEspecialidad() + 
+				  "     Subtotal: $" + consultasMedicas.get(i).getSueldo()*1.20;
 		return aux;
 	}
 
