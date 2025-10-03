@@ -25,7 +25,9 @@ public class Sala {
 
 	/**
      * Método para agregar un paciente a la sala.
+     * <b>Pre:</b> p!=null
      * @param p Paciente a agregar a la sala.
+     * <b>Post:</b> La sala queda ocupada por el paciente. 
      */
 	public void agregaPaciente(Paciente p) {
 		this.paciente = p;
@@ -33,6 +35,7 @@ public class Sala {
 
 	/**
      * Método para eliminar el paciente de la sala.
+     * <b>Post:</b> La sala queda desocupada.
      */
 	public void eliminaPaciente() {
 		this.paciente = null;
