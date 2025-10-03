@@ -10,17 +10,20 @@ import interfaces.IHabitacion;
  */
 
 public abstract class Habitacion implements IHabitacion {
+    protected String tipo; // "Sala de Internacion", "Habitacion Compartida", "Habitacion Privada"
     protected boolean estaOcupado;
     protected double costoFijo;
     private static double costoAsignacion = 1000; // Costo fijo de asignación de habitación.
 
     /**
+     * <b>Pre: </b> El costoFijo debe ser mayor a 0.
      * Constructor de la clase Habitacion.
      * @param costoFijo Costo fijo de la habitación por día. double>0.
      */
 
-    public Habitacion(double costoFijo) {
+    public Habitacion(double costoFijo, String tipo) {
         this.costoFijo = costoFijo;
+        this.tipo = tipo;
         this.estaOcupado = false;
     }
 

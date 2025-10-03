@@ -3,14 +3,15 @@ package clases;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Facturacion {
-	
 /**
  * Clase que genera y guarda facturas de los clientes.
  * Distingue clientes que han recibido o no una internacion.
  * @author Grupo 9 - POO
  * @version 1.00
  */
+
+public class Facturacion {
+
 	private static int contFacturas;
 	private int nroFactura;
 	private Paciente paciente;
@@ -33,7 +34,7 @@ public class Facturacion {
 	}
 
 /**
- * Contructor sobreescrito con dias, implica una internacion de dias dias.
+ * Contructor sobreecargado con dias, implica una internacion de dias dias.
  * @param paciente
  * @param dias
  */
