@@ -6,7 +6,7 @@ public class ModuloAtiende {
 
     /**
      * <b> Pre: </b> El paciente p, el médico m, las listas Lista_espera, Lista_atendidos, patio y la sala no deben ser null.
-     * El paciente debe estar en la lista de espera o la lista de atendidos (El paciente es atendidd por mas de un medico).
+     * El paciente debe estar en la lista de espera o la lista de atendidos (El paciente es atendido por mas de un medico).
      * @param p Paciente a ser atendido.
      * @param m Médico que atiende al paciente.
      * @param Lista_espera Lista de espera de pacientes.
