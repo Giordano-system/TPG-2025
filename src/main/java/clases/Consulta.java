@@ -1,6 +1,5 @@
 package clases;
 import java.time.LocalDate;
-import java.util.Date;
 
 /**
  * Clase que representa una consulta médica.
@@ -10,9 +9,9 @@ import java.util.Date;
  */
 
 public class Consulta {
-    private String nombrePaciente;
-    private Date fechaConsulta;
-    private double HonorarioMedico;
+    private final String nombrePaciente;
+    private final LocalDate fechaConsulta;
+    private final double HonorarioMedico;
 
     /**
      * Constructor de la clase Consulta.
@@ -23,7 +22,7 @@ public class Consulta {
      * <b>Post:</b> Se crea un objeto Consulta con los valores pasados por parámetro.
      */
 
-    public Consulta(String nombrePaciente, Date fechaConsulta, double honorarioMedico) {
+    public Consulta(String nombrePaciente, LocalDate fechaConsulta, double honorarioMedico) {
         this.nombrePaciente = nombrePaciente;
         this.fechaConsulta = fechaConsulta;
         this.HonorarioMedico = honorarioMedico;
@@ -33,7 +32,7 @@ public class Consulta {
         return nombrePaciente;
     }
 
-    public Date getFechaConsulta() {
+    public LocalDate getFechaConsulta() {
         return fechaConsulta;
     }
 

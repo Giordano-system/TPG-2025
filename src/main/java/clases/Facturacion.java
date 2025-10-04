@@ -15,6 +15,7 @@ public class Facturacion {
 	private static int contFacturas;
 	private int nroFactura;
 	private Paciente paciente;
+    private Habitacion habitacionOcupada;
     private ArrayList<Medico> consultasMedicas;
 	private int cantDias;
 	private double costoInternacion;
@@ -41,6 +42,7 @@ public class Facturacion {
 	
 	public Facturacion(Paciente paciente, int dias) {
 		this(paciente);
+        this.habitacionOcupada = paciente.getHabitacionInternacion();
 		this.costoInternacion= this.paciente.getHabitacionInternacion().devolverCosto(dias);	
 		this.total+=this.costoInternacion;
 		this.cantDias=dias;
@@ -73,8 +75,8 @@ public class Facturacion {
 					+ "\nFecha Ingreso: " + this.fechaEgreso.minusDays(cantDias) 
 					+ "\nFechaEgreso: " + this.fechaEgreso 
 					+ "\nCantidad de Dias: " + this.cantDias 
-					+ "\nHabitacion Tipo: " + this.paciente.getHabitacionInternacion() 
-					+ "     Costo: $" + this.paciente.getHabitacionInternacion().devolverCosto(cantDias) 
+					+ "\nHabitacion Tipo: " + this.habitacionOcupada.getTipo()
+					+ "     Costo: $" + this.costoInternacion
 					+ "\n\nConsultas Medicas:\n " + this.ArmaConsultas() 
 					+ "\n\n             Total: $" + this.total; 
 		else

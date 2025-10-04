@@ -17,7 +17,7 @@ public class ModuloIngresa {
 	 * 	<b>POST:</b> el paciente se queda esperando en la sala o en el patio. 
 	 */
 
-	public void ubicoPaciente(Sala s, Patio p, Paciente paciente) {
+	public void ingresaPaciente(Sala s, Patio p, Paciente paciente) {
 		if(s.getPaciente() == null)
 			s.agregaPaciente(paciente);
 		else if(s.getPaciente().comparoPaciente(paciente))
