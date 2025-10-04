@@ -10,10 +10,12 @@ package clases;
 public class factoryHabitaciones {
 
     /**
+     * <b>Pre: </b> El tipo debe ser uno de los siguientes: "Sala de Internacion", "Habitacion Compartida" o "Habitacion Privada". El costoFijo debe ser mayor a 0.
      * Método estático que crea y devuelve una instancia de una subclase de Habitacion según el tipo especificado.
      * @param tipo Tipo de habitación. Puede ser "Sala de Internacion", "Habitacion Compartida" o "Habitacion Privada".
      * @param costoFijo Costo fijo de la habitación por día. double>0.
      * @return Una instancia de la subclase correspondiente de Habitacion, o null si el tipo no es válido.
+     * <b>Post: </b> Se devuelve una instancia de la subclase correspondiente de Habitacion.
      */
 
     public static Habitacion factoryHabitaciones(String tipo, double costoFijo){

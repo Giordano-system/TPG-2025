@@ -16,6 +16,7 @@ public abstract class Medico extends Persona implements Interfaz_Medico{
     private static double sueldo = 20000;
 
     /**
+     * <b>Pre: </b> Todos los parametros String deben ser String!="" y String != null, numero debe ser Int>0 y especialidad debe ser Clinica, Cirugia o Pediatria.
      * Constructor de la clase Medico.
      * @param nombre String!="".
      * @param apellido String!=""
