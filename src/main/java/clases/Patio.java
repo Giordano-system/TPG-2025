@@ -38,4 +38,13 @@ public class Patio {
 	public void eliminaPaciente(Paciente p) {
 		this.pacientes.remove(p);
 	}
+
+    /**
+     * <b>Pre:</b> pacientes != null.
+     * @return
+     */
+
+    public ArrayList<Paciente> getPacientes() {
+        return pacientes;
+    }
 }

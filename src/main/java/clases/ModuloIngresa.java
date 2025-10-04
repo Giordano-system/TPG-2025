@@ -16,7 +16,8 @@ public class ModuloIngresa {
 	 *  @param paciente Paciente que acaba de ingresar
 	 * 	<b>POST:</b> el paciente se queda esperando en la sala o en el patio. 
 	 */
-	public void ingresaPaciente(Sala s, Patio p, Paciente paciente) {
+
+	public void ubicoPaciente(Sala s, Patio p, Paciente paciente) {
 		if(s.getPaciente() == null)
 			s.agregaPaciente(paciente);
 		else if(s.getPaciente().comparoPaciente(paciente))

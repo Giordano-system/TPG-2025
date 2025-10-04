@@ -1,6 +1,7 @@
 package clases;
 
 import interfaces.Interfaz_Medico;
+import java.util.ArrayList;
 
 /**
  * Clase que representa a un médico, que es una persona con un número de matrícula y una especialidad.
@@ -14,6 +15,7 @@ public abstract class Medico extends Persona implements Interfaz_Medico{
     private final int numMatricula; // >0
     private String especialidad; // Clinica, Cirugia o Pediatria
     private static double sueldo = 20000;
+    private ArrayList<Consulta> consultasMedicas;
 
     /**
      * <b>Pre: </b> Todos los parametros String deben ser String!="" y String != null, numero debe ser Int>0 y especialidad debe ser Clinica, Cirugia o Pediatria.
@@ -32,6 +34,7 @@ public abstract class Medico extends Persona implements Interfaz_Medico{
         super(nombre, apellido, dni, calle, numero, telefono, ciudad);
         this.numMatricula = numMatricula;
         this.especialidad = especialidad;
+        this.consultasMedicas = new ArrayList<Consulta>();
     }
 
     /**
@@ -63,4 +66,18 @@ public abstract class Medico extends Persona implements Interfaz_Medico{
 	{
 		return sueldo;
 	}
+
+    public ArrayList<Consulta> getConsultasMedicas() {
+        return consultasMedicas;
+    }
+
+    /**
+     * <b>Pre:</b> consulta!=null y que existe previamente el arrayList de consultasMedicas.
+     * @param consulta
+     */
+
+    public void addConsultaMedica(Consulta consulta) {
+        this.consultasMedicas.add(consulta);
+    }
+
 }
