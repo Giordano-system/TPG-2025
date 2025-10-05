@@ -32,7 +32,7 @@ public class Consulta {
         return nombrePaciente;
     }
 
-    public LocalDate getFechaConsulta() {
+    public LocalDate getFecha() {
         return fechaConsulta;
     }
 

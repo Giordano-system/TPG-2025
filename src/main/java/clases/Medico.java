@@ -2,6 +2,7 @@ package clases;
 
 import interfaces.Interfaz_Medico;
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 /**
  * Clase que representa a un médico, que es una persona con un número de matrícula y una especialidad.
@@ -85,5 +86,28 @@ public abstract class Medico extends Persona implements Interfaz_Medico{
             System.out.println(consulta);
         }
     }
+
+    /**
+     * Genera un reporte de las consultas médicas realizadas por el médico en un rango de fechas específico.
+     * Muestra cada consulta que cae dentro del rango de fechas y calcula el total facturado
+     * <b>Pre:</b> fechaInicio!=null, fechaFin!=null, fechaInicio<=fechaFin
+     * <b>Post:</b> Se muestra por consola el reporte de consultas médicas y el total facturado en el período.
+     * @param fechaInicio
+     * @param fechaFin
+     */
+
+    public void reporteConsultas(LocalDate fechaInicio, LocalDate fechaFin) {
+        double totalFacturado = 0;
+        System.out.println("Consultas médicas entre " + fechaInicio + " y " + fechaFin + ": \n");
+        for (Consulta consulta : consultasMedicas) {
+            if ((consulta.getFecha().isEqual(fechaInicio) || consulta.getFecha().isAfter(fechaInicio)) &&
+                (consulta.getFecha().isEqual(fechaFin) || consulta.getFecha().isBefore(fechaFin))) {
+                totalFacturado += consulta.getHonorarioMedico();
+                System.out.println(consulta);
+            }
+        }
+        System.out.println("Total facturado en el período: $" + totalFacturado + "\n");
+    }
+
 
 }
