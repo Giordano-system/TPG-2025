@@ -80,4 +80,10 @@ public abstract class Medico extends Persona implements Interfaz_Medico{
         this.consultasMedicas.add(consulta);
     }
 
+    public void showConsultasMedicas() {
+        for (Consulta consulta : consultasMedicas) {
+            System.out.println(consulta);
+        }
+    }
+
 }
