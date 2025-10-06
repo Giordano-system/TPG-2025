@@ -25,4 +25,5 @@ public class DecoratorContratacionPermanente extends DecoratorContratacion
 	{
 		return "Nombre Médico: " + encapsulado.getApellido() + " " + this.getNombre() + " Especialidad: " + encapsulado.getEspecialidad();
 	}
+
 }

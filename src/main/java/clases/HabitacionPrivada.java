@@ -8,6 +8,7 @@ package clases;
  */
 
 public class HabitacionPrivada extends Habitacion {
+    private final int costoHP = 1000;
 
     /**
      * <b>Pre: </b> El costoFijo debe ser mayor a 0.
@@ -58,11 +59,11 @@ public class HabitacionPrivada extends Habitacion {
     public double devolverCosto(int dias) {
         double costoTotal = 0;
         if (dias == 1) {
-            costoTotal = costoFijo;
+            costoTotal = costoHP;
         } else if (dias>=2 && dias <=5) {
-            costoTotal = costoFijo * 1.3 * dias;
+            costoTotal = costoHP * 1.3 * dias;
         } else {
-            costoTotal = costoFijo * 2 * dias;
+            costoTotal = costoHP * 2 * dias;
         }
         return costoTotal + this.getCostoAsignacion();
     }

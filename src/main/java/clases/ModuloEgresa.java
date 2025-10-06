@@ -1,5 +1,7 @@
 package clases;
 
+import interfaces.Interfaz_Medico;
+
 import java.util.ArrayList;
 import java.time.LocalDate;
 
@@ -26,7 +28,7 @@ public class ModuloEgresa {
     public Facturacion egresaPaciente(Paciente p, ArrayList<Paciente> lista_atendidos, int dias) {
         lista_atendidos.remove(p);
         Facturacion factura = new Facturacion(p,dias);
-        for (Medico m : p.getConsultasMedicas()) {
+        for (Interfaz_Medico m : p.getConsultasMedicas()) {
             consultaMedicos(p, m);
         }
         p.clearHabitacionInternacion();
@@ -46,7 +48,7 @@ public class ModuloEgresa {
     public Facturacion egresaPaciente(Paciente p, ArrayList<Paciente> lista_atendidos) {
         lista_atendidos.remove(p);
         Facturacion factura = new Facturacion(p);
-        for (Medico m : p.getConsultasMedicas()) {
+        for (Interfaz_Medico m : p.getConsultasMedicas()) {
             consultaMedicos(p, m);
         }
         return factura;
@@ -60,7 +62,7 @@ public class ModuloEgresa {
      * @param m Médico que atendió al paciente
      */
 
-    private void consultaMedicos(Paciente p, Medico m){
+    private void consultaMedicos(Paciente p, Interfaz_Medico m){
         Consulta consulta = new Consulta(p.getNombre(),LocalDate.now(), m.getSueldo()*1.20 );
         m.addConsultaMedica(consulta);
     }

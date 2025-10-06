@@ -1,6 +1,8 @@
 package clases;
 
 import interfaces.IPacientesComparables;
+import interfaces.Interfaz_Medico;
+
 import java.util.ArrayList;
 
 /**
@@ -13,7 +15,7 @@ import java.util.ArrayList;
 public abstract class Paciente extends Persona implements IPacientesComparables {
     private final String rangoEtario; // "Niño", "Joven", "Mayor"
     private final int numHistoriaClinica; // >0
-    private ArrayList<Medico> consultasMedicas;
+    private ArrayList<Interfaz_Medico> consultasMedicas;
     private Habitacion habitacionInternacion;
 
     /**
@@ -33,7 +35,7 @@ public abstract class Paciente extends Persona implements IPacientesComparables 
         super(nombre, apellido, dni, calle, numero, telefono, ciudad);
         this.rangoEtario = rangoEtario;
         this.numHistoriaClinica = numHistoriaClinica;
-        this.consultasMedicas = new ArrayList<Medico>();
+        this.consultasMedicas = new ArrayList<Interfaz_Medico>();
         this.habitacionInternacion = null;
     }
 
@@ -45,11 +47,11 @@ public abstract class Paciente extends Persona implements IPacientesComparables 
         return  numHistoriaClinica;
     }
 
-    public ArrayList<Medico> getConsultasMedicas() {
+    public ArrayList<Interfaz_Medico> getConsultasMedicas() {
         return consultasMedicas;
     }
 
-    public void addConsultaMedica(Medico medico) {
+    public void addConsultaMedica(Interfaz_Medico medico) {
         this.consultasMedicas.add(medico);
     }
 

@@ -1,5 +1,7 @@
 package clases;
 
+import interfaces.Interfaz_Medico;
+
 import java.util.ArrayList;
 
 public class ModuloAtiende {
@@ -17,7 +19,7 @@ public class ModuloAtiende {
      * Si el paciente estaba en la sala, se elimina de la sala. Si estaba en el patio, se elimina del patio.
      */
 
-    public void atiendoPaciente(Paciente p, Medico m, ArrayList<Paciente> Lista_espera, ArrayList<Paciente> Lista_atendidos, Patio patio, Sala sala) {
+    public void atiendoPaciente(Paciente p, Interfaz_Medico m, ArrayList<Paciente> Lista_espera, ArrayList<Paciente> Lista_atendidos, Patio patio, Sala sala) {
         p.addConsultaMedica(m);
         if (Lista_espera.contains(p)) {
             ArrayList<Paciente> PacientesPatio = patio.getPacientes();

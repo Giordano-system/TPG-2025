@@ -10,6 +10,7 @@ package clases;
 public class HabitacionCompartida extends Habitacion {
     private static final int cantidadCamas = 2;
     private int camasOcupadas; // >=0 && <= cantidadCamas
+    private final int costoHC = 500; // Costo adicional por asignacion de habitacion compartida
 
     /**
      * <b>Pre: </b> El costoFijo debe ser mayor a 0.
@@ -67,7 +68,7 @@ public class HabitacionCompartida extends Habitacion {
 
     @Override
     public double devolverCosto(int dias) {
-        return costoFijo * dias + this.getCostoAsignacion();
+        return costoHC * dias + this.getCostoAsignacion();
     }
 
     /**

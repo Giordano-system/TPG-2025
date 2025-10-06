@@ -14,7 +14,7 @@ import java.time.LocalDate;
 
 public abstract class Medico extends Persona implements Interfaz_Medico{
     private final int numMatricula; // >0
-    private String especialidad; // Clinica, Cirugia o Pediatria
+    private final String especialidad; // Clinica, Cirugia o Pediatria
     private static double sueldo = 20000;
     private ArrayList<Consulta> consultasMedicas;
 
@@ -74,7 +74,8 @@ public abstract class Medico extends Persona implements Interfaz_Medico{
 
     /**
      * <b>Pre:</b> consulta!=null y que existe previamente el arrayList de consultasMedicas.
-     * @param consulta
+     * @param consulta Consulta!=null que se desea agregar al arrayList de consultasMedicas.
+     * <b>Post:</b> Se agrega la consulta al arrayList de consultasMed
      */
 
     public void addConsultaMedica(Consulta consulta) {

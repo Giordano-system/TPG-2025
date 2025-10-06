@@ -22,7 +22,8 @@ public class FactoryMedicos
 	 * @param numMatricula numero de matricula del medico
 	 * @return devuelve el objeto del medicco correspondiente
 	 */
-	public Interfaz_Medico getMedico(String posgrado, String contratacion, String especialidad, 
+
+	public static Interfaz_Medico getMedico(String posgrado, String contratacion, String especialidad,
 			String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad, int numMatricula)
 	{
 		Interfaz_Medico resultado = null;

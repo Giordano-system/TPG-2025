@@ -1,6 +1,8 @@
 package clases;
 
 import excepciones.LugarNoDisponibleException;
+import interfaces.Interfaz_Especialidad;
+import interfaces.Interfaz_Medico;
 
 import java.util.ArrayList;
 
@@ -15,7 +17,7 @@ public class Sistema {
     private final Patio patio;
     private final ArrayList<Paciente> lista_espera;
     private final ArrayList<Paciente> lista_atendidos;
-    private final ArrayList<Medico> medicos;
+    private final ArrayList<Interfaz_Medico> medicos;
     private final ArrayList<Habitacion> habitaciones;
     private final ModuloAtiende moduloAtiende;
     private final ModuloIngresa moduloIngresa;
@@ -60,12 +62,24 @@ public class Sistema {
         return lista_atendidos;
     }
 
-    public ArrayList<Medico> getMedicos() {
+    public ArrayList<Interfaz_Medico> getMedicos() {
         return medicos;
     }
 
     public ArrayList<Habitacion> getHabitaciones() {
         return habitaciones;
+    }
+
+    //Se crean varios medicos de cada tipo donde el posgrado puede ser Magister o Doctorado, la contratacion Permanente o Residente y la especialidad puede ser Cirugia, Pediatria o Clinica.
+
+    public void cargarMedicos(){
+        this.medicos.add(FactoryMedicos.getMedico("Magister", "Permanente", "Cirugia", "Juan", "Aldana", "45789632", "Los Troncos", 1450, "2237894564", "Mar del Plata", 1234));
+        this.medicos.add(FactoryMedicos.getMedico("Doctorado", "Permanente", "Pediatria", "Ana", "Lopez", "40123658", "Las Heras", 2345, "2234567890", "Mar del Plata", 5678));
+        this.medicos.add(FactoryMedicos.getMedico("Magister", "Residente", "Clinica", "Luis", "Garcia", "38965412", "San Martin", 678, "2231234567", "Mar del Plata", 9101));
+        this.medicos.add(FactoryMedicos.getMedico("Magister", "Permanente", "Cirugia", "Valentino", "Giordano", "46632600", "España", 1459, "2235964847", "Mar del Plata", 2214));
+        this.medicos.add(FactoryMedicos.getMedico("Doctorado", "Permanente", "Pediatria", "Micaela", "Fernandez", "40123659", "La Rioja", 2346, "2234567891", "Mar del Plata", 5679));
+        this.medicos.add(FactoryMedicos.getMedico("Magister", "Residente", "Clinica", "Sofia", "Martinez", "38965413", "San Luis", 679, "2231234568", "Mar del Plata", 9102));
+        this.medicos.add(FactoryMedicos.getMedico("Magister", "Permanente", "Cirugia", "Mateo", "Rodriguez", "45789633", "Mitre", 1451, "2237894565", "Mar del Plata", 1235));
     }
 
     public void cargarHabitaciones(){
@@ -78,6 +92,10 @@ public class Sistema {
         this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Sala de Internacion", 500));
         this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Sala de Internacion", 500));
         this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Sala de Internacion", 500));
+    }
+
+    public void addHabitacion(String tipo){
+        this.habitaciones.add(factoryHabitaciones.factoryHabitaciones(tipo, 500));
     }
 
     /**
@@ -110,7 +128,7 @@ public class Sistema {
      * <b>Post:</b> El paciente p es atendido por el médico m. Si el paciente estaba en la sala, se elimina de la sala. Si estaba en el patio, se elimina del patio. Si el paciente no estaba en la lista de atendidos, se añade a dicha lista.
      */
 
-    public void atiendoPaciente(Paciente p, Medico m){
+    public void atiendoPaciente(Paciente p, Interfaz_Medico m){
         this.moduloAtiende.atiendoPaciente(p, m, this.lista_espera, this.lista_atendidos, this.patio, this.sala);
     }
 

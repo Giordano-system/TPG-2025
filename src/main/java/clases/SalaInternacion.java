@@ -10,6 +10,8 @@ package clases;
 
 public class SalaInternacion extends Habitacion{
 
+    private final int costoSI = 2000;
+
     /**
      * <b>Pre: </b> El costoFijo debe ser mayor a 0.
      * Constructor de la clase SalaInternacion.
@@ -55,7 +57,7 @@ public class SalaInternacion extends Habitacion{
 
     @Override
     public double devolverCosto(int dias) {
-        return Math.pow(costoFijo,dias) + this.getCostoAsignacion();
+        return Math.pow(costoSI,dias) + this.getCostoAsignacion();
     }
 
     /**

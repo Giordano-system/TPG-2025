@@ -2,6 +2,8 @@ package clases;
 
 import interfaces.Interfaz_Especialidad;
 
+import java.util.ArrayList;
+
 /**
  * Clase que decora a un médico, le aumenta el sueldo un 5%.
  * Hereda de la clase DecoratorPosgrado.
@@ -28,4 +30,5 @@ public class DecoratorPosgradoMagister extends DecoratorPosgrado
 	{
 		return encapsulado.getEspecialidad();
 	}
+
 }

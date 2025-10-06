@@ -2,6 +2,9 @@ package clases;
 
 import interfaces.Interfaz_Medico;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 /**
  * Clase que decora a un médico, le aumenta el sueldo un 5%.
  * Hereda de la clase DecoratorPosgrado.
@@ -59,5 +62,34 @@ public abstract class DecoratorContratacion implements Interfaz_Medico
 	{
 		return this.encapsulado.getMatricula();
 	}
+
+    @Override public String getEspecialidad() {
+        return this.encapsulado.getEspecialidad();
+    }
+
+    @Override
+    public String toString(){
+        return encapsulado.toString();
+    }
+
+    @Override
+    public void addConsultaMedica(Consulta consulta) {
+        encapsulado.addConsultaMedica(consulta);
+    }
+
+    @Override
+    public void showConsultasMedicas() {
+        encapsulado.showConsultasMedicas();
+    }
+
+    @Override
+    public ArrayList<Consulta> getConsultasMedicas() {
+        return encapsulado.getConsultasMedicas();
+    }
+
+    @Override
+    public void reporteConsultas(LocalDate fechaInicio, LocalDate fechaFin){
+        encapsulado.reporteConsultas(fechaInicio, fechaFin);
+    }
 
 }

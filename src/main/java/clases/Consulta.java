@@ -42,7 +42,7 @@ public class Consulta {
 
     @Override
     public String toString() {
-        return "Consulta: \n" + "Nombre Paciente: " + nombrePaciente + "Fecha Consulta: " + fechaConsulta + "Honorario Medico: " + HonorarioMedico + "\n";
+        return "Consulta: \n" + "Nombre Paciente: " + nombrePaciente + " Fecha Consulta: " + fechaConsulta + " Honorario Medico: " + HonorarioMedico + "\n";
     }
 
 }

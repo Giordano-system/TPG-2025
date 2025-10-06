@@ -1,5 +1,8 @@
 package clases;
 
+import interfaces.Interfaz_Especialidad;
+import interfaces.Interfaz_Medico;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -16,7 +19,7 @@ public class Facturacion {
 	private int nroFactura;
 	private Paciente paciente;
     private Habitacion habitacionOcupada;
-    private ArrayList<Medico> consultasMedicas;
+    private ArrayList<Interfaz_Medico> consultasMedicas;
 	private int cantDias;
 	private double costoInternacion;
 	private double total=0;
