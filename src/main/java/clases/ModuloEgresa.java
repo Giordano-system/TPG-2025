@@ -1,5 +1,6 @@
 package clases;
 
+import excepciones.PacienteNoAtendidoException;
 import interfaces.Interfaz_Medico;
 
 import java.util.ArrayList;
@@ -25,19 +26,23 @@ public class ModuloEgresa {
      * @return Factura generada por el egreso del paciente
      */
 
-    public Facturacion egresaPaciente(Paciente p, ArrayList<Paciente> lista_atendidos, int dias) {
-        lista_atendidos.remove(p);
-        Facturacion factura = new Facturacion(p,dias);
-        for (Interfaz_Medico m : p.getConsultasMedicas()) {
-            consultaMedicos(p, m);
+    public Facturacion egresaPaciente(Paciente p, ArrayList<Paciente> lista_atendidos, int dias) throws PacienteNoAtendidoException {
+        if (!lista_atendidos.contains(p)) {
+            throw new PacienteNoAtendidoException("El paciente no ha sido atentido: ", p.getNombre(), p.getApellido(), p.getDni());
+        } else {
+            lista_atendidos.remove(p);
+            Facturacion factura = new Facturacion(p,dias);
+            for (Interfaz_Medico m : p.getConsultasMedicas()) {
+                consultaMedicos(p, m);
+            }
+            p.clearHabitacionInternacion();
+            return factura;
         }
-        p.clearHabitacionInternacion();
-        return factura;
     }
 
     /**
      * Método para el egreso de un paciente.
-     * <b>Pre:</b> p != null, lista_atendidos != null. El paciente debe haber sido atendido previamente y estar en la lista de atendidos.
+     * <b>Pre:</b> p != null, lista_atendidos != null.
      * <b>Post:</b> El paciente es removido de la lista de atendidos, se genera una factura por su atención y se actualizan las consultas médicas de los médicos
      * que lo atendieron.
      * @param p Paciente que egresa
@@ -45,13 +50,17 @@ public class ModuloEgresa {
      * @return Factura generada por el egreso del paciente
      */
 
-    public Facturacion egresaPaciente(Paciente p, ArrayList<Paciente> lista_atendidos) {
-        lista_atendidos.remove(p);
-        Facturacion factura = new Facturacion(p);
-        for (Interfaz_Medico m : p.getConsultasMedicas()) {
-            consultaMedicos(p, m);
+    public Facturacion egresaPaciente(Paciente p, ArrayList<Paciente> lista_atendidos) throws PacienteNoAtendidoException {
+        if (!lista_atendidos.contains(p)) {
+            throw new PacienteNoAtendidoException("El paciente no ha sido atentido: ", p.getNombre(), p.getApellido(), p.getDni() );
+        } else {
+            lista_atendidos.remove(p);
+            Facturacion factura = new Facturacion(p);
+            for (Interfaz_Medico m : p.getConsultasMedicas()) {
+                consultaMedicos(p, m);
+            }
+            return factura;
         }
-        return factura;
     }
 
     /**

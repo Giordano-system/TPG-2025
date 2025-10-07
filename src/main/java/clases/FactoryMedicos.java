@@ -21,6 +21,7 @@ public class FactoryMedicos
 	 * @param ciudad ciudad donde vive el medico
 	 * @param numMatricula numero de matricula del medico
 	 * @return devuelve el objeto del medicco correspondiente
+     * <b>Post: </b> devuelve un objeto intefaz_medico con las modificaciones correspondientes a su posgrado y tipo de contratacion
 	 */
 
 	public static Interfaz_Medico getMedico(String posgrado, String contratacion, String especialidad,

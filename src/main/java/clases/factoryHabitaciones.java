@@ -1,5 +1,8 @@
 package clases;
 
+import excepciones.LugarNoDisponibleException;
+import excepciones.NoExisteHabitacionException;
+
 /**
  * Clase factory para crear instancias de diferentes tipos de habitaciones.
  * Utiliza el patrón de diseño Factory Method.
@@ -10,7 +13,7 @@ package clases;
 public class factoryHabitaciones {
 
     /**
-     * <b>Pre: </b> El tipo debe ser uno de los siguientes: "Sala de Internacion", "Habitacion Compartida" o "Habitacion Privada". El costoFijo debe ser mayor a 0.
+     * <b>Pre: </b>  El costoFijo debe ser mayor a 0.
      * Método estático que crea y devuelve una instancia de una subclase de Habitacion según el tipo especificado.
      * @param tipo Tipo de habitación. Puede ser "Sala de Internacion", "Habitacion Compartida" o "Habitacion Privada".
      * @param costoFijo Costo fijo de la habitación por día. double>0.
@@ -18,7 +21,7 @@ public class factoryHabitaciones {
      * <b>Post: </b> Se devuelve una instancia de la subclase correspondiente de Habitacion.
      */
 
-    public static Habitacion factoryHabitaciones(String tipo, double costoFijo){
+    public static Habitacion factoryHabitaciones(String tipo, double costoFijo) throws NoExisteHabitacionException {
             String tipoLower = tipo.toLowerCase();
             Habitacion h;
             switch (tipoLower) {
@@ -32,8 +35,7 @@ public class factoryHabitaciones {
                     h = new HabitacionPrivada(costoFijo);
                     break;
                 default:
-                    h = null;
-                    break;
+                    throw new NoExisteHabitacionException("No existe la habitacion del tipo: ", tipo);
             }
             return h;
     }

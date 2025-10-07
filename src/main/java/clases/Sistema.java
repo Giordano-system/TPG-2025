@@ -1,8 +1,9 @@
 package clases;
 
-import excepciones.LugarNoDisponibleException;
+
 import interfaces.Interfaz_Especialidad;
 import interfaces.Interfaz_Medico;
+import excepciones.*;
 
 import java.util.ArrayList;
 
@@ -82,20 +83,54 @@ public class Sistema {
         this.medicos.add(FactoryMedicos.getMedico("Magister", "Permanente", "Cirugia", "Mateo", "Rodriguez", "45789633", "Mitre", 1451, "2237894565", "Mar del Plata", 1235));
     }
 
+    /**
+     * Metodo que que devuelve el objeto medico correspondiente a los parametros
+     * <b>Pre: </b> todos los parametros deben ser distintos de null o vacio, y las modificaciones del medicio deben ser las correspondientes
+     * @param posgrado tipo de posgrado que tiene el medico
+     * @param contratacion tipo de contratacion que tiene el medico
+     * @param especialidad especialidad del medico
+     * @param nombre nombre del medico
+     * @param apellido apellido del medico
+     * @param dni DNI del medico
+     * @param calle calle del domicilio del medico
+     * @param numero altura de la calle del medico
+     * @param telefono telefono del medico
+     * @param ciudad ciudad donde vive el medico
+     * @param numMatricula numero de matricula del medico
+     * <b>Post: </b> Se añade un intefaz_medico con las modificaciones correspondientes a su posgrado y tipo de contratacion a la lista de medicos del sistema.
+     */
+
+    public void addMedico(String posgrado, String contratacion, String especialidad, String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad, int numMatricula){
+        Interfaz_Medico nuevoMedico = FactoryMedicos.getMedico(posgrado, contratacion, especialidad, nombre, apellido, dni, calle, numero, telefono, ciudad, numMatricula);
+        if (nuevoMedico != null) {
+            this.medicos.add(nuevoMedico);
+        } else {
+            System.out.println("No se pudo crear el medico con los datos proporcionados.");
+        }
+    }
+
     public void cargarHabitaciones(){
-        this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Habitacion Compartida", 500));
-        this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Habitacion Compartida", 500));
-        this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Habitacion Compartida", 500));
-        this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Habitacion Privada", 500));
-        this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Habitacion Privada", 500));
-        this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Habitacion Privada", 500));
-        this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Sala de Internacion", 500));
-        this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Sala de Internacion", 500));
-        this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Sala de Internacion", 500));
+        try{
+            this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Habitacion Compartida", 500));
+            this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Habitacion Compartida", 500));
+            this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Habitacion Compartida", 500));
+            this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Habitacion Privada", 500));
+            this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Habitacion Privada", 500));
+            this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Habitacion Privada", 500));
+            this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Sala de Internacion", 500));
+            this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Sala de Internacion", 500));
+            this.habitaciones.add(factoryHabitaciones.factoryHabitaciones("Sala de Internacion", 500));
+        } catch (NoExisteHabitacionException e){
+            System.out.println(e.getMessage() + e.getTipoSolicitado());
+        }
     }
 
     public void addHabitacion(String tipo){
-        this.habitaciones.add(factoryHabitaciones.factoryHabitaciones(tipo, 500));
+        try{
+            this.habitaciones.add(factoryHabitaciones.factoryHabitaciones(tipo, 500));
+        } catch (NoExisteHabitacionException e){
+            System.out.println(e.getMessage() + e.getTipoSolicitado());
+        }
     }
 
     /**
@@ -128,28 +163,33 @@ public class Sistema {
      * <b>Post:</b> El paciente p es atendido por el médico m. Si el paciente estaba en la sala, se elimina de la sala. Si estaba en el patio, se elimina del patio. Si el paciente no estaba en la lista de atendidos, se añade a dicha lista.
      */
 
-    public void atiendoPaciente(Paciente p, Interfaz_Medico m){
-        this.moduloAtiende.atiendoPaciente(p, m, this.lista_espera, this.lista_atendidos, this.patio, this.sala);
+    public void atiendoPaciente(Paciente p, Interfaz_Medico m) throws PacienteNoRegistradoException, MedicoNoRegistradoException {
+        this.moduloAtiende.atiendoPaciente(p, m, this.medicos ,this.lista_espera, this.lista_atendidos, this.patio, this.sala);
     }
 
     /**
      * Método para internar un paciente en una habitación disponible del tipo solicitado.
-     * <b>Pre:</b> p != null, tipoHabitacion != null e tipoHabiacion== "Habitacion Compartida" o tipoHabitacion=="Habitacion Privada" o tipoHabitacion=="Sala de Internacion".
+     * <b>Pre:</b> p != null, tipoHabitacion != null.
      * @param p Paciente a internar.
      * @param tipoHabitacion Tipo de habitación solicitada.
      * <b>Post:</b> El paciente queda internado en una habitación del tipo solicitado si hay disponibilidad. Si no fue posible internar al paciente, se lanza una excepción del tipo LugarNoDisponibleException.
      * @throws LugarNoDisponibleException Si no hay habitaciones disponibles del tipo solicitado.
      */
 
-    public void internaPaciente(Paciente p, String tipoHabitacion) throws LugarNoDisponibleException {
-        for(Habitacion h : this.habitaciones){
-            if(h.getTipo().equals(tipoHabitacion) && !h.estaOcupada()){
-                this.moduloInterna.internaPaciente(p, h);
-                break;
+    public void internaPaciente(Paciente p, String tipoHabitacion) throws LugarNoDisponibleException, NoExisteHabitacionException {
+        if (!tipoHabitacion.equals("Sala de Internacion") && !tipoHabitacion.equals("Habitacion Compartida") && !tipoHabitacion.equals("Habitacion Privada")){
+            throw new NoExisteHabitacionException("No existe la habitacion del tipo: ", tipoHabitacion);
+        } else {
+            for(Habitacion h : this.habitaciones){
+                if(h.getTipo().equals(tipoHabitacion) && !h.estaOcupada()){
+                    this.moduloInterna.internaPaciente(p, h);
+                    break;
+                }
             }
+            if (p.getHabitacionInternacion()==null)
+                throw new LugarNoDisponibleException("No hay lugar disponible en el tipo de habitacion solicitado para internar al paciente.");
         }
-        if (p.getHabitacionInternacion()==null)
-            throw new LugarNoDisponibleException("No hay lugar disponible en el tipo de habitacion solicitado para internar al paciente.");
+
     }
 
     /**
@@ -162,7 +202,7 @@ public class Sistema {
      * @return Facturacion Objeto que contiene los detalles de la factura generada al egresar al paciente.
      */
 
-    public Facturacion egresaPaciente(Paciente p) {
+    public Facturacion egresaPaciente(Paciente p) throws PacienteNoAtendidoException {
         return this.moduloEgresa.egresaPaciente(p, this.lista_atendidos);
     }
 
@@ -179,7 +219,7 @@ public class Sistema {
      * @return Facturacion Objeto que contiene los detalles de la factura generada al egresar al paciente.
      */
 
-    public Facturacion egresaPaciente(Paciente p, int dias) {
+    public Facturacion egresaPaciente(Paciente p, int dias) throws PacienteNoAtendidoException {
         return this.moduloEgresa.egresaPaciente(p, this.lista_atendidos, dias);
     }
 

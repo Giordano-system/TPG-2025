@@ -1,5 +1,7 @@
 package clases;
 
+import excepciones.MedicoNoRegistradoException;
+import excepciones.PacienteNoRegistradoException;
 import interfaces.Interfaz_Medico;
 
 import java.util.ArrayList;
@@ -8,7 +10,6 @@ public class ModuloAtiende {
 
     /**
      * <b> Pre: </b> El paciente p, el médico m, las listas Lista_espera, Lista_atendidos, patio y la sala no deben ser null.
-     * El paciente debe estar en la lista de espera o la lista de atendidos (El paciente es atendido por mas de un medico).
      * @param p Paciente a ser atendido.
      * @param m Médico que atiende al paciente.
      * @param Lista_espera Lista de espera de pacientes.
@@ -19,17 +20,23 @@ public class ModuloAtiende {
      * Si el paciente estaba en la sala, se elimina de la sala. Si estaba en el patio, se elimina del patio.
      */
 
-    public void atiendoPaciente(Paciente p, Interfaz_Medico m, ArrayList<Paciente> Lista_espera, ArrayList<Paciente> Lista_atendidos, Patio patio, Sala sala) {
-        p.addConsultaMedica(m);
-        if (Lista_espera.contains(p)) {
-            ArrayList<Paciente> PacientesPatio = patio.getPacientes();
-            if (PacientesPatio.contains(p)) {
-                patio.eliminaPaciente(p);
-            } else {
-                sala.eliminaPaciente();
+    public void atiendoPaciente(Paciente p, Interfaz_Medico m, ArrayList<Interfaz_Medico> medicos ,ArrayList<Paciente> Lista_espera, ArrayList<Paciente> Lista_atendidos, Patio patio, Sala sala) throws PacienteNoRegistradoException, MedicoNoRegistradoException {
+        if (!(Lista_atendidos.contains(p) || Lista_espera.contains(p))) {
+            throw new PacienteNoRegistradoException("El paciente nunca fue registrado en el sistema.", p);
+        } else if (medicos.contains(m)) {
+                p.addConsultaMedica(m);
+                if (Lista_espera.contains(p)) {
+                    ArrayList<Paciente> PacientesPatio = patio.getPacientes();
+                    if (PacientesPatio.contains(p)) {
+                        patio.eliminaPaciente(p);
+                    } else {
+                        sala.eliminaPaciente();
+                    }
+                    Lista_espera.remove(p);
+                    Lista_atendidos.add(p);
             }
-            Lista_espera.remove(p);
-            Lista_atendidos.add(p);
+        } else {
+            throw new MedicoNoRegistradoException("El medico no esta licenciado para atender pacientes.", m);
         }
     }
 }
