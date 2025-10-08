@@ -1,5 +1,10 @@
 package interfaces;
 
+import clases.Consulta;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 /**
  * Interfaz que define el comportamiento común de todos los médicos.
  * 
@@ -9,7 +14,12 @@ package interfaces;
  */
 public interface Interfaz_Medico extends Interfaz_Persona 
 {
-	int getMatricula();
-	double getSueldo();
-	String toString();
+	public int getMatricula();
+	public double getSueldo();
+	public String toString();
+    public String getEspecialidad();
+    public void showConsultasMedicas();
+    public void addConsultaMedica(Consulta consulta);
+    public ArrayList<Consulta> getConsultasMedicas();
+    public void reporteConsultas(LocalDate fechaInicio, LocalDate fechaFin);
 }

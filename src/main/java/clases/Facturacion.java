@@ -1,20 +1,25 @@
 package clases;
 
+import interfaces.Interfaz_Especialidad;
+import interfaces.Interfaz_Medico;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Facturacion {
-	
 /**
  * Clase que genera y guarda facturas de los clientes.
  * Distingue clientes que han recibido o no una internacion.
  * @author Grupo 9 - POO
  * @version 1.00
  */
+
+public class Facturacion {
+
 	private static int contFacturas;
 	private int nroFactura;
 	private Paciente paciente;
-    private ArrayList<Medico> consultasMedicas;
+    private Habitacion habitacionOcupada;
+    private ArrayList<Interfaz_Medico> consultasMedicas;
 	private int cantDias;
 	private double costoInternacion;
 	private double total=0;
@@ -33,13 +38,14 @@ public class Facturacion {
 	}
 
 /**
- * Contructor sobreescrito con dias, implica una internacion de dias dias.
+ * Contructor sobreecargado con dias, implica una internacion de dias dias.
  * @param paciente
  * @param dias
  */
 	
 	public Facturacion(Paciente paciente, int dias) {
 		this(paciente);
+        this.habitacionOcupada = paciente.getHabitacionInternacion();
 		this.costoInternacion= this.paciente.getHabitacionInternacion().devolverCosto(dias);	
 		this.total+=this.costoInternacion;
 		this.cantDias=dias;
@@ -74,8 +80,8 @@ public class Facturacion {
 					+ "\nFecha Ingreso: " + this.fechaEgreso.minusDays(cantDias) 
 					+ "\nFechaEgreso: " + this.fechaEgreso 
 					+ "\nCantidad de Dias: " + this.cantDias 
-					+ "\nHabitacion Tipo: " + this.paciente.getHabitacionInternacion() 
-					+ "     Costo: $" + this.paciente.getHabitacionInternacion().devolverCosto(cantDias) 
+					+ "\nHabitacion Tipo: " + this.habitacionOcupada.getTipo()
+					+ "     Costo: $" + this.costoInternacion
 					+ "\n\nConsultas Medicas:\n " + this.ArmaConsultas() 
 					+ "\n\n             Total: $" + this.total; 
 		else

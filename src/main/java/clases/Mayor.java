@@ -11,15 +11,16 @@ package clases;
 public class Mayor extends Paciente {
 	
 	/**
-     * Constructor de la clase Joven.
-     * @param nombre String!=""
-     * @param apellido String!=""
-     * @param calle String!=""
-     * @param numero int>0
-     * @param telefono String!=""
-     * @param ciudad String!=""
-     * @param rangoEtario String = "Nino", "Joven" o "Mayor"
-     * @param numHistoriaClinica int>0
+     * Constructor de la clase Mayor.
+     * <b>PRE:</b> nombre!=null, nombre!="", apellido!=null, apellido!="", dni!=null, dni!="", calle!=null, calle!="", telefono!=null, telefono!="", ciudad!=null, ciudad!="", rangoEtario!=null, rangoEtario!="", numero>0, historiaClinica>0
+     * @param nombre Nombre del paciente
+     * @param apellido Apellido del paciente
+     * @param calle Nombre de la calle (Domicilio)
+     * @param numero Numero de la calle (Domicilio)
+     * @param telefono Numero de telefono del paciente.
+     * @param ciudad Ciudad del paciente.
+     * @param rangoEtario Rango etario del paciente
+     * @param numHistoriaClinica Numero de Historia Clinica del paciente.
      */
 	
 	public Mayor(String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad, String rangoEtario, int numHistoriaClinica) {
@@ -28,6 +29,7 @@ public class Mayor extends Paciente {
 	
 	/**
      * Compara dos pacientes por su rango etario.
+     * <b>Pre:</b> p!=null
      * @param p Paciente recien ingresado. Instancia de una subclase de Paciente.
      * @return true si quien se queda en la sala de espera es el paciente que llama al metodo, false en caso contrario.
      */

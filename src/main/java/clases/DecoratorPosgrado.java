@@ -3,7 +3,10 @@ package clases;
 import interfaces.Interfaz_Especialidad;
 import interfaces.Interfaz_Medico;
 
-public abstract class DecoratorPosgrado implements Interfaz_Medico, Interfaz_Especialidad
+import java.time.LocalDate;
+import java.util.ArrayList;
+
+public abstract class DecoratorPosgrado implements  Interfaz_Medico ,Interfaz_Especialidad
 {
 	protected Interfaz_Especialidad encapsulado;
 
@@ -53,4 +56,30 @@ public abstract class DecoratorPosgrado implements Interfaz_Medico, Interfaz_Esp
 	{
 		return this.encapsulado.getMatricula();
 	}
+
+    @Override
+    public String toString(){
+        return encapsulado.toString();
+    }
+
+    @Override
+    public void addConsultaMedica(Consulta consulta) {
+        encapsulado.addConsultaMedica(consulta);
+    }
+
+    @Override
+    public void showConsultasMedicas() {
+        encapsulado.showConsultasMedicas();
+    }
+
+    @Override
+    public ArrayList<Consulta> getConsultasMedicas() {
+        return encapsulado.getConsultasMedicas();
+    }
+
+    @Override
+    public void reporteConsultas(LocalDate fechaInicio, LocalDate fechaFin){
+        encapsulado.reporteConsultas(fechaInicio, fechaFin);
+    }
+
 }

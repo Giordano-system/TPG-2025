@@ -1,13 +1,22 @@
 package clases;
 
+/**
+ * Clase que representa un domicilio con atributos como calle y número.
+ * Contiene un constructor para inicializar estos atributos, así como métodos getter y setter para acceder y modificar los valores.
+ * @author Grupo 9 - POO
+ * @version 1.0
+ */
+
 public class Domicilio {
     private String Calle;
     private int Numero;
 
     /**
+     * <b>Pre: </b> El parametro calle debe ser String!="" && String!=null y numero debe ser Int>0. <br>
      * Constructor de la clase Domicilio.
      * @param calle nombre de la calle del domicilio. String != ""
      * @param numero número de la calle del domicilio. int > 0
+     * <b>Post: </b> Se crea un objeto Domicilio con los valores pasados por parámetro.
      */
 
     public Domicilio(String calle, int numero) {

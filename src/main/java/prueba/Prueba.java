@@ -1,18 +1,16 @@
 package prueba;
 
-import clases.Cirujano;
-import clases.Clinico;
-import clases.Pediatra;
-import clases.DecoratorPosgrado;
-import clases.DecoratorPosgradoDoctorado;
-import clases.DecoratorPosgradoMagister;
-import clases.DecoratorContratacion;
-import clases.DecoratorContratacionPermanente;
-import clases.DecoratorContratacionResidente;
-import interfaces.Interfaz_Especialidad;
-import interfaces.Interfaz_Medico;
-import interfaces.Interfaz_Persona;
-import interfaces.IPacientesComparables;
+import clases.*;
+import interfaces.*;
+import excepciones.*;
+
+import java.time.LocalDate;
+
+/**
+ * Clase de prueba para el sistema de gestión de médicos.
+ * @author Grupo 9 - POO
+ * @version 1.0
+ */
 
 @SuppressWarnings("unused")
 public class Prueba
@@ -20,12 +18,16 @@ public class Prueba
 
 	public static void main(String[] args)
 	{
-		Interfaz_Medico m1 = new DecoratorContratacionResidente(
-								new DecoratorPosgradoMagister(
-									new Clinico("Gian", "Distefano", "47256279", "Rojas", 6150, "2235376208", "Mar del Plata", 12959)));
-		
-		System.out.println(m1.getSueldo());
-		System.out.println(m1);
+        Sistema sistema = new Sistema();
+        Interfaz_Medico m = FactoryMedicos.getMedico("Magister", "Residente", "Clinica", "Juan", "Perez", "12345678", "Springfield", 1459, "223 596 4847", "Simpsons", 50000);
+        System.out.println(m.getNombre());
+        System.out.println(m.getEspecialidad());
+        System.out.println(m.getSueldo());
+        Consulta c = new Consulta("Carlos", LocalDate.of(2024, 6, 15), m.getSueldo());
+        Consulta c2 = new Consulta("Agustin", LocalDate.of(2024, 9, 15), m.getSueldo());
+        m.addConsultaMedica(c);
+        m.addConsultaMedica(c2);
+        m.reporteConsultas(LocalDate.of(2024, 6, 15), LocalDate.of(2024, 9, 15));
 
 	}
 

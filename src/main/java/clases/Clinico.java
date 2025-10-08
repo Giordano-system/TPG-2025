@@ -2,6 +2,13 @@ package clases;
 
 import interfaces.Interfaz_Especialidad;
 
+/**
+ * Clase que representa a un médico clínico, que es un tipo de medico.
+ * Hereda de la clase Medico e implementa la interfaz Interfaz_Especialidad.
+ * @author Grupo 9 - POO
+ * @version 1.0
+ */
+
 public class Clinico extends Medico implements Interfaz_Especialidad
 {
 

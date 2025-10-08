@@ -19,6 +19,7 @@ public abstract class Persona implements Interfaz_Persona {
 
     /**
      * Constructor de la clase Persona.
+     * <b>Pre: </b> Todos los parametros String deben ser String!="" y String != null y numero debe ser Int>0.
      * @param nombre String!=""
      * @param apellido String!=""
      * @param dni String!=""
@@ -74,6 +75,7 @@ public abstract class Persona implements Interfaz_Persona {
     }
 
     /**
+     * <b>Pre: </b> El domicilio no puede ser nulo. Calle debe ser String!="" y String != null y numero debe ser Int>0.
      * Set del atributo domicilio.
      * @param calle nombre de la calle del nuevo domicilio. String!=""
      * @param numero número de la calle del nuevo domicilio. Int>0

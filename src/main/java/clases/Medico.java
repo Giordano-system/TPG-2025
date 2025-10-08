@@ -1,6 +1,8 @@
 package clases;
 
 import interfaces.Interfaz_Medico;
+import java.util.ArrayList;
+import java.time.LocalDate;
 
 /**
  * Clase que representa a un médico, que es una persona con un número de matrícula y una especialidad.
@@ -12,10 +14,12 @@ import interfaces.Interfaz_Medico;
 
 public abstract class Medico extends Persona implements Interfaz_Medico{
     private final int numMatricula; // >0
-    private String especialidad; // Clinica, Cirugia o Pediatria
+    private final String especialidad; // Clinica, Cirugia o Pediatria
     private static double sueldo = 20000;
+    private ArrayList<Consulta> consultasMedicas;
 
     /**
+     * <b>Pre: </b> Todos los parametros String deben ser String!="" y String != null, numero debe ser Int>0 y especialidad debe ser Clinica, Cirugia o Pediatria.
      * Constructor de la clase Medico.
      * @param nombre String!="".
      * @param apellido String!=""
@@ -31,6 +35,7 @@ public abstract class Medico extends Persona implements Interfaz_Medico{
         super(nombre, apellido, dni, calle, numero, telefono, ciudad);
         this.numMatricula = numMatricula;
         this.especialidad = especialidad;
+        this.consultasMedicas = new ArrayList<Consulta>();
     }
 
     /**
@@ -62,4 +67,48 @@ public abstract class Medico extends Persona implements Interfaz_Medico{
 	{
 		return sueldo;
 	}
+
+    public ArrayList<Consulta> getConsultasMedicas() {
+        return consultasMedicas;
+    }
+
+    /**
+     * <b>Pre:</b> consulta!=null y que existe previamente el arrayList de consultasMedicas.
+     * @param consulta Consulta!=null que se desea agregar al arrayList de consultasMedicas.
+     * <b>Post:</b> Se agrega la consulta al arrayList de consultasMed
+     */
+
+    public void addConsultaMedica(Consulta consulta) {
+        this.consultasMedicas.add(consulta);
+    }
+
+    public void showConsultasMedicas() {
+        for (Consulta consulta : consultasMedicas) {
+            System.out.println(consulta);
+        }
+    }
+
+    /**
+     * Genera un reporte de las consultas médicas realizadas por el médico en un rango de fechas específico.
+     * Muestra cada consulta que cae dentro del rango de fechas y calcula el total facturado
+     * <b>Pre:</b> fechaInicio!=null, fechaFin!=null, fechaInicio<=fechaFin
+     * <b>Post:</b> Se muestra por consola el reporte de consultas médicas y el total facturado en el período.
+     * @param fechaInicio
+     * @param fechaFin
+     */
+
+    public void reporteConsultas(LocalDate fechaInicio, LocalDate fechaFin) {
+        double totalFacturado = 0;
+        System.out.println("Consultas médicas entre " + fechaInicio + " y " + fechaFin + ": \n");
+        for (Consulta consulta : consultasMedicas) {
+            if ((consulta.getFecha().isEqual(fechaInicio) || consulta.getFecha().isAfter(fechaInicio)) &&
+                (consulta.getFecha().isEqual(fechaFin) || consulta.getFecha().isBefore(fechaFin))) {
+                totalFacturado += consulta.getHonorarioMedico();
+                System.out.println(consulta);
+            }
+        }
+        System.out.println("Total facturado en el período: $" + totalFacturado + "\n");
+    }
+
+
 }
