@@ -20,11 +20,10 @@ public class Mayor extends Paciente {
      * @param telefono Numero de telefono del paciente.
      * @param ciudad Ciudad del paciente.
      * @param rangoEtario Rango etario del paciente
-     * @param numHistoriaClinica Numero de Historia Clinica del paciente.
      */
 	
-	public Mayor(String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad, String rangoEtario, int numHistoriaClinica) {
-		super(nombre, apellido, dni, calle, numero, telefono, ciudad, rangoEtario, numHistoriaClinica);
+	public Mayor(String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad, String rangoEtario) {
+		super(nombre, apellido, dni, calle, numero, telefono, ciudad, rangoEtario);
 	}
 	
 	/**

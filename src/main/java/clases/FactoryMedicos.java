@@ -1,9 +1,11 @@
 package clases;
 
 import interfaces.Interfaz_Medico;
+
 /**
  * Clase que aplica el patron factory para la creacion de Medicos
  */
+
 public class FactoryMedicos 
 {
 	/**

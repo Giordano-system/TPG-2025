@@ -18,8 +18,4 @@ public interface Interfaz_Medico extends Interfaz_Persona
 	public double getSueldo();
 	public String toString();
     public String getEspecialidad();
-    public void showConsultasMedicas();
-    public void addConsultaMedica(Consulta consulta);
-    public ArrayList<Consulta> getConsultasMedicas();
-    public void reporteConsultas(LocalDate fechaInicio, LocalDate fechaFin);
 }
