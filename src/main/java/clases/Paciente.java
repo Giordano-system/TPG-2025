@@ -14,8 +14,8 @@ import java.util.ArrayList;
 
 public abstract class Paciente extends Persona implements IPacientesComparables {
     private final String rangoEtario; // "Niño", "Joven", "Mayor"
+    private static int contadorPacientes = 0;
     private final int numHistoriaClinica; // >0
-    private ArrayList<Interfaz_Medico> consultasMedicas;
     private Habitacion habitacionInternacion;
 
     /**
@@ -28,14 +28,12 @@ public abstract class Paciente extends Persona implements IPacientesComparables 
      * @param telefono Numero de telefono del paciente.
      * @param ciudad Ciudad del paciente.
      * @param rangoEtario Rango etario del paciente
-     * @param numHistoriaClinica Numero de Historia Clinica del paciente.
      */
 
-    public Paciente(String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad, String rangoEtario, int numHistoriaClinica) {
+    public Paciente(String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad, String rangoEtario) {
         super(nombre, apellido, dni, calle, numero, telefono, ciudad);
         this.rangoEtario = rangoEtario;
-        this.numHistoriaClinica = numHistoriaClinica;
-        this.consultasMedicas = new ArrayList<Interfaz_Medico>();
+        this.numHistoriaClinica = ++contadorPacientes;
         this.habitacionInternacion = null;
     }
 
@@ -47,20 +45,7 @@ public abstract class Paciente extends Persona implements IPacientesComparables 
         return  numHistoriaClinica;
     }
 
-    public ArrayList<Interfaz_Medico> getConsultasMedicas() {
-        return consultasMedicas;
-    }
 
-    public void addConsultaMedica(Interfaz_Medico medico) {
-        this.consultasMedicas.add(medico);
-    }
-
-    /**
-     * Limpia el ArrayList de consultas médicas del paciente.
-     */
-    public void clearConsultasMedicas() {
-        this.consultasMedicas.clear();
-    }
 
     public void setHabitacionInternacion(Habitacion habitacion) {
         habitacion.ocupar();

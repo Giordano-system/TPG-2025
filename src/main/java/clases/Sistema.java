@@ -6,6 +6,8 @@ import interfaces.Interfaz_Medico;
 import excepciones.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.time.LocalDate;
 
 /**
  * Clase que representa el sistema de gestión de pacientes y médicos.
@@ -18,9 +20,12 @@ public class Sistema {
     private final Patio patio;
     private final ArrayList<Paciente> lista_espera;
     private final ArrayList<Paciente> lista_atendidos;
+    private final HashMap<Integer, ArrayList<ConsultasHistoricas>> historialConsultas;
     private final ArrayList<Interfaz_Medico> medicos;
+    private final HashMap<Integer, ArrayList<Consulta>> consultasMedicas;
     private final ArrayList<Habitacion> habitaciones;
     private final ModuloAtiende moduloAtiende;
+    private final ModuloRegistros moduloRegistros;
     private final ModuloIngresa moduloIngresa;
     private final ModuloRegistra moduloRegistra;
     private final ModuloInterna moduloInterna;
@@ -37,12 +42,15 @@ public class Sistema {
         this.lista_espera = new ArrayList<>();
         this.lista_atendidos = new ArrayList<>();
         this.medicos = new ArrayList<>();
-
+        cargarMedicos();
         this.habitaciones = new ArrayList<>();
         cargarHabitaciones();
+        this.historialConsultas = new HashMap<>();
+        this.consultasMedicas = new HashMap<>();
         this.moduloAtiende = new ModuloAtiende();
         this.moduloIngresa = new ModuloIngresa();
         this.moduloRegistra = new ModuloRegistra();
+        this.moduloRegistros = new ModuloRegistros();
         this.moduloInterna = new ModuloInterna();
         this.moduloEgresa = new ModuloEgresa();
     }
@@ -81,6 +89,9 @@ public class Sistema {
         this.medicos.add(FactoryMedicos.getMedico("Doctorado", "Permanente", "Pediatria", "Micaela", "Fernandez", "40123659", "La Rioja", 2346, "2234567891", "Mar del Plata", 5679));
         this.medicos.add(FactoryMedicos.getMedico("Magister", "Residente", "Clinica", "Sofia", "Martinez", "38965413", "San Luis", 679, "2231234568", "Mar del Plata", 9102));
         this.medicos.add(FactoryMedicos.getMedico("Magister", "Permanente", "Cirugia", "Mateo", "Rodriguez", "45789633", "Mitre", 1451, "2237894565", "Mar del Plata", 1235));
+        for (Interfaz_Medico m : this.medicos){
+            this.moduloRegistros.addMedico(m, this.consultasMedicas);
+        }
     }
 
     /**
@@ -104,6 +115,7 @@ public class Sistema {
         Interfaz_Medico nuevoMedico = FactoryMedicos.getMedico(posgrado, contratacion, especialidad, nombre, apellido, dni, calle, numero, telefono, ciudad, numMatricula);
         if (nuevoMedico != null) {
             this.medicos.add(nuevoMedico);
+            this.moduloRegistros.addMedico(nuevoMedico, this.consultasMedicas);
         } else {
             System.out.println("No se pudo crear el medico con los datos proporcionados.");
         }
@@ -142,6 +154,7 @@ public class Sistema {
 
     public void registraPaciente(Paciente p){
         this.moduloRegistra.registraPaciente(p, this.lista_espera);
+        this.moduloRegistros.addPaciente(p, this.historialConsultas);
     }
 
     /**
@@ -165,6 +178,8 @@ public class Sistema {
 
     public void atiendoPaciente(Paciente p, Interfaz_Medico m) throws PacienteNoRegistradoException, MedicoNoRegistradoException {
         this.moduloAtiende.atiendoPaciente(p, m, this.medicos ,this.lista_espera, this.lista_atendidos, this.patio, this.sala);
+        this.moduloRegistros.registrarConsultaPaciente(p, m, this.historialConsultas);
+        this.moduloRegistros.registrarConsultaMedico(p, m, this.consultasMedicas);
     }
 
     /**
@@ -176,18 +191,22 @@ public class Sistema {
      * @throws LugarNoDisponibleException Si no hay habitaciones disponibles del tipo solicitado.
      */
 
-    public void internaPaciente(Paciente p, String tipoHabitacion) throws LugarNoDisponibleException, NoExisteHabitacionException {
-        if (!tipoHabitacion.equals("Sala de Internacion") && !tipoHabitacion.equals("Habitacion Compartida") && !tipoHabitacion.equals("Habitacion Privada")){
-            throw new NoExisteHabitacionException("No existe la habitacion del tipo: ", tipoHabitacion);
+    public void internaPaciente(Paciente p, String tipoHabitacion) throws LugarNoDisponibleException, NoExisteHabitacionException, PacienteNoRegistradoException {
+        if (!(this.lista_atendidos.contains(p) || this.lista_espera.contains(p))){
+            throw new PacienteNoRegistradoException("El paciente no ha sido registrado, no puede ser internado.",p);
         } else {
-            for(Habitacion h : this.habitaciones){
-                if(h.getTipo().equals(tipoHabitacion) && !h.estaOcupada()){
-                    this.moduloInterna.internaPaciente(p, h);
-                    break;
+            if (!tipoHabitacion.equals("Sala de Internacion") && !tipoHabitacion.equals("Habitacion Compartida") && !tipoHabitacion.equals("Habitacion Privada")){
+                throw new NoExisteHabitacionException("No existe la habitacion del tipo: ", tipoHabitacion);
+            } else {
+                for(Habitacion h : this.habitaciones){
+                    if(h.getTipo().equals(tipoHabitacion) && !h.estaOcupada()){
+                        this.moduloInterna.internaPaciente(p, h);
+                        break;
+                    }
                 }
+                if (p.getHabitacionInternacion()==null)
+                    throw new LugarNoDisponibleException("No hay lugar disponible en el tipo de habitacion solicitado para internar al paciente.");
             }
-            if (p.getHabitacionInternacion()==null)
-                throw new LugarNoDisponibleException("No hay lugar disponible en el tipo de habitacion solicitado para internar al paciente.");
         }
 
     }
@@ -202,8 +221,20 @@ public class Sistema {
      * @return Facturacion Objeto que contiene los detalles de la factura generada al egresar al paciente.
      */
 
-    public Facturacion egresaPaciente(Paciente p) throws PacienteNoAtendidoException {
-        return this.moduloEgresa.egresaPaciente(p, this.lista_atendidos);
+    public Facturacion egresaPaciente(Paciente p) throws PacienteNoAtendidoException, PacienteNoRegistradoException {
+        LocalDate fechaActual = LocalDate.now();
+        ArrayList<ConsultasHistoricas>consultasTotales = this.historialConsultas.get(p.getNumHistoriaClinica());
+        ArrayList<ConsultasHistoricas> consultasActuales = new ArrayList<>();
+        if (consultasTotales != null) {
+            for (ConsultasHistoricas ch : consultasTotales) {
+                if (ch.getFechaConsulta().getMonth() == fechaActual.getMonth() && ch.getFechaConsulta().getYear() == fechaActual.getYear() && ch.getFechaConsulta().isBefore(fechaActual) || ch.getFechaConsulta().isEqual(fechaActual)) {
+                    consultasActuales.add(ch);
+                }
+            }
+            return this.moduloEgresa.egresaPaciente(p, consultasActuales, this.lista_atendidos);
+        } else {
+            throw new PacienteNoRegistradoException("El paciente no esta registrado en el sistema, no puede egresar.", p);
+        }
     }
 
     /**
@@ -219,8 +250,21 @@ public class Sistema {
      * @return Facturacion Objeto que contiene los detalles de la factura generada al egresar al paciente.
      */
 
-    public Facturacion egresaPaciente(Paciente p, int dias) throws PacienteNoAtendidoException {
-        return this.moduloEgresa.egresaPaciente(p, this.lista_atendidos, dias);
+    public Facturacion egresaPaciente(Paciente p, int dias) throws PacienteNoAtendidoException, PacienteNoRegistradoException{
+        LocalDate fechaActual = LocalDate.now();
+        LocalDate fechaIngreso = LocalDate.now().minusDays(dias);
+        ArrayList<ConsultasHistoricas>consultasTotales = this.historialConsultas.get(p.getNumHistoriaClinica());
+        ArrayList<ConsultasHistoricas> consultasActuales = new ArrayList<>();
+        if (consultasTotales != null) {
+            for (ConsultasHistoricas ch : consultasTotales) {
+                if (ch.getFechaConsulta().isAfter(fechaIngreso) && (ch.getFechaConsulta().isBefore(fechaActual) || ch.getFechaConsulta().isEqual(fechaActual))) {
+                    consultasActuales.add(ch);
+                }
+            }
+            return this.moduloEgresa.egresaPaciente(p, consultasActuales, this.lista_atendidos, dias);
+        } else {
+            throw new PacienteNoRegistradoException("El paciente no esta registrado en el sistema, no puede egresar.", p);
+        }
     }
 
 }

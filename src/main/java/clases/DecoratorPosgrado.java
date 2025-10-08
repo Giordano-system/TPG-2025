@@ -62,24 +62,5 @@ public abstract class DecoratorPosgrado implements  Interfaz_Medico ,Interfaz_Es
         return encapsulado.toString();
     }
 
-    @Override
-    public void addConsultaMedica(Consulta consulta) {
-        encapsulado.addConsultaMedica(consulta);
-    }
-
-    @Override
-    public void showConsultasMedicas() {
-        encapsulado.showConsultasMedicas();
-    }
-
-    @Override
-    public ArrayList<Consulta> getConsultasMedicas() {
-        return encapsulado.getConsultasMedicas();
-    }
-
-    @Override
-    public void reporteConsultas(LocalDate fechaInicio, LocalDate fechaFin){
-        encapsulado.reporteConsultas(fechaInicio, fechaFin);
-    }
 
 }

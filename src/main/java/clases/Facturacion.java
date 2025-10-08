@@ -19,7 +19,7 @@ public class Facturacion {
 	private int nroFactura;
 	private Paciente paciente;
     private Habitacion habitacionOcupada;
-    private ArrayList<Interfaz_Medico> consultasMedicas;
+    private ArrayList<ConsultasHistoricas> consultasMedicas;
 	private int cantDias;
 	private double costoInternacion;
 	private double total=0;
@@ -29,11 +29,11 @@ public class Facturacion {
  * Constructor base de la clase.
  * @param paciente Paciente !=null
  */
-	public Facturacion(Paciente paciente) {
+	public Facturacion(Paciente paciente, ArrayList<ConsultasHistoricas> consultasMedicas) {
 		this.nroFactura+= contFacturas+1;
-		this.consultasMedicas=paciente.getConsultasMedicas();
+		this.consultasMedicas= consultasMedicas;
 		for (int i=0; i<this.consultasMedicas.size(); i++) {
-			this.total+=this.consultasMedicas.get(i).getSueldo()*1.20;
+			this.total+=this.consultasMedicas.get(i).getHonorarioTotal();
 		}
 	}
 
@@ -43,26 +43,25 @@ public class Facturacion {
  * @param dias
  */
 	
-	public Facturacion(Paciente paciente, int dias) {
-		this(paciente);
+	public Facturacion(Paciente paciente, ArrayList<ConsultasHistoricas> consultasMedicas , int dias) {
+		this(paciente,consultasMedicas);
         this.habitacionOcupada = paciente.getHabitacionInternacion();
 		this.costoInternacion= this.paciente.getHabitacionInternacion().devolverCosto(dias);	
 		this.total+=this.costoInternacion;
 		this.cantDias=dias;
 	}
-	
+
 /**
  * Impresion consultas.
- * Imprime las consultas del paciente, con sus respectivos medicos y valores. 
+ * Imprime las consultas del paciente, con sus respectivos medicos y valores.
  */
-	
+
 	private String ArmaConsultas() {
 		String aux="";
-		for (int i=0; i<this.consultasMedicas.size(); i++)
-			aux+= "\nNombre Medico: " + consultasMedicas.get(i).getNombre() + 
-				  "     Especialidad: " + consultasMedicas.get(i).getEspecialidad() + 
-				  "     Subtotal: $" + consultasMedicas.get(i).getSueldo()*1.20;
-		return aux;
+        for (int i=0; i<this.consultasMedicas.size(); i++) {
+            aux += this.consultasMedicas.get(i).toString();
+        }
+        return aux;
 	}
 
 /*
@@ -82,7 +81,7 @@ public class Facturacion {
 					+ "\nCantidad de Dias: " + this.cantDias 
 					+ "\nHabitacion Tipo: " + this.habitacionOcupada.getTipo()
 					+ "     Costo: $" + this.costoInternacion
-					+ "\n\nConsultas Medicas:\n " + this.ArmaConsultas() 
+					+ "\n\nConsultas Medicas:\n " + this.ArmaConsultas()
 					+ "\n\n             Total: $" + this.total; 
 		else
 			return "Nº Factura: " + this.nroFactura 
