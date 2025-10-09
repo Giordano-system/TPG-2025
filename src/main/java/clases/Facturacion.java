@@ -30,6 +30,8 @@ public class Facturacion {
  * @param paciente Paciente !=null
  */
 	public Facturacion(Paciente paciente, ArrayList<ConsultasHistoricas> consultasMedicas) {
+        this.cantDias=0;
+        this.paciente = paciente;
 		this.nroFactura+= contFacturas+1;
 		this.consultasMedicas= consultasMedicas;
 		for (int i=0; i<this.consultasMedicas.size(); i++) {
@@ -73,7 +75,7 @@ public class Facturacion {
 	@Override
 	public String toString(){
 		if (this.cantDias>0)
-			return "Nº Factura: " + this.nroFactura 
+			return "\n\n\nNº Factura: " + this.nroFactura
 					+ "\nNombrePaciente: " + this.paciente.getNombre() 
 					+ " " + this.paciente.getApellido() 
 					+ "\nFecha Ingreso: " + this.fechaEgreso.minusDays(cantDias) 
@@ -84,7 +86,7 @@ public class Facturacion {
 					+ "\n\nConsultas Medicas:\n " + this.ArmaConsultas()
 					+ "\n\n             Total: $" + this.total; 
 		else
-			return "Nº Factura: " + this.nroFactura 
+			return "\n\n\nNº Factura: " + this.nroFactura
 					+ "\nNombrePaciente: " + this.paciente.getNombre() + " " + this.paciente.getApellido() 
 					+ "\nFecha: " + this.fechaEgreso 
 					+ "\n\nConsultas Medicas:\n " + this.ArmaConsultas() 
