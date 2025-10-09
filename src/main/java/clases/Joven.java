@@ -22,8 +22,8 @@ public class Joven extends Paciente {
      * @param rangoEtario Rango etario del paciente
      */
 	
-	public Joven(String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad, String rangoEtario) {
-		super(nombre, apellido, dni, calle, numero, telefono, ciudad, rangoEtario);
+	public Joven(String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad) {
+		super(nombre, apellido, dni, calle, numero, telefono, ciudad, "Joven");
 	}
 	
 	/**

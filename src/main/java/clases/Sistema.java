@@ -42,9 +42,7 @@ public class Sistema {
         this.lista_espera = new ArrayList<>();
         this.lista_atendidos = new ArrayList<>();
         this.medicos = new ArrayList<>();
-        cargarMedicos();
         this.habitaciones = new ArrayList<>();
-        cargarHabitaciones();
         this.historialConsultas = new HashMap<>();
         this.consultasMedicas = new HashMap<>();
         this.moduloAtiende = new ModuloAtiende();
@@ -53,6 +51,8 @@ public class Sistema {
         this.moduloRegistros = new ModuloRegistros();
         this.moduloInterna = new ModuloInterna();
         this.moduloEgresa = new ModuloEgresa();
+        cargarMedicos();
+        cargarHabitaciones();
     }
 
     public Sala getSala() {
@@ -266,5 +266,16 @@ public class Sistema {
             throw new PacienteNoRegistradoException("El paciente no esta registrado en el sistema, no puede egresar.", p);
         }
     }
+    public void registrarConsultaMedico(Paciente p,Interfaz_Medico m){
+        this.moduloRegistros.registrarConsultaMedico(p,m,this.consultasMedicas);
+    }
 
+    public void registrarConsultaPaciente(Paciente p,Interfaz_Medico m){
+        this.moduloRegistros.registrarConsultaPaciente(p,m,historialConsultas);
+    }
+
+    public void addMedico(Interfaz_Medico m){
+        this.medicos.add(m);
+        this.moduloRegistros.addMedico(m, this.consultasMedicas);
+    }
 }

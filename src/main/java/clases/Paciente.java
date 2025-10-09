@@ -30,7 +30,7 @@ public abstract class Paciente extends Persona implements IPacientesComparables 
      * @param rangoEtario Rango etario del paciente
      */
 
-    public Paciente(String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad, String rangoEtario) {
+    public Paciente(String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad, String  rangoEtario) {
         super(nombre, apellido, dni, calle, numero, telefono, ciudad);
         this.rangoEtario = rangoEtario;
         this.numHistoriaClinica = ++contadorPacientes;
