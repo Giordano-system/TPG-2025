@@ -30,7 +30,7 @@ public class ModuloEgresa {
 
     public Facturacion egresaPaciente(Paciente p, ArrayList<ConsultasHistoricas> consultasMedicas ,ArrayList<Paciente> lista_atendidos, int dias) throws PacienteNoAtendidoException {
         if (!lista_atendidos.contains(p)) {
-            throw new PacienteNoAtendidoException("El paciente no ha sido atentido: ", p.getNombre(), p.getApellido(), p.getDni());
+            throw new PacienteNoAtendidoException("El paciente no ha sido atentido: ", p);
         } else {
             lista_atendidos.remove(p);
             Facturacion factura = new Facturacion(p, consultasMedicas ,dias);
@@ -53,7 +53,7 @@ public class ModuloEgresa {
 
     public Facturacion egresaPaciente(Paciente p, ArrayList<ConsultasHistoricas> consultasMedicas ,ArrayList<Paciente> lista_atendidos) throws PacienteNoAtendidoException {
         if (!lista_atendidos.contains(p)) {
-            throw new PacienteNoAtendidoException("El paciente no ha sido atentido: ", p.getNombre(), p.getApellido(), p.getDni() );
+            throw new PacienteNoAtendidoException("El paciente no ha sido atentido: ", p);
         } else {
             lista_atendidos.remove(p);
             return new Facturacion(p, consultasMedicas);

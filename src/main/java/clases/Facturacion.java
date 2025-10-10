@@ -66,7 +66,7 @@ public class Facturacion {
         return aux;
 	}
 
-/*
+/**
  * To string de la factura.
  * Diferencia con o sin internacion, invoca la impresion de las consultas.
  */
@@ -82,14 +82,14 @@ public class Facturacion {
 					+ "\nFechaEgreso: " + this.fechaEgreso 
 					+ "\nCantidad de Dias: " + this.cantDias 
 					+ "\nHabitacion Tipo: " + this.habitacionOcupada.getTipo()
-					+ "     Costo: $" + this.costoInternacion
+					+ "     Costo: $" + Math.round(this.costoInternacion * 100.0) / 100.0
 					+ "\n\nConsultas Medicas:\n " + this.ArmaConsultas()
-					+ "\n\n             Total: $" + this.total; 
+					+ "\n\n             Total: $" + Math.round(this.total * 100.0) / 100.0; 
 		else
 			return "\n\n\nNº Factura: " + this.nroFactura
 					+ "\nNombrePaciente: " + this.paciente.getNombre() + " " + this.paciente.getApellido() 
 					+ "\nFecha: " + this.fechaEgreso 
 					+ "\n\nConsultas Medicas:\n " + this.ArmaConsultas() 
-					+ "\n\n             Total: $" + this.total;
+					+ "\n\n             Total: $" + Math.round(this.total * 100.0) / 100.0;
 	}
 }

@@ -21,7 +21,6 @@ public class ModuloInterna {
     public void internaPaciente(Paciente p, Habitacion h){
         p.setHabitacionInternacion(h);
         h.ocupar();
-
     }
 
 }

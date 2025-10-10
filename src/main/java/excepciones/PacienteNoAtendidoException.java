@@ -1,28 +1,16 @@
 package excepciones;
 
+import clases.Paciente;
+
 public class PacienteNoAtendidoException extends Exception {
-    private String nombre;
-    private String apellido;
-    private String dni;
+    private Paciente p;
 
-    public PacienteNoAtendidoException(String message, String nombre, String apellido, String dni) {
+    public PacienteNoAtendidoException(String message, Paciente p) {
         super(message);
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.dni = dni;
+        this.p = p;
     }
 
-    public String getNombre() {
-        return nombre;
+    public Paciente getPaciente() {
+        return p;
     }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public String getDni() {
-        return dni;
-    }
-
-
 }

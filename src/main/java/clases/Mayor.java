@@ -34,7 +34,7 @@ public class Mayor extends Paciente {
      */
 	@Override
 	public boolean comparoPaciente(Paciente p) {
-		return p.comparoNinos();
+		return p.comparoMayores();
 	}
 
 	/**

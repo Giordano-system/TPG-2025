@@ -162,10 +162,11 @@ public class Sistema {
      * <b>Pre:</b> p es una instancia de paciente no nula.
      * @param p Paciente que ingresa al sistema.
      * <b>Post:</b> El paciente p es ingresado en la sala si hay espacio, o tiene prioridad, de otra manera se ira a el patio.
+     * @throws PacienteNoRegistradoException 
      */
 
-    public void ingresaPaciente(Paciente p){
-        this.moduloIngresa.ingresaPaciente(this.sala, this.patio, p);
+    public void ingresaPaciente(Paciente p) throws PacienteNoRegistradoException{
+        this.moduloIngresa.ingresaPaciente(this.lista_espera, this.sala, this.patio, p);
     }
 
     /**
@@ -191,9 +192,9 @@ public class Sistema {
      * @throws LugarNoDisponibleException Si no hay habitaciones disponibles del tipo solicitado.
      */
 
-    public void internaPaciente(Paciente p, String tipoHabitacion) throws LugarNoDisponibleException, NoExisteHabitacionException, PacienteNoRegistradoException {
-        if (!(this.lista_atendidos.contains(p) || this.lista_espera.contains(p))){
-            throw new PacienteNoRegistradoException("El paciente no ha sido registrado, no puede ser internado.",p);
+    public void internaPaciente(Paciente p, String tipoHabitacion) throws LugarNoDisponibleException, NoExisteHabitacionException, PacienteNoAtendidoException {
+        if (!this.lista_atendidos.contains(p)){
+            throw new PacienteNoAtendidoException("El paciente no ha sido atendido, no puede ser internado.",p);
         } else {
             if (!tipoHabitacion.equals("Sala de Internacion") && !tipoHabitacion.equals("Habitacion Compartida") && !tipoHabitacion.equals("Habitacion Privada")){
                 throw new NoExisteHabitacionException("No existe la habitacion del tipo: ", tipoHabitacion);

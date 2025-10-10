@@ -39,7 +39,7 @@ public class ConsultasHistoricas {
 
     @Override
     public String toString() {
-        return ("\nNombre Medico: " + nombreMedico + " Especialidad: " + especialidad + " Subtotal: " + honorarioTotal);
+        return ("\nNombre Medico: " + nombreMedico + " | Especialidad: " + especialidad + " | Subtotal: $" + Math.round(honorarioTotal * 100.0) / 100.0);
     }
 
 }
