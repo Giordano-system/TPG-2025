@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class Facturacion {
 
-	private static int contFacturas;
+	private static int contFacturas=0;
 	private int nroFactura;
 	private Paciente paciente;
     private Habitacion habitacionOcupada;
@@ -32,7 +32,7 @@ public class Facturacion {
 	public Facturacion(Paciente paciente, ArrayList<ConsultasHistoricas> consultasMedicas) {
         this.cantDias=0;
         this.paciente = paciente;
-		this.nroFactura+= contFacturas+1;
+		this.nroFactura+= ++contFacturas;
 		this.consultasMedicas= consultasMedicas;
 		for (int i=0; i<this.consultasMedicas.size(); i++) {
 			this.total+=this.consultasMedicas.get(i).getHonorarioTotal();
@@ -79,7 +79,7 @@ public class Facturacion {
 					+ "\nNombrePaciente: " + this.paciente.getNombre() 
 					+ " " + this.paciente.getApellido() 
 					+ "\nFecha Ingreso: " + this.fechaEgreso.minusDays(cantDias) 
-					+ "\nFechaEgreso: " + this.fechaEgreso 
+					+ "\nFecha Egreso: " + this.fechaEgreso
 					+ "\nCantidad de Dias: " + this.cantDias 
 					+ "\nHabitacion Tipo: " + this.habitacionOcupada.getTipo()
 					+ "     Costo: $" + Math.round(this.costoInternacion * 100.0) / 100.0
