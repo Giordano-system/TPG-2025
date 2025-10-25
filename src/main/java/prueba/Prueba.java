@@ -1,8 +1,9 @@
 package prueba;
 
-import clases.*;
-import interfaces.*;
-import excepciones.*;
+import Modelo.Datos.clases.*;
+import Modelo.Datos.interfaces.*;
+
+
 
 import java.time.LocalDate;
 
