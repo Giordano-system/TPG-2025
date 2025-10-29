@@ -2,6 +2,7 @@ package prueba;
 
 import Modelo.Datos.clases.*;
 import Modelo.Datos.interfaces.*;
+import Modelo.ModeloExcepciones.*;
 
 
 
