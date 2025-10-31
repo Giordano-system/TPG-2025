@@ -23,6 +23,7 @@ public abstract class Paciente extends Persona implements IPacientesComparables 
      * <b>PRE:</b> nombre!=null, nombre!="", apellido!=null, apellido!="", dni!=null, dni!="", calle!=null, calle!="", telefono!=null, telefono!="", ciudad!=null, ciudad!="", rangoEtario!=null, rangoEtario!="", numero>0, historiaClinica>0
      * @param nombre Nombre del paciente
      * @param apellido Apellido del paciente
+     * @param dni Documento del paciente.
      * @param calle Nombre de la calle (Domicilio)
      * @param numero Numero de la calle (Domicilio)
      * @param telefono Numero de telefono del paciente.
