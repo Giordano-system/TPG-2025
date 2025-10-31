@@ -21,4 +21,9 @@ public interface StateAmbulancia {
      * Solicita y posteriormente traslada a taller para mantenimiento.
      */
     public void SolicitudMantenimiento();
+    
+    /**
+     * Retorna el nombre del estado actual de la ambulancia.
+     */
+    public String getNombre();
 }

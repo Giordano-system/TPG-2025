@@ -29,4 +29,9 @@ public class StateDisponible implements StateAmbulancia {
     public void SolicitudMantenimiento() {
         this.ambulancia.setEstado(new StateEnTaller(this.ambulancia));
     }
+    
+    @Override
+	public String getNombre() {
+		return "Disponible";
+	}
 }

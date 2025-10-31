@@ -2,7 +2,6 @@ package Modelo.Datos.clases;
 
 import Modelo.Datos.interfaces.StateAmbulancia;
 import Modelo.ModeloExcepciones.AccionImposibleExeption;
-import com.sun.corba.se.spi.orbutil.fsm.State;
 
 public class StateRegresandoTaller implements StateAmbulancia {
 
@@ -31,4 +30,9 @@ public class StateRegresandoTaller implements StateAmbulancia {
     public void SolicitudMantenimiento() throws AccionImposibleExeption {
         throw new AccionImposibleExeption("Imposible realizar mantenimiento, regresando de mantenimiento");
     }
+    
+    @Override
+	public String getNombre() {
+		return "Regresando del taller";
+	}
 }

@@ -38,44 +38,25 @@ public class ThreadAsociado extends Thread {
 			int solicitud = random.nextInt(2) + 1;
 			
 			if(solicitud == 1)
-				ambulancia.solicitaAtencionADomicilio();
+				try {
+					ambulancia.solicitaAtencionADomicilio();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			else
-				ambulancia.solicitaTrasladoAClinica();
+				try {
+					ambulancia.solicitaTrasladoAClinica();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			
-			Thread.sleep(5000);	
+			int tiempoDeEspera = random.nextInt(5000) + 1000;
+			try {
+				Thread.sleep(tiempoDeEspera);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}	
 		}
 		
-	}
-	
-	/**
-	 * METODO DE LA AMBULANCIA
-	 * Método sincronizado que se encarga de recibir las solicitudes (de tipo Atención a Domicilio) de los asociados,
-	 * en caso de no poder satisfacerlas se queda en espera hasta que la ambulancia esté disponible (se duermen los hilos).
-	 * <b>POST:</b> El estado de la ambulancia habrá cambiado.
-	 */
-	public synchronized void solicitaAtencionADomicilio() {
-		System.out.println("Un asociado esta esperando ser atendido a domicilio."); // Luego cambiarlo por el patron Observer
-		
-		while(this.estado.getNombre() != "Disponible" && this.estado.getNombre() != "Regresando sin paciente")
-			wait();
-		
-		this.atencionADomicilio();
-		System.out.println("Un asociado esta siendo atendido a domicilio.");
-	}
-	
-	/**
-	 * METODO DE LA AMBULANCIA
-	 * Método sincronizado que se encarga de recibir las solicitudes (de tipo Traslado a Clínica) de los asociados,
-	 * en caso de no poder satisfacerlas se queda en espera hasta que la ambulancia esté disponible (se duermen los hilos).
-	 * <b>POST:</b> El estado de la ambulancia habrá cambiado.
-	 */
-	public synchronized void solicitaTrasladoAClinica() {
-		System.out.println("Un asociado esta esperando ser traslado a la clinica."); // Luego cambiarlo por el patron Observer
-		
-		while(this.estado.getNombre() != "Disponible" && this.estado.getNombre() != "Regresando sin paciente")
-			wait();
-		
-		this.trasladoAClinica();
-		System.out.println("Un asociado esta siendo trasladado a la clinica.");
 	}
 }

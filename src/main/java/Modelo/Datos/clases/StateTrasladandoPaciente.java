@@ -30,4 +30,9 @@ public class StateTrasladandoPaciente implements StateAmbulancia{
     public void SolicitudMantenimiento() throws AccionImposibleExeption {
         throw new AccionImposibleExeption("Imposible realizar mantenimiento, realizando traslado");
     }
+    
+    @Override
+	public String getNombre() {
+		return "Trasladando paciente";
+	}
 }

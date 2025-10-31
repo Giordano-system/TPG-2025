@@ -30,4 +30,9 @@ public class StateEnTaller implements StateAmbulancia {
     public void SolicitudMantenimiento() {
         this.ambulancia.setEstado(new StateRegresandoTaller(this.ambulancia));
     }
+    
+    @Override
+	public String getNombre() {
+		return "En taller";
+	}
 }

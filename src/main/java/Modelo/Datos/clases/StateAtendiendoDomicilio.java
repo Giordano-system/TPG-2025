@@ -30,4 +30,9 @@ public class StateAtendiendoDomicilio implements StateAmbulancia {
     public void SolicitudMantenimiento() throws AccionImposibleExeption {
         throw new AccionImposibleExeption("Imposible realizar mantenimiento, atendiendo a domicilio");
     }
+
+	@Override
+	public String getNombre() {
+		return "Atendiendo a domicilio";
+	}
 }

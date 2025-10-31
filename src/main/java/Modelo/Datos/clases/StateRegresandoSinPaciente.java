@@ -30,4 +30,9 @@ public class StateRegresandoSinPaciente implements StateAmbulancia {
     public void SolicitudMantenimiento() throws AccionImposibleExeption {
         throw new AccionImposibleExeption("Imposible realizar mantenimiento, regresando sin paciente");
     }
+    
+    @Override
+	public String getNombre() {
+		return "Regresando sin paciente";
+	}
 }

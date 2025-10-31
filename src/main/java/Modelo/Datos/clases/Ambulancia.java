@@ -17,4 +17,53 @@ public class Ambulancia {
     public void setEstado(StateAmbulancia estado) {
         this.estado = estado;
     }
+    
+    public void SolicitudAtencionDomicilio() {
+    	this.estado.SolicitudAtencionDomicilio();
+    }
+
+    public void SolicitudTrasladoClinica() {
+    	this.estado.SolicitudTrasladoClinica();
+    }
+
+    public void RetornoAutomaticoClinica() {
+    	this.estado.RetornoAutomaticoClinica();
+    	notifyAll();
+    }
+
+    public void SolicitudMantenimiento() {
+    	this.estado.SolicitudMantenimiento();
+    }
+    
+    /**
+	 * Método sincronizado que se encarga de recibir las solicitudes (de tipo Atención a Domicilio) de los asociados,
+	 * en caso de no poder satisfacerlas se queda en espera hasta que la ambulancia esté disponible (se duermen los hilos).
+	 * <b>POST:</b> El estado de la ambulancia habrá cambiado.
+     * @throws InterruptedException 
+	 */
+	public synchronized void solicitaAtencionADomicilio() throws InterruptedException {
+		System.out.println("Un asociado esta esperando ser atendido a domicilio."); // Luego cambiarlo por el patron Observer
+		
+		while(this.estado.getNombre() != "Disponible" && this.estado.getNombre() != "Regresando sin paciente")
+			wait();
+		
+		this.SolicitudAtencionDomicilio();
+		System.out.println("Un asociado esta siendo atendido a domicilio.");
+	}
+	
+	/**
+	 * Método sincronizado que se encarga de recibir las solicitudes (de tipo Traslado a Clínica) de los asociados,
+	 * en caso de no poder satisfacerlas se queda en espera hasta que la ambulancia esté disponible (se duermen los hilos).
+	 * <b>POST:</b> El estado de la ambulancia habrá cambiado.
+	 * @throws InterruptedException 
+	 */
+	public synchronized void solicitaTrasladoAClinica() throws InterruptedException {
+		System.out.println("Un asociado esta esperando ser traslado a la clinica."); // Luego cambiarlo por el patron Observer
+		
+		while(this.estado.getNombre() != "Disponible" && this.estado.getNombre() != "Regresando sin paciente")
+			wait();
+		
+		this.SolicitudTrasladoClinica();
+		System.out.println("Un asociado esta siendo trasladado a la clinica.");
+	}
 }
