@@ -1,5 +1,7 @@
 package Modelo.Datos.clases;
 
+import java.util.Random;
+
 import Modelo.Datos.interfaces.StateAmbulancia;
 
 public class Ambulancia {
@@ -49,6 +51,14 @@ public class Ambulancia {
 		
 		this.SolicitudAtencionDomicilio();
 		System.out.println("Un asociado esta siendo atendido a domicilio.");
+		
+		Random random = new Random();
+		int tiempoDeEspera = random.nextInt(5000) + 1000;
+		
+		Thread.sleep(tiempoDeEspera);
+		
+		System.out.println("La ambulancia retorna a la clinica.");
+		this.RetornoAutomaticoClinica();
 	}
 	
 	/**
@@ -65,5 +75,13 @@ public class Ambulancia {
 		
 		this.SolicitudTrasladoClinica();
 		System.out.println("Un asociado esta siendo trasladado a la clinica.");
+		
+		Random random = new Random();
+		int tiempoDeEspera = random.nextInt(5000) + 1000;
+		
+		Thread.sleep(tiempoDeEspera);
+		
+		System.out.println("La ambulancia retorna a la clinica.");
+		this.RetornoAutomaticoClinica();
 	}
 }
