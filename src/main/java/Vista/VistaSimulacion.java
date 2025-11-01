@@ -94,6 +94,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 	private JPanel panel_19;
 	private JButton btnReiniciarDB;
     private ActionListener actionListener;
+    private boolean simulacionIniciada = true ;
 
 	/**
 	 * Launch the application.
@@ -428,9 +429,9 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 	        valido = false;
 	    }
 
-	    btnAlta.setEnabled(valido);
-	    btnBaja.setEnabled(valido);
-	    btnModificacion.setEnabled(valido);
+	    btnAlta.setEnabled(valido && !simulacionIniciada);
+	    btnBaja.setEnabled(valido && !simulacionIniciada);
+	    btnModificacion.setEnabled(valido && !simulacionIniciada);
 	}
 	
 	private void validarCamposSimulacion() {
@@ -502,6 +503,11 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
     public void setearListas(ArrayList<Asociado> lista) {
 
     }
+
+    public void finalizarSimulacion() {
+        this.simulacionIniciada = false;
+    }
+
 
 
 

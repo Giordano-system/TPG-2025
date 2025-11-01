@@ -22,4 +22,7 @@ public interface IVista {
     void setearListas(ArrayList<Asociado> lista);
 
     void setVisible(boolean b);
+
+    void finalizarSimulacion();
+
 }
