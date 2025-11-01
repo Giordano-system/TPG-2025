@@ -1,6 +1,6 @@
-package Modelo.Datos.clases;
+package Modelo.Negocio.clases;
 
-import Modelo.Datos.interfaces.StateAmbulancia;
+import Modelo.Negocio.interfaces.StateAmbulancia;
 
 public class StateDisponible implements StateAmbulancia {
 

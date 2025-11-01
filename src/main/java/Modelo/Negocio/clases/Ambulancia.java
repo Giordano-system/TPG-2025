@@ -1,15 +1,26 @@
-package Modelo.Datos.clases;
+package Modelo.Negocio.clases;
 
 import java.util.Random;
 
-import Modelo.Datos.interfaces.StateAmbulancia;
+import Modelo.Negocio.interfaces.StateAmbulancia;
+import Patrones.Observer.IObservador;
+import Patrones.Observer.Observable;
 
-public class Ambulancia {
+public class Ambulancia extends Observable {
 
     private StateAmbulancia estado;
+    private boolean change = false;
 
     public Ambulancia() {
+        super();
         this.estado = new StateDisponible(this);
+    }
+
+    @Override
+    public void notificarObservadores() {
+        for (IObservador observador : this.observadores) {
+            observador.update(this, "CambioEstadoAmbulancia");
+        }
     }
 
     public StateAmbulancia getEstado() {
@@ -18,6 +29,20 @@ public class Ambulancia {
 
     public void setEstado(StateAmbulancia estado) {
         this.estado = estado;
+        setChanged();
+        notificarObservadores();
+    }
+
+    public void setChanged() {
+    	this.change = true;
+    }
+
+    public void clearChanged() {
+    	this.change = false;
+    }
+
+    public boolean getChange() {
+        return this.change;
     }
     
     public void SolicitudAtencionDomicilio() {

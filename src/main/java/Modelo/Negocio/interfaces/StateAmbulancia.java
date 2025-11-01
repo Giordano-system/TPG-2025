@@ -1,4 +1,4 @@
-package Modelo.Datos.interfaces;
+package Modelo.Negocio.interfaces;
 
 public interface StateAmbulancia {
 

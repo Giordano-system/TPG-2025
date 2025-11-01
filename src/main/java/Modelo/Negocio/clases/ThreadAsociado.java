@@ -1,4 +1,4 @@
-package Modelo.Datos.clases;
+package Modelo.Negocio.clases;
 
 import java.util.Random;
 

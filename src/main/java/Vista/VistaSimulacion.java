@@ -1,5 +1,7 @@
 package Vista;
 
+import Modelo.Negocio.clases.Asociado;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -29,9 +31,10 @@ import javax.swing.border.EtchedBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.CardLayout;
+import java.util.ArrayList;
 import javax.swing.SpringLayout;
 
-public class VistaSimulacion extends JFrame implements DocumentListener, ActionListener {
+public class VistaSimulacion extends JFrame implements DocumentListener, IVista {
 
 	private static final long serialVersionUID = 1L;
 	private JTabbedPane pestana; 
@@ -90,6 +93,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, ActionL
 	private JPanel panel_18;
 	private JPanel panel_19;
 	private JButton btnReiniciarDB;
+    private ActionListener actionListener;
 
 	/**
 	 * Launch the application.
@@ -139,32 +143,53 @@ public class VistaSimulacion extends JFrame implements DocumentListener, ActionL
 		this.panelInfoAsoc.setBorder(new TitledBorder(null, "Informacion Asociado", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		this.panel_7.add(this.panelInfoAsoc);
 
-		this.panelInfoAsoc.add(new JLabel("Nombre"));
+		JLabel label = new JLabel("Nombre");
+		label.setFont(new Font("Arial", Font.BOLD, 11));
+		this.panelInfoAsoc.add(label);
 		this.textFieldNombre = new JTextField(10);
+		this.textFieldNombre.setFont(new Font("Arial", Font.PLAIN, 11));
 		this.panelInfoAsoc.add(this.textFieldNombre);
 
-		this.panelInfoAsoc.add(new JLabel("Apellido"));
+		JLabel label_1 = new JLabel("Apellido");
+		label_1.setFont(new Font("Arial", Font.BOLD, 11));
+		this.panelInfoAsoc.add(label_1);
 		this.textFieldApellido = new JTextField(10);
+		this.textFieldApellido.setFont(new Font("Arial", Font.PLAIN, 11));
 		this.panelInfoAsoc.add(this.textFieldApellido);
 
-		this.panelInfoAsoc.add(new JLabel("DNI"));
+		JLabel label_2 = new JLabel("DNI");
+		label_2.setFont(new Font("Arial", Font.BOLD, 11));
+		this.panelInfoAsoc.add(label_2);
 		this.textFieldDNI = new JTextField(10);
+		this.textFieldDNI.setFont(new Font("Arial", Font.PLAIN, 11));
 		this.panelInfoAsoc.add(this.textFieldDNI);
 
-		this.panelInfoAsoc.add(new JLabel("Calle"));
+		JLabel label_3 = new JLabel("Calle");
+		label_3.setFont(new Font("Arial", Font.BOLD, 11));
+		this.panelInfoAsoc.add(label_3);
 		this.textFieldCalle = new JTextField(10);
+		this.textFieldCalle.setFont(new Font("Arial", Font.PLAIN, 11));
 		this.panelInfoAsoc.add(this.textFieldCalle);
 
-		this.panelInfoAsoc.add(new JLabel("Número"));
+		JLabel label_4 = new JLabel("Número");
+		label_4.setFont(new Font("Arial", Font.BOLD, 11));
+		this.panelInfoAsoc.add(label_4);
 		this.textFieldNumero = new JTextField(10);
+		this.textFieldNumero.setFont(new Font("Arial", Font.PLAIN, 11));
 		this.panelInfoAsoc.add(this.textFieldNumero);
 
-		this.panelInfoAsoc.add(new JLabel("Teléfono"));
+		JLabel label_5 = new JLabel("Teléfono");
+		label_5.setFont(new Font("Arial", Font.BOLD, 11));
+		this.panelInfoAsoc.add(label_5);
 		this.textFieldTelefono = new JTextField(10);
+		this.textFieldTelefono.setFont(new Font("Arial", Font.PLAIN, 11));
 		this.panelInfoAsoc.add(this.textFieldTelefono);
 
-		this.panelInfoAsoc.add(new JLabel("Ciudad"));
+		JLabel label_6 = new JLabel("Ciudad");
+		label_6.setFont(new Font("Arial", Font.BOLD, 11));
+		this.panelInfoAsoc.add(label_6);
 		this.textFieldCiudad = new JTextField(10);
+		this.textFieldCiudad.setFont(new Font("Arial", Font.PLAIN, 11));
 		this.panelInfoAsoc.add(this.textFieldCiudad);
 		
 		this.panelABM = new JPanel();
@@ -180,6 +205,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, ActionL
 		this.panel_8.add(this.panel_10);
 		
 		this.btnAlta = new JButton("Alta de Asociado");
+		this.btnAlta.setFont(new Font("Arial", Font.BOLD, 13));
 		this.btnAlta.setEnabled(false);
 		this.btnAlta.setBackground(new Color(128, 255, 128));
 		this.panel_10.add(this.btnAlta);
@@ -188,6 +214,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, ActionL
 		this.panel_8.add(this.panel_11);
 		
 		this.btnBaja = new JButton("Baja de Asociado");
+		this.btnBaja.setFont(new Font("Arial", Font.BOLD, 13));
 		this.btnBaja.setEnabled(false);
 		this.btnBaja.setBackground(new Color(255, 128, 128));
 		this.panel_11.add(this.btnBaja);
@@ -196,6 +223,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, ActionL
 		this.panel_8.add(this.panel_12);
 		
 		this.btnModificacion = new JButton("Modificacion de Asociado");
+		this.btnModificacion.setFont(new Font("Arial", Font.BOLD, 13));
 		this.btnModificacion.setEnabled(false);
 		this.btnModificacion.setBackground(new Color(255, 255, 128));
 		this.panel_12.add(this.btnModificacion);
@@ -210,6 +238,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, ActionL
 		this.panelInfoSim.setLayout(new BorderLayout(0, 0));
 		
 		this.textAsociados = new JTextArea();
+		this.textAsociados.setFont(new Font("Arial", Font.PLAIN, 11));
 		this.textAsociados.setEditable(false);
 		this.panelInfoSim.add(this.textAsociados);
 		
@@ -226,12 +255,14 @@ public class VistaSimulacion extends JFrame implements DocumentListener, ActionL
 		this.panelNumAsociados.add(this.panel_13);
 		
 		this.lblNroAsociados = new JLabel("Nº de Asociados");
+		this.lblNroAsociados.setFont(new Font("Arial", Font.BOLD, 11));
 		this.panel_13.add(this.lblNroAsociados);
 		
 		this.panel_9 = new JPanel();
 		this.panelNumAsociados.add(this.panel_9);
 		
 		this.textFieldNumAsociados = new JTextField();
+		this.textFieldNumAsociados.setFont(new Font("Arial", Font.PLAIN, 11));
 		this.panel_9.add(this.textFieldNumAsociados);
 		this.textFieldNumAsociados.setColumns(10);
 		
@@ -239,12 +270,14 @@ public class VistaSimulacion extends JFrame implements DocumentListener, ActionL
 		this.panelNumAsociados.add(this.panel_14);
 		
 		this.lblNroSolicitudes = new JLabel("Nº de Solicitudes");
+		this.lblNroSolicitudes.setFont(new Font("Arial", Font.BOLD, 11));
 		this.panel_14.add(this.lblNroSolicitudes);
 		
 		this.panel_15 = new JPanel();
 		this.panelNumAsociados.add(this.panel_15);
 		
 		this.textFieldNumSolicitudes = new JTextField();
+		this.textFieldNumSolicitudes.setFont(new Font("Arial", Font.PLAIN, 11));
 		this.panel_15.add(this.textFieldNumSolicitudes);
 		this.textFieldNumSolicitudes.setColumns(10);
 		
@@ -261,6 +294,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, ActionL
 		this.panel_16.add(this.panel_18);
 		
 		this.btnReiniciarSim = new JButton("Reiniciar");
+		this.btnReiniciarSim.setFont(new Font("Arial", Font.BOLD, 11));
 		this.btnReiniciarSim.setEnabled(false);
 		this.btnReiniciarSim.setBackground(new Color(255, 128, 128));
 		this.panel_18.add(this.btnReiniciarSim);
@@ -269,6 +303,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, ActionL
 		this.panel_16.add(this.panel_19);
 		
 		this.btnFinalizarSim = new JButton("Finalizar");
+		this.btnFinalizarSim.setFont(new Font("Arial", Font.PLAIN, 11));
 		this.btnFinalizarSim.setBackground(new Color(255, 128, 128));
 		this.panel_19.add(this.btnFinalizarSim);
 		
@@ -277,6 +312,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, ActionL
 		this.panelAcciones.add(this.panel_17);
 		
 		this.btnReiniciarDB = new JButton("Reiniciar BD");
+		this.btnReiniciarDB.setFont(new Font("Arial", Font.BOLD, 11));
 		this.btnReiniciarDB.setBackground(new Color(255, 0, 0));
 		this.panel_17.add(this.btnReiniciarDB);
 		
@@ -286,6 +322,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, ActionL
 		this.panelListadoAsoc.setPreferredSize(new Dimension(150,300));
 		
 		this.listAsociados = new JList();
+		this.listAsociados.setFont(new Font("Arial", Font.PLAIN, 11));
 		this.listAsociados.setBorder(null);
 		this.panelListadoAsoc.setViewportView(this.listAsociados);
 		
@@ -301,9 +338,6 @@ public class VistaSimulacion extends JFrame implements DocumentListener, ActionL
 		agregarListenerSimulacion(textFieldNumSolicitudes);
 		
 
-	}
-
-	public void actionPerformed(ActionEvent e) {
 	}
 
 	@Override
@@ -419,7 +453,56 @@ public class VistaSimulacion extends JFrame implements DocumentListener, ActionL
 	    }
 
 	    btnReiniciarSim.setEnabled(valido);
-	}	
-	
-	
+	}
+
+
+    @Override
+    public void setActionListener(ActionListener actionListener) {
+        this.actionListener = actionListener;
+        this.btnAlta.addActionListener(this.actionListener);
+        this.btnBaja.addActionListener(this.actionListener);
+        this.btnModificacion.addActionListener(this.actionListener);
+        this.btnReiniciarSim.addActionListener(this.actionListener);
+        this.btnFinalizarSim.addActionListener(this.actionListener);
+        this.btnReiniciarDB.addActionListener(this.actionListener);
+    }
+
+    @Override
+    public void actualizarCampos(Asociado asociado) {
+
+    }
+
+    @Override
+    public void limpiarCampos() {
+        this.textFieldNombre.setText("");
+        this.textFieldApellido.setText("");
+        this.textFieldDNI.setText("");
+        this.textFieldCalle.setText("");
+        this.textFieldNumero.setText("");
+        this.textFieldTelefono.setText("");
+        this.textFieldCiudad.setText("");
+    }
+
+    @Override
+    public void mensajeAsociado(String mensaje) {
+
+    }
+
+    @Override
+    public void actualizarEstadoAmb(String estado) {
+
+    }
+
+    @Override
+    public void mensajeOperario(String mensaje) {
+
+    }
+
+    @Override
+    public void setearListas(ArrayList<Asociado> lista) {
+
+    }
+
+
+
 }

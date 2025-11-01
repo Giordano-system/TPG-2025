@@ -1,7 +1,7 @@
-package Modelo.Datos.clases;
+package Modelo.Negocio.clases;
 
-import Modelo.Datos.interfaces.StateAmbulancia;
-import Modelo.ModeloExcepciones.AccionImposibleExeption;
+import Modelo.Negocio.interfaces.StateAmbulancia;
+import Modelo.ModeloExcepciones.AccionImposibleException;
 
 public class StateRegresandoSinPaciente implements StateAmbulancia {
 
@@ -27,8 +27,8 @@ public class StateRegresandoSinPaciente implements StateAmbulancia {
     }
 
     @Override
-    public void SolicitudMantenimiento() throws AccionImposibleExeption {
-        throw new AccionImposibleExeption("Imposible realizar mantenimiento, regresando sin paciente");
+    public void SolicitudMantenimiento() throws AccionImposibleException {
+        throw new AccionImposibleException("Imposible realizar mantenimiento, regresando sin paciente");
     }
     
     @Override

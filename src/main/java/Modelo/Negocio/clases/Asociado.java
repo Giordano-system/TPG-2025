@@ -1,4 +1,6 @@
-package Modelo.Datos.clases;
+package Modelo.Negocio.clases;
+
+import Modelo.Datos.clases.Persona;
 
 /**
  * Clase que representa a un Asociado.
