@@ -19,7 +19,7 @@ public class Ambulancia extends Observable {
     @Override
     public void notificarObservadores() {
         for (IObservador observador : this.observadores) {
-            observador.update(this, "CambioEstadoAmbulancia");
+            observador.update(this, "Ambulancia");
         }
     }
 

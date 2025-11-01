@@ -4,35 +4,26 @@ import Modelo.Negocio.clases.Asociado;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JList;
 import java.awt.GridLayout;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.FlowLayout;
-import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.JTextArea;
 import javax.swing.border.EtchedBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.CardLayout;
 import java.util.ArrayList;
-import javax.swing.SpringLayout;
 
 public class VistaSimulacion extends JFrame implements DocumentListener, IVista {
 
@@ -41,7 +32,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 	private JPanel contentPane;
 	private JPanel PanelABM;
 	private JScrollPane panelListadoAsoc;
-	private JList listAsociados;
+	private JList<Asociado> listAsociados;
 	private JPanel panelInfoAsoc;
 	private JPanel panel;
 	private JPanel panel_1;
@@ -95,6 +86,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 	private JButton btnReiniciarDB;
     private ActionListener actionListener;
     private boolean simulacionIniciada = true ;
+    private DefaultListModel<Asociado> listModel;
 
 	/**
 	 * Launch the application.
@@ -337,7 +329,9 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 		
 		agregarListenerSimulacion(textFieldNumAsociados); 
 		agregarListenerSimulacion(textFieldNumSolicitudes);
-		
+
+        this.listAsociados.setModel(listModel);
+        agregarListenerSeleccionAsociado();
 
 	}
 
@@ -468,9 +462,42 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
         this.btnReiniciarDB.addActionListener(this.actionListener);
     }
 
+    /**
+     * Agrega un listener para la selección de un asociado en la lista.
+     * Cuando se selecciona un asociado, se actualizan los campos de información con los datos del asociado seleccionado.
+     */
+
+    private void agregarListenerSeleccionAsociado() {
+        listAsociados.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                Asociado seleccionado = listAsociados.getSelectedValue();
+                if (seleccionado != null) {
+                    actualizarCampos(seleccionado);
+                }
+            }
+        });
+    }
+
+    /**
+     * <b>Pre:</b> El asociado proporcionado no debe ser nulo.
+     * Actualiza los campos de información con los datos del asociado proporcionado.
+     * @param asociado El asociado cuyos datos se utilizarán para actualizar los campos.
+     * <b>Post:</b> Los campos de información habrán sido actualizados con los datos del asociado.
+     */
+
     @Override
     public void actualizarCampos(Asociado asociado) {
-
+        if (asociado != null) {
+            this.textFieldNombre.setText(asociado.getNombre());
+            this.textFieldApellido.setText(asociado.getApellido());
+            this.textFieldDNI.setText(asociado.getDni());
+            this.textFieldCalle.setText(asociado.getDomicilio().getCalle());
+            this.textFieldNumero.setText(String.valueOf(asociado.getDomicilio().getNumero()));
+            this.textFieldTelefono.setText(asociado.getTelefono());
+            this.textFieldCiudad.setText(asociado.getCiudad());
+        } else {
+            assert (false) : "El asociado proporcionado es nulo.";
+        }
     }
 
     @Override
@@ -501,7 +528,8 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 
     @Override
     public void setearListas(ArrayList<Asociado> lista) {
-
+        listModel.clear();
+        listModel.addAll(lista);
     }
 
     public void finalizarSimulacion() {

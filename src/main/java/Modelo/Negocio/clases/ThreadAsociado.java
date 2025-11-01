@@ -15,20 +15,26 @@ public class ThreadAsociado extends Thread {
 	
 	/**
      * Constructor de la clase ThreadAsociado.
-     * <b>PRE:</b> asociado != null, ambulancia != null
+     * <b>Pre:</b> asociado != null, ambulancia != null
      * @param asociado Asociado que solicita la ambulancia.
      * @param ambulancia Ambulancia de la clínica, recurso compartido por los asociados.
+     * <b>Post:</b> Se crea la instancia del ThreadAsociado con el asociado y la ambulancia pasada como parametro.
      */
 	public ThreadAsociado(Asociado asociado, Ambulancia ambulancia) {
 		super();
-		this.asociado = asociado;
-		this.ambulancia = ambulancia;
+		if (asociado == null || ambulancia == null) {
+            assert (false) : "El asociado o la ambulancia no pueden ser nulos.";
+        }
+        this.asociado = asociado;
+        this.ambulancia = ambulancia;
 	}
 
 	/**
 	 * Método run para el hilo cuando arranque su ejecución con start()
-	 * Se encargará de ejecutar todas las solicitudes que tenga el asociado. 
+	 * Se encargará de ejecutar todas las solicitudes que tenga el asociado.
+     * <b>Post: El asociado termino de realizar todas sus peticiones a la ambulancia</b>
 	 */
+
 	@Override
 	public void run() {
 		int n = this.asociado.getSolicitudes();
