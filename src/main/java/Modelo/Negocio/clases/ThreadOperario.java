@@ -1,6 +1,6 @@
 package Modelo.Negocio.clases;
 
-public class ThreadOperario implements Runnable {
+public class ThreadOperario extends Thread {
 
     private Operario operario;
     private Ambulancia ambulancia;

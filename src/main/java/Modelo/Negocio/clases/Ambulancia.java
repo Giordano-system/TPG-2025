@@ -69,20 +69,16 @@ public class Ambulancia extends Observable {
      * @throws InterruptedException 
 	 */
 	public synchronized void solicitaAtencionADomicilio() throws InterruptedException {
-		System.out.println("Un asociado esta esperando ser atendido a domicilio."); // Luego cambiarlo por el patron Observer
-		
 		while(this.estado.getNombre() != "Disponible" && this.estado.getNombre() != "Regresando sin paciente")
 			wait();
 		
 		this.SolicitudAtencionDomicilio();
-		System.out.println("Un asociado esta siendo atendido a domicilio.");
 		
 		Random random = new Random();
 		int tiempoDeEspera = random.nextInt(5000) + 1000;
 		
 		Thread.sleep(tiempoDeEspera);
 		
-		System.out.println("La ambulancia retorna a la clinica.");
 		this.RetornoAutomaticoClinica();
 	}
 	
@@ -94,20 +90,16 @@ public class Ambulancia extends Observable {
 	 */
 
 	public synchronized void solicitaTrasladoAClinica() throws InterruptedException {
-		System.out.println("Un asociado esta esperando ser traslado a la clinica."); // Luego cambiarlo por el patron Observer
-		
 		while(this.estado.getNombre() != "Disponible" && this.estado.getNombre() != "Regresando sin paciente")
 			wait();
 		
 		this.SolicitudTrasladoClinica();
-		System.out.println("Un asociado esta siendo trasladado a la clinica.");
 		
 		Random random = new Random();
 		int tiempoDeEspera = random.nextInt(5000) + 1000;
 		
 		Thread.sleep(tiempoDeEspera);
 		
-		System.out.println("La ambulancia retorna a la clinica.");
 		this.RetornoAutomaticoClinica();
 	}
 
@@ -118,7 +110,7 @@ public class Ambulancia extends Observable {
      */
 
     public synchronized void IrATaller() throws InterruptedException {
-        while (this.estado.getNombre().equals("Disponible")) {
+        while (this.estado.getNombre() != "Disponible") {
             wait();
         }
         this.SolicitudMantenimiento();

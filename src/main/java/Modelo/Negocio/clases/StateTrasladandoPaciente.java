@@ -23,7 +23,7 @@ public class StateTrasladandoPaciente implements StateAmbulancia{
 
     @Override
     public void RetornoAutomaticoClinica() {
-        //NADA
+    	this.ambulancia.setEstado(new StateDisponible(this.ambulancia)); // Ver que hay que hacer en este caso
     }
 
     @Override
