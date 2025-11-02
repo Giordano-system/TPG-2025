@@ -32,4 +32,8 @@ public class Asociado extends Persona {
 	public int getSolicitudes() {
 		return solicitudes;
 	}
+
+    public String toString() {
+    	return "Asociado: " + nombre;
+    }
 }

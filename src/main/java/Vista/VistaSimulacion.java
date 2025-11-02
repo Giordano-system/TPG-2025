@@ -86,7 +86,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 	private JButton btnReiniciarDB;
     private ActionListener actionListener;
     private boolean simulacionIniciada = true ;
-    private DefaultListModel<Asociado> listModel;
+    private DefaultListModel<Asociado> listModel = new DefaultListModel<>();
 
 	/**
 	 * Launch the application.
@@ -332,7 +332,8 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 
         this.listAsociados.setModel(listModel);
         agregarListenerSeleccionAsociado();
-
+        Asociado p1 = new Asociado("Kuka", "Lopez", "12345678", "Calle Falsa", 123, "1234567", "Ciudad", 5);
+        listModel.addElement(p1);
 	}
 
 	@Override
