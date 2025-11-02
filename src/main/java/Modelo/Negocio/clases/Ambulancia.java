@@ -92,6 +92,7 @@ public class Ambulancia extends Observable {
 	 * <b>POST:</b> El estado de la ambulancia habrá cambiado.
 	 * @throws InterruptedException 
 	 */
+
 	public synchronized void solicitaTrasladoAClinica() throws InterruptedException {
 		System.out.println("Un asociado esta esperando ser traslado a la clinica."); // Luego cambiarlo por el patron Observer
 		
@@ -109,4 +110,28 @@ public class Ambulancia extends Observable {
 		System.out.println("La ambulancia retorna a la clinica.");
 		this.RetornoAutomaticoClinica();
 	}
+
+    /**
+     * Metodo sincronizado que se encarga de llevar la ambulancia al taller de mantenimiento
+     * en caso de no poder satisfacer la accion se queda en espera hasta que la ambulancia este disponible (se duermen los hilos).
+     * <b>Post:</b> El estado de la ambulancia habra cambiado.
+     */
+
+    public synchronized void IrATaller() throws InterruptedException {
+        while (this.estado.getNombre().equals("Disponible")) {
+            wait();
+        }
+        this.SolicitudMantenimiento();
+    }
+
+    public synchronized void finalizarMantenimiento() {
+        this.SolicitudMantenimiento();
+        try{
+            Thread.sleep(3000); // Simula el tiempo que tarda en volver a la clinica desde el taller
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
+    	this.RetornoAutomaticoClinica();
+    }
+
 }
