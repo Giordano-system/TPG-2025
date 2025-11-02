@@ -514,7 +514,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 
     @Override
     public void mensajeAsociado(String mensaje) {
-
+        textAsociados.append(mensaje + "\n");
     }
 
     @Override

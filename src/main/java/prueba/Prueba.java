@@ -1,11 +1,16 @@
 package prueba;
 
+import Controlador.Controlador;
 import Modelo.Datos.clases.*;
 import Modelo.Datos.interfaces.*;
 import Modelo.ModeloExcepciones.*;
 import Modelo.Negocio.clases.*;
+import Vista.IVista;
+import Vista.VistaConfig;
+import Vista.VistaSimulacion;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  * Clase de prueba para el sistema de gestión de médicos.
@@ -114,22 +119,15 @@ public class Prueba
 		} catch (Exception e) {
 			System.out.println("Error: " + e.getMessage());
 		}*/
-    	
-    	/* // PRUEBA DE CONCURRENCIA 
-    	Ambulancia ambulancia = new Ambulancia();
-    	Asociado a1 = new Asociado("Agustin", "Proia", "46112190", "Mendoza", 912, "2231234567", "Tokio", 3);
-    	Asociado a2 = new Asociado("Pedro", "Gutierrez", "46112190", "Mendoza", 912, "2231234567", "Tokio", 3);
-    	Asociado a3 = new Asociado("Lionel", "Messi", "46112190", "Mendoza", 912, "2231234567", "Tokio", 3);
-    	ThreadAsociado ta1 = new ThreadAsociado(a1, ambulancia);
-    	ThreadAsociado ta2 = new ThreadAsociado(a2, ambulancia);
-    	ThreadAsociado ta3 = new ThreadAsociado(a3, ambulancia);
-    	Operario op = new Operario("Hernan", "Gomez", "46112190", "Mendoza", 912, "2231234567", "Tokio");
-    	ThreadOperario to = new ThreadOperario(op, ambulancia);
-    	
-    	ta1.start();
-    	ta2.start();
-    	ta3.start();
-    	to.start();	*/
+
+
+
+
+
+
+
+
+
     }
 
 }

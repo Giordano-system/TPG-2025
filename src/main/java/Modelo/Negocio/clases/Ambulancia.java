@@ -3,10 +3,11 @@ package Modelo.Negocio.clases;
 import java.util.Random;
 
 import Modelo.Negocio.interfaces.StateAmbulancia;
+import Patrones.Observer.IObservable;
 import Patrones.Observer.IObservador;
 import Patrones.Observer.Observable;
 
-public class Ambulancia extends Observable {
+public class Ambulancia extends Observable implements IObservable {
 
     private StateAmbulancia estado;
     private boolean change = false;
@@ -17,7 +18,7 @@ public class Ambulancia extends Observable {
     }
 
     @Override
-    public void notificarObservadores() {
+    public void notificarObservadores(String evento) {
         for (IObservador observador : this.observadores) {
             observador.update(this, "Ambulancia");
         }
@@ -30,7 +31,7 @@ public class Ambulancia extends Observable {
     public void setEstado(StateAmbulancia estado) {
         this.estado = estado;
         setChanged();
-        notificarObservadores();
+        notificarObservadores("Cambio de estado");
     }
 
     public void setChanged() {

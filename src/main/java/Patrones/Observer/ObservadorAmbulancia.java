@@ -17,15 +17,20 @@ public class ObservadorAmbulancia implements IObservador {
      * <b>Post: Se crea la instancia del ObservadorAmbulancia que va a observar a la ambulancia pasada como parametro</b>
      */
 
-    public ObservadorAmbulancia(Ambulancia ambulancia, Controlador controladorVista) {
-        if (ambulancia == null || controladorVista == null) {
-            assert (false) : "La ambulancia o el controlador no pueden ser nulos.";
+    public ObservadorAmbulancia(Controlador controladorVista) {
+        if (controladorVista == null) {
+            assert (false) : "El controlador no pueden ser nulos.";
         }
-        this.ambulancia = ambulancia;
-        this.ambulancia.agregarObservador(this);
         controladorVista = controladorVista;
     }
 
+    public void setAmbulancia(Ambulancia ambulancia) {
+        if (ambulancia == null) {
+            assert (false) : "La ambulancia no puede ser nula.";
+        }
+        this.ambulancia = ambulancia;
+        ambulancia.agregarObservador(this);
+    }
 
     /**
      * <b>Pre: El objeto observado debe ser la ambulancia asociada a este observador.</b>
@@ -37,7 +42,7 @@ public class ObservadorAmbulancia implements IObservador {
      */
 
     @Override
-    public void update(Observable obj, String evento) {
+    public void update(IObservable obj, String evento) {
         if (obj != this.ambulancia) {
             assert (false) : "El objeto observado no es la ambulancia asociada a este observador.";
         }

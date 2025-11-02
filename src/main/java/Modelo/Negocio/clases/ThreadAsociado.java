@@ -46,12 +46,14 @@ public class ThreadAsociado extends Thread {
 			if(solicitud == 1)
 				try {
 					ambulancia.solicitaAtencionADomicilio();
+                    asociado.notificarObservadores("El asociado: " + asociado.getNombre() + " ha solicitado atención a domicilio.");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			else
 				try {
 					ambulancia.solicitaTrasladoAClinica();
+                    asociado.notificarObservadores("El asociado: " + asociado.getNombre() + " ha solicitado traslado a clínica.");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

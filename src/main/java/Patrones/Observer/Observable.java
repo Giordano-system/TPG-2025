@@ -22,11 +22,11 @@ public abstract class Observable {
         return this.observadores.size();
     }
 
-    public void deleterObservadores() {
+    public void deleteObservadores() {
         this.observadores.clear();
     }
 
 
-    public abstract void notificarObservadores() ;
+    public abstract void notificarObservadores(String evento) ;
 
 }
