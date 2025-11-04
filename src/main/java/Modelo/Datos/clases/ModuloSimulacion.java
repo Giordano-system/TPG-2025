@@ -73,6 +73,12 @@ public class ModuloSimulacion {
             assert (false) : "Los asociados o el operario no están correctamente inicializados.";
         }
 
+        try{
+            Thread.sleep(5000); // Para que al menos aparezca 5 segundos en disponible
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
         // Convertir cada asociado en un hilo y tambien el operario
         Thread[] hilos = new Thread[asociados.size() + 1];
         for (int i = 0; i < asociados.size(); i++) {
