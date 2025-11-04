@@ -24,6 +24,10 @@ public class Controlador implements ActionListener {
         vistaConfig.setVisible(true);
     }
 
+    public void actualizarAreaOperario(String mensaje) {
+        vistaSim.mensajeOperarioAmbulancia(mensaje);
+    }
+
     public void actualizarEstadoAmbulancia(String estado) {
         vistaSim.actualizarEstadoAmb(estado);
     }
@@ -45,7 +49,11 @@ public class Controlador implements ActionListener {
             vistaConfig.setVisible(false);
             vistaSim.setVisible(true);
             vistaSim.setearListas(modelo.getAsociados());
+            vistaSim.setearOpeario(modelo.getOperario());
             modelo.iniciarSimulacion();
+        } else if (command.equals("Finalizar")) {
+            vistaSim.finalizarSimulacion();
+            modelo.finalizarSimulacion();
         }
     }
 

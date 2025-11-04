@@ -1,12 +1,9 @@
 package Modelo.Datos.clases;
 
-import Controlador.Controlador;
 import Modelo.Negocio.clases.*;
 import Patrones.Observer.ObservadorAmbulancia;
 import Patrones.Observer.ObservadorAsociados;
-import Vista.IVista;
-import Vista.VistaConfig;
-import Vista.VistaSimulacion;
+import Patrones.Observer.ObservadorOperario;
 
 import java.util.ArrayList;
 
@@ -15,11 +12,13 @@ public class ModuloSimulacion {
     Ambulancia ambulancia;
     ArrayList<Asociado> asociados;
     Operario operario;
+    private ArrayList<Thread> threads; //Guardo las referencias a los hilos para poder gestionarlos si es necesario
 
     public ModuloSimulacion() {
         this.ambulancia = new Ambulancia();
         this.operario = new Operario("Valentino", "Giordano", "46632600", "España", 1459, "5964847", "Tokio");
         this.asociados = new ArrayList<>();
+        this.threads = new ArrayList<>();
         cargaInformal();
     }
 
@@ -31,11 +30,12 @@ public class ModuloSimulacion {
      * <b>Post:</b> Los observadores habrán sido agregados correctamente. Por su mismo lado, los observados habrán incorporado a sus listas de observadores a los observadores correspondientes.
      */
 
-    public void agregarObservadores(ObservadorAsociados observadorAsociados, ObservadorAmbulancia observadorAmbulancia) {
-        if (observadorAsociados == null || observadorAmbulancia == null) {
+    public void agregarObservadores(ObservadorAsociados observadorAsociados, ObservadorAmbulancia observadorAmbulancia, ObservadorOperario observadorOperario) {
+        if (observadorAsociados == null || observadorAmbulancia == null || observadorOperario == null) {
             assert (false) : "Los observadores no pueden ser nulos.";
         }
-        ambulancia.agregarObservador(observadorAmbulancia);
+        observadorOperario.agregarOperario(operario);
+        observadorAmbulancia.setAmbulancia(ambulancia);
         for (Asociado asociado : asociados) {
             observadorAsociados.agregarAsociado(asociado);
         }
@@ -80,10 +80,13 @@ public class ModuloSimulacion {
         }
         hilos[asociados.size()] = new ThreadOperario(operario, ambulancia);
 
+
+
         System.out.println("Iniciando Simulacion");
 
         // Iniciar todos los hilos
         for (Thread hilo : hilos) {
+            this.threads.add(hilo);
             hilo.start();
         }
 
@@ -92,5 +95,34 @@ public class ModuloSimulacion {
         // Actualizar la vista para indicar que la simulación ha finalizado
 
     }
+
+    /**
+     * Devuelve la ambulancia.
+     * @return
+     * <b>Post:</b> Se devuelve la ambulancia asociada al modulo de simulacion.
+     */
+    public Ambulancia getAmbulancia() {
+        return ambulancia;
+    }
+
+    /**
+     * Devuelve el operario.
+     * @return
+     * <b>Post:</b> Se devuelve el operario asociado al modulo de simulacion.
+     */
+
+    public Operario getOperario() {
+        return operario;
+    }
+
+    public void finalizarSimulacion() {
+        for (Thread thread : threads) {
+            if (thread.isAlive()) {
+                thread.interrupt();
+            }
+        }
+    }
+
+
 
 }

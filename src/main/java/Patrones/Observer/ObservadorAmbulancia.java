@@ -13,15 +13,15 @@ public class ObservadorAmbulancia implements IObservador {
     /**
      * <b>Pre: Ambulancia es una instancia de ambulancia y el Controlador tambien.</b>
      * Constructor de la clase ObservadorAmbulancia.
-     * @param controladorVista Controlador de la vista para actualizar el estado de la ambulancia.
+     * @param controlador Controlador de la vista para actualizar el estado de la ambulancia.
      * <b>Post: Se crea la instancia del ObservadorAmbulancia que va a observar a la ambulancia pasada como parametro</b>
      */
 
-    public ObservadorAmbulancia(Controlador controladorVista) {
+    public ObservadorAmbulancia(Controlador controlador) {
         if (controladorVista == null) {
             assert (false) : "El controlador no pueden ser nulos.";
         }
-        controladorVista = controladorVista;
+        controladorVista = controlador;
     }
 
     public void setAmbulancia(Ambulancia ambulancia) {

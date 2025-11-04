@@ -5,6 +5,7 @@ import Modelo.Datos.clases.ModuloSimulacion;
 import Modelo.Negocio.clases.*;
 import Patrones.Observer.ObservadorAmbulancia;
 import Patrones.Observer.ObservadorAsociados;
+import Patrones.Observer.ObservadorOperario;
 import Vista.IVista;
 import Vista.VistaConfig;
 import Vista.VistaSimulacion;
@@ -21,7 +22,8 @@ public class PruebaVistas {
         Controlador controlador = new Controlador(vista, vistaConfig, moduloSimulacion);
         ObservadorAmbulancia observadorAmbulancia = new ObservadorAmbulancia(controlador);
         ObservadorAsociados observadorAsociados = new ObservadorAsociados(controlador);
-        moduloSimulacion.agregarObservadores(observadorAsociados, observadorAmbulancia);
+        ObservadorOperario observadorOperario = new ObservadorOperario(controlador);
+        moduloSimulacion.agregarObservadores(observadorAsociados, observadorAmbulancia, observadorOperario);
 
     }
 

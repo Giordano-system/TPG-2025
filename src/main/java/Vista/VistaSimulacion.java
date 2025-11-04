@@ -1,6 +1,7 @@
 package Vista;
 
 import Modelo.Negocio.clases.Asociado;
+import Modelo.Negocio.clases.Operario;
 
 import java.awt.EventQueue;
 
@@ -10,6 +11,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -87,6 +89,26 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
     private ActionListener actionListener;
     private boolean simulacionIniciada = true ;
     private DefaultListModel<Asociado> listModel = new DefaultListModel<>();
+    private JPanel panelInformacion;
+    private JPanel panelAmbOp;
+    private JScrollPane scrollPane;
+    private JTextArea textAreaAmbulancia;
+    private JPanel panelInfoAmbulancia;
+    private JPanel panelInfoOp;
+    private JLabel lblIMG;
+    private JPanel panelEstado;
+    private JLabel lblEstado;
+    private JTextField textFieldEstado;
+    private JPanel panel_20;
+    private JPanel panelFotoOP;
+    private JPanel panelInfo;
+    private JLabel lblOperario;
+    private JLabel lblNombreOp;
+    private JTextField textNombreOp;
+    private JLabel lblApellidoOp;
+    private JTextField textFieldApellidoOp;
+    private JLabel lblDNIOp;
+    private JTextField textFieldDocOp;
 
 	/**
 	 * Launch the application.
@@ -123,7 +145,107 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
         JPanel panelAdmAmbulancia = new JPanel();
         panelAdmAmbulancia.setLayout(new BorderLayout());
         tabbedPane.addTab("Administración Ambulancia", panelAdmAmbulancia);
-		
+        
+        this.panelInformacion = new JPanel();
+        panelAdmAmbulancia.add(this.panelInformacion, BorderLayout.CENTER);
+        this.panelInformacion.setLayout(new BorderLayout(0, 0));
+        
+        this.scrollPane = new JScrollPane();
+        this.scrollPane.setViewportBorder(new TitledBorder(null, "Movimientos Ambulancia", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        this.panelInformacion.add(this.scrollPane);
+        
+        this.textAreaAmbulancia = new JTextArea();
+        this.scrollPane.setViewportView(this.textAreaAmbulancia);
+        
+        this.panelAmbOp = new JPanel();
+        panelAdmAmbulancia.add(this.panelAmbOp, BorderLayout.EAST);
+        this.panelAmbOp.setPreferredSize(new Dimension(250,100));
+        this.panelAmbOp.setLayout(new GridLayout(2, 0, 0, 0));
+        
+        this.panelInfoAmbulancia = new JPanel();
+        this.panelInfoAmbulancia.setBorder(new TitledBorder(null, "Ambulancia", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        this.panelAmbOp.add(this.panelInfoAmbulancia);
+        this.panelInfoAmbulancia.setLayout(new BorderLayout(0, 0));
+        
+        ImageIcon img = new ImageIcon(getClass().getResource("/Vista/ambulancia.jpeg")); 
+        this.lblIMG = new JLabel(img);
+        this.panelInfoAmbulancia.add(this.lblIMG, BorderLayout.CENTER);
+        
+        this.panelEstado = new JPanel();
+        this.panelInfoAmbulancia.add(this.panelEstado, BorderLayout.SOUTH);
+        this.panelEstado.setPreferredSize(new Dimension(250,30));
+        this.panelEstado.setLayout(new BorderLayout(0, 0));
+        
+        this.lblEstado = new JLabel("Estado: ");
+        this.lblEstado.setHorizontalAlignment(SwingConstants.CENTER);
+        this.lblEstado.setFont(new Font("Arial", Font.BOLD, 11));
+        this.panelEstado.add(this.lblEstado, BorderLayout.WEST);
+        
+        this.panel_20 = new JPanel();
+        this.panel_20.setBorder(new EmptyBorder(5, 5, 5, 5));
+        this.panelEstado.add(this.panel_20);
+        this.panel_20.setLayout(new BorderLayout(0, 0));
+        
+        this.textFieldEstado = new JTextField();
+        this.textFieldEstado.setEditable(false);
+        this.textFieldEstado.setFont(new Font("Arial", Font.PLAIN, 11));
+        this.panel_20.add(this.textFieldEstado);
+        this.textFieldEstado.setColumns(10);
+        
+        this.panelInfoOp = new JPanel();
+        this.panelInfoOp.setBorder(new TitledBorder(null, "Operario", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        this.panelAmbOp.add(this.panelInfoOp);
+        this.panelInfoOp.setLayout(new GridLayout(0, 2, 0, 0));
+        
+        this.panelFotoOP = new JPanel();
+        this.panelFotoOP.setBorder(new EmptyBorder(15, 0, 0, 0));
+        this.panelInfoOp.add(this.panelFotoOP);
+        
+        
+        
+        this.panelInfo = new JPanel();
+        this.panelInfo.setBorder(new EmptyBorder(20, 0, 0, 0));
+        this.panelInfoOp.add(this.panelInfo);
+        
+        this.lblNombreOp = new JLabel("Nombre");
+        this.lblNombreOp.setFont(new Font("Arial", Font.BOLD, 11));
+        this.panelInfo.add(this.lblNombreOp);
+        
+        this.textNombreOp = new JTextField();
+        this.textNombreOp.setEditable(false);
+        this.textNombreOp.setFont(new Font("Arial", Font.PLAIN, 11));
+        this.panelInfo.add(this.textNombreOp);
+        this.textNombreOp.setColumns(10);
+        
+        this.lblApellidoOp = new JLabel("Apellido");
+        this.lblApellidoOp.setFont(new Font("Arial", Font.BOLD, 11));
+        this.panelInfo.add(this.lblApellidoOp);
+        
+        this.textFieldApellidoOp = new JTextField();
+        this.textFieldApellidoOp.setEditable(false);
+        this.textFieldApellidoOp.setFont(new Font("Arial", Font.PLAIN, 11));
+        this.panelInfo.add(this.textFieldApellidoOp);
+        this.textFieldApellidoOp.setColumns(10);
+        
+        this.lblDNIOp = new JLabel("DNI");
+        this.lblDNIOp.setFont(new Font("Arial", Font.BOLD, 11));
+        this.panelInfo.add(this.lblDNIOp);
+        
+        this.textFieldDocOp = new JTextField();
+        this.textFieldDocOp.setEditable(false);
+        this.textFieldDocOp.setFont(new Font("Arial", Font.PLAIN, 11));
+        this.panelInfo.add(this.textFieldDocOp);
+        this.textFieldDocOp.setColumns(10);
+        
+        ImageIcon imgOp = new ImageIcon(getClass().getResource("/Vista/operario.png"));
+
+        //Ahora vamos a escalar la imagen para que encaje bien.
+
+        Image imgEscalada = imgOp.getImage().getScaledInstance(150, 175, Image.SCALE_SMOOTH);
+        imgOp = new ImageIcon(imgEscalada);
+        this.lblOperario = new JLabel(imgOp);
+        this.panelFotoOP.add(this.lblOperario);
+      
 		this.PanelABM = new JPanel();
 		this.contentPane.add(this.PanelABM, BorderLayout.CENTER);
 		this.PanelABM.setLayout(new GridLayout(0, 2, 0, 0));
@@ -519,13 +641,21 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 
     @Override
     public void actualizarEstadoAmb(String estado) {
-
+        this.textFieldEstado.setText(estado);
     }
 
     @Override
-    public void mensajeOperario(String mensaje) {
-
+    public void mensajeOperarioAmbulancia(String mensaje) {
+        this.textAreaAmbulancia.append(mensaje + "\n");
     }
+
+    @Override
+    public void setearOpeario(Operario operario) {
+        this.textFieldApellidoOp.setText(operario.getApellido());
+        this.textNombreOp.setText(operario.getNombre());
+        this.textFieldDocOp.setText(operario.getDni());
+    }
+
 
     @Override
     public void setearListas(ArrayList<Asociado> lista) {

@@ -1,5 +1,7 @@
 package Modelo.Negocio.clases;
 
+import java.util.Random;
+
 public class ThreadOperario extends Thread {
 
     private Operario operario;
@@ -22,19 +24,31 @@ public class ThreadOperario extends Thread {
 
     @Override
     public void run() {
-        for (int i = 0; i < 3; i++) {
-            try{
-                ambulancia.IrATaller();
-            } catch (InterruptedException e){
-                e.printStackTrace();
+
+        try {
+            Random r = new Random();
+            for (int i = 0; i < 3; i++) {
+                try {
+                    ambulancia.IrATaller();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                operario.notificarObservadores("Se ha iniciado el mantenimiento de la ambulancia. Tiempo de espera aproximado 5 segundos.");
+                try {
+                    Thread.sleep(5000); // Simula el tiempo que tarda en realizar la tarea
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+                ambulancia.finalizarMantenimiento();
+                try {
+                    Thread.sleep(r.nextInt(5000) + 2000); // Espera entre 2 y 7 segundos antes de iniciar el siguiente mantenimiento
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
             }
-            try {
-                Thread.sleep(5000); // Simula el tiempo que tarda en realizar la tarea
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-            ambulancia.finalizarMantenimiento();
+        } catch (Exception e) {
+            e.printStackTrace();
+
         }
     }
-
 }

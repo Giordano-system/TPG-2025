@@ -17,7 +17,9 @@ public interface IVista {
 
     void actualizarEstadoAmb(String estado);
 
-    void mensajeOperario(String mensaje);
+    void mensajeOperarioAmbulancia(String mensaje);
+
+    void setearOpeario(Operario operario);
 
     void setearListas(ArrayList<Asociado> lista);
 
