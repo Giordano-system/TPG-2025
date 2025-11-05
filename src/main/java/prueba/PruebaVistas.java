@@ -2,6 +2,7 @@ package prueba;
 
 import Controlador.Controlador;
 import Modelo.Datos.clases.ModuloSimulacion;
+import Modelo.Datos.clases.Sistema;
 import Modelo.Negocio.clases.*;
 import Patrones.Observer.ObservadorAmbulancia;
 import Patrones.Observer.ObservadorAsociados;
@@ -16,15 +17,10 @@ public class PruebaVistas {
 
 
     public static void main(String[] args) {
-        ModuloSimulacion moduloSimulacion = new ModuloSimulacion();
-        IVista vista = new VistaSimulacion();
+        Sistema sistema = new Sistema();
+        IVista VistaSim = new VistaSimulacion();
         VistaConfig vistaConfig = new VistaConfig();
-        Controlador controlador = new Controlador(vista, vistaConfig, moduloSimulacion);
-        ObservadorAmbulancia observadorAmbulancia = new ObservadorAmbulancia(controlador);
-        ObservadorAsociados observadorAsociados = new ObservadorAsociados(controlador);
-        ObservadorOperario observadorOperario = new ObservadorOperario(controlador);
-        moduloSimulacion.agregarObservadores(observadorAsociados, observadorAmbulancia, observadorOperario);
-
+        Controlador controlador = new Controlador(VistaSim, vistaConfig, sistema);
     }
 
 

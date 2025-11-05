@@ -72,7 +72,8 @@ public class Ambulancia extends Observable implements IObservable {
     /**
      * Método para finalizar la simulacion, notifica a todos los hilos para que terminen de ejecutarse.
      */
-    public void finalizaSimulacion() {
+
+    public synchronized void finalizaSimulacion() {
     	this.simulacion = false;
     	notifyAll();
     }
@@ -83,6 +84,7 @@ public class Ambulancia extends Observable implements IObservable {
 	 * <b>POST:</b> El estado de la ambulancia habrá cambiado.
      * @throws InterruptedException 
 	 */
+
 	public synchronized void solicitaAtencionADomicilio() throws InterruptedException {
 		while(this.estado.getNombre() != "Disponible" && this.estado.getNombre() != "Regresando sin paciente" && this.simulacion)
 			wait();
@@ -125,8 +127,8 @@ public class Ambulancia extends Observable implements IObservable {
      * Metodo sincronizado que se encarga de finalizar el mantenimiento.
      * <b>Post:</b> El estado de la ambulancia habra cambiado.
      */
+
     public synchronized void finalizarMantenimiento() {
-        if(this.simulacion)
         	this.SolicitudMantenimiento();
     }
     
@@ -134,8 +136,8 @@ public class Ambulancia extends Observable implements IObservable {
      * Metodo sincronizado que se encarga de retornar automaticamente la ambulancia a la clinica.
      * <b>Post:</b> El estado de la ambulancia habra cambiado.
      */
+
     public synchronized void solicitudRetorno() {
-    	if(this.simulacion)
-    		this.RetornoAutomaticoClinica();
+        this.RetornoAutomaticoClinica();
     }
 }

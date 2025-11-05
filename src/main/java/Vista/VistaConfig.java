@@ -147,6 +147,14 @@ public class VistaConfig extends JFrame implements DocumentListener {
         btnIniciarSim.setEnabled(valido);
     }
 
+    public int getNumAsociados() {
+        return Integer.parseInt(this.textFieldNumAso.getText().trim());
+    }
+
+    public int getNumSolicitudes() {
+        return Integer.parseInt(this.textFieldNumSolicitudes.getText().trim());
+    }
+
 
     @Override
     public void insertUpdate(DocumentEvent e) {

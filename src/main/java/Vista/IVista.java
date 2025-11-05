@@ -23,6 +23,28 @@ public interface IVista {
 
     void setearListas(ArrayList<Asociado> lista);
 
+    public int getNumAsociados();
+
+    public int getNumSolicitudes();
+
+    public String getNombreAsociado();
+
+    public String getApellidoAsociado();
+
+    public String getDNIAsociado();
+
+    public String getCalleAsociado();
+
+    public int getNumeroAsociado();
+
+    public String getCiudadAsociado();
+
+    public String getTelefonoAsociado();
+
+    public void desactivarTaller();
+
+    public void activarTaller();
+
     void setVisible(boolean b);
 
     void finalizarSimulacion();

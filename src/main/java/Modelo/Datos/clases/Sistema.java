@@ -1,9 +1,19 @@
 package Modelo.Datos.clases;
 
 
+import Controlador.Controlador;
 import Modelo.Datos.interfaces.Interfaz_Especialidad;
 import Modelo.Datos.interfaces.Interfaz_Medico;
 import Modelo.ModeloExcepciones.*;
+import Modelo.Negocio.clases.Ambulancia;
+import Modelo.Negocio.clases.Asociado;
+import Modelo.Negocio.clases.Operario;
+import Patrones.Observer.ObservadorAmbulancia;
+import Patrones.Observer.ObservadorAsociados;
+import Patrones.Observer.ObservadorOperario;
+import Vista.IVista;
+import Vista.VistaConfig;
+import Vista.VistaSimulacion;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +40,13 @@ public class Sistema {
     private final ModuloRegistra moduloRegistra;
     private final ModuloInterna moduloInterna;
     private final ModuloEgresa moduloEgresa;
+    private final ModuloSimulacion moduloSimulacion;
+    private final Ambulancia ambulancia;
+    private final ArrayList<Asociado> asociados;
+    private final Operario operario;
+    private ObservadorAmbulancia obsAmbulancia;
+    private ObservadorAsociados obsAsociados;
+    private ObservadorOperario obsOperario;
 
     /**
      * Constructor de la clase Sistema.
@@ -51,8 +68,18 @@ public class Sistema {
         this.moduloRegistros = new ModuloRegistros();
         this.moduloInterna = new ModuloInterna();
         this.moduloEgresa = new ModuloEgresa();
+        this.moduloSimulacion = new ModuloSimulacion();
+        this.ambulancia = new Ambulancia();
+        this.operario = new Operario("Valentino", "Giordano", "46632600", "España", 1459, "5964847", "Tokio");
+        this.asociados = new ArrayList<>();
         cargarMedicos();
         cargarHabitaciones();
+    }
+
+    public void crearObservadores(Controlador controlador){
+        this.obsAmbulancia = new ObservadorAmbulancia(controlador);
+        this.obsOperario = new ObservadorOperario(controlador);
+        this.obsAsociados = new ObservadorAsociados(controlador);
     }
 
     public Sala getSala() {
@@ -279,4 +306,47 @@ public class Sistema {
         this.medicos.add(m);
         this.moduloRegistros.addMedico(m, this.consultasMedicas);
     }
+
+    public ArrayList<Asociado> getAsociados() {
+        return asociados;
+    }
+
+    public Operario getOperario() {
+        return operario;
+    }
+
+    public void configurarSimulacion(int numAsSociados, int numSolicitudesPorAsociado) {
+        cargaInformal(numSolicitudesPorAsociado);
+    }
+
+    public void cargaInformal(int numSolicitudesPorAsociado) {
+        Asociado a1 = new Asociado("Agustin", "Proia", "46112190", "Mendoza", 912, "1234567", "Tokio", numSolicitudesPorAsociado);
+        Asociado a2 = new Asociado("Pedro", "Gutierrez", "46112190", "Mendoza", 912, "1234567", "Tokio", numSolicitudesPorAsociado);
+        Asociado a3 = new Asociado("Lionel", "Messi", "46112190", "Mendoza", 912, "1234567", "Tokio", numSolicitudesPorAsociado);
+
+        asociados.add(a1);
+        asociados.add(a2);
+        asociados.add(a3);
+    }
+
+    public void setObservadores(){
+        obsAmbulancia.setAmbulancia(ambulancia);
+        obsOperario.agregarOperario(operario);
+        for(Asociado a : asociados){
+            obsAsociados.agregarAsociado(a);
+        }
+    }
+
+    public void iniciarSimulacion() {
+        this.moduloSimulacion.iniciarSimulacion(asociados, operario, ambulancia);
+    }
+
+    public void mandarAMantenimiento() {
+        this.moduloSimulacion.mandarAMantenimiento(operario, ambulancia);
+    }
+
+    public void finalizarSimulacion(){
+        this.moduloSimulacion.finalizarSimulacion(ambulancia);
+    }
+
 }

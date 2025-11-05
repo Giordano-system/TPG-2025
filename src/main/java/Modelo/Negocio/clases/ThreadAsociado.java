@@ -41,22 +41,8 @@ public class ThreadAsociado extends Thread {
             Random random = new Random();
             int i=0;
             while(i<n && ambulancia.isSimulacion()) {
-                int solicitud = random.nextInt(2) + 1;
 
-                if(solicitud == 1)
-                    try {
-                        ambulancia.solicitaAtencionADomicilio();
-                        asociado.notificarObservadores("El asociado: " + asociado.getNombre() + " ha solicitado atención a domicilio.");
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                else
-                    try {
-                        ambulancia.solicitaTrasladoAClinica();
-                        asociado.notificarObservadores("El asociado: " + asociado.getNombre() + " ha solicitado traslado a clínica.");
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                int solicitud = random.nextInt(2) + 1;
 
                 int tiempoDeEspera = random.nextInt(5000) + 1000;
                 try {
@@ -64,9 +50,24 @@ public class ThreadAsociado extends Thread {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                
-                ambulancia.solicitudRetorno();
-                
+
+                if(solicitud == 1)
+                    try {
+                        ambulancia.solicitaAtencionADomicilio();
+                        if (ambulancia.isSimulacion())
+                            asociado.notificarObservadores("El asociado: " + asociado.getNombre() + " ha solicitado atención a domicilio.");
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                else
+                    try {
+                        ambulancia.solicitaTrasladoAClinica();
+                        if (ambulancia.isSimulacion())
+                            asociado.notificarObservadores("El asociado: " + asociado.getNombre() + " ha solicitado traslado a clínica.");
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
                 tiempoDeEspera = random.nextInt(5000) + 1000;
                 try {
                     Thread.sleep(tiempoDeEspera);
@@ -74,6 +75,8 @@ public class ThreadAsociado extends Thread {
                     e.printStackTrace();
                 }
                 
+                ambulancia.solicitudRetorno();
+
                 i++;
             }
         } catch (Exception e) {

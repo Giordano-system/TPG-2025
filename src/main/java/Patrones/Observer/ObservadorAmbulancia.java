@@ -47,7 +47,7 @@ public class ObservadorAmbulancia implements IObservador {
             assert (false) : "El objeto observado no es la ambulancia asociada a este observador.";
         }
         if (controladorVista != null) {
-            controladorVista.actualizarEstadoAmbulancia(ambulancia.getEstado().getNombre());
+            controladorVista.actualizarEstadoAmbulancia(ambulancia.getEstado().getNombre(), ambulancia.isSimulacion());
         }
     }
 }

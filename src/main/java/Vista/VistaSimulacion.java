@@ -109,6 +109,8 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
     private JTextField textFieldApellidoOp;
     private JLabel lblDNIOp;
     private JTextField textFieldDocOp;
+    private JButton btnMantenimiento;
+    private JPanel panel_21;
 
 	/**
 	 * Launch the application.
@@ -236,6 +238,14 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
         this.textFieldDocOp.setFont(new Font("Arial", Font.PLAIN, 11));
         this.panelInfo.add(this.textFieldDocOp);
         this.textFieldDocOp.setColumns(10);
+        
+        this.panel_21 = new JPanel();
+        this.panel_21.setBorder(new EmptyBorder(10, 0, 0, 0));
+        this.panelInfo.add(this.panel_21);
+        
+        this.btnMantenimiento = new JButton("Mantenimiento");
+        this.panel_21.add(this.btnMantenimiento);
+        this.btnMantenimiento.setFont(new Font("Arial", Font.BOLD, 11));
         
         ImageIcon imgOp = new ImageIcon(getClass().getResource("/Vista/operario.png"));
 
@@ -440,6 +450,13 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 		this.listAsociados.setFont(new Font("Arial", Font.PLAIN, 11));
 		this.listAsociados.setBorder(null);
 		this.panelListadoAsoc.setViewportView(this.listAsociados);
+
+        this.textAsociados.setLineWrap(true);
+        this.textAsociados.setWrapStyleWord(true);
+
+        this.textAreaAmbulancia.setLineWrap(true);
+        this.textAreaAmbulancia.setWrapStyleWord(true);
+        this.textAreaAmbulancia.setEditable(false);
 		
 		agregarListenerAsociados(textFieldNombre);
 		agregarListenerAsociados(textFieldApellido);
@@ -454,8 +471,6 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 
         this.listAsociados.setModel(listModel);
         agregarListenerSeleccionAsociado();
-        Asociado p1 = new Asociado("Kuka", "Lopez", "12345678", "Calle Falsa", 123, "1234567", "Ciudad", 5);
-        listModel.addElement(p1);
 	}
 
 	@Override
@@ -583,6 +598,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
         this.btnReiniciarSim.addActionListener(this.actionListener);
         this.btnFinalizarSim.addActionListener(this.actionListener);
         this.btnReiniciarDB.addActionListener(this.actionListener);
+        this.btnMantenimiento.addActionListener(this.actionListener);
     }
 
     /**
@@ -667,7 +683,50 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
         this.simulacionIniciada = false;
     }
 
+    //Getters de los campos de texto para obtener los valores ingresados por el usuario
 
+    public int getNumAsociados() {
+        return Integer.parseInt(this.textFieldNumAsociados.getText().trim());
+    }
 
+    public int getNumSolicitudes() {
+        return Integer.parseInt(this.textFieldNumSolicitudes.getText().trim());
+    }
+
+    public String getNombreAsociado() {
+        return this.textFieldNombre.getText().trim();
+    }
+
+    public String getApellidoAsociado() {
+        return this.textFieldApellido.getText().trim();
+    }
+
+    public String getDNIAsociado() {
+        return this.textFieldDNI.getText().trim();
+    }
+
+    public String getCalleAsociado() {
+        return this.textFieldCalle.getText().trim();
+    }
+
+    public int getNumeroAsociado() {
+        return Integer.parseInt(this.textFieldNumero.getText().trim());
+    }
+
+    public String getTelefonoAsociado() {
+        return this.textFieldTelefono.getText().trim();
+    }
+
+    public String getCiudadAsociado() {
+        return this.textFieldCiudad.getText().trim();
+    }
+
+    public void desactivarTaller() {
+        this.btnMantenimiento.setEnabled(false);
+    }
+
+    public void activarTaller() {
+        this.btnMantenimiento.setEnabled(true);
+    }
 
 }
