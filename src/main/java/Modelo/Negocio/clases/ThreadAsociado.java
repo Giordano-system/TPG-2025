@@ -34,14 +34,13 @@ public class ThreadAsociado extends Thread {
 	 * Se encargará de ejecutar todas las solicitudes que tenga el asociado.
      * <b>Post: El asociado termino de realizar todas sus peticiones a la ambulancia</b>
 	 */
-
 	@Override
 	public void run() {
 		try {
             int n = this.asociado.getSolicitudes();
             Random random = new Random();
-
-            for(int i=0; i<n; i++) {
+            int i=0;
+            while(i<n && ambulancia.isSimulacion()) {
                 int solicitud = random.nextInt(2) + 1;
 
                 if(solicitud == 1)
@@ -65,8 +64,18 @@ public class ThreadAsociado extends Thread {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                
+                ambulancia.solicitudRetorno();
+                
+                tiempoDeEspera = random.nextInt(5000) + 1000;
+                try {
+                    Thread.sleep(tiempoDeEspera);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                
+                i++;
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
