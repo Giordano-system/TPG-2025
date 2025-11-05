@@ -11,6 +11,8 @@ public class Ambulancia extends Observable implements IObservable {
 
     private StateAmbulancia estado;
     private boolean change = false;
+    private boolean simulacion = true;
+    
 
     public Ambulancia() {
         super();
@@ -46,7 +48,11 @@ public class Ambulancia extends Observable implements IObservable {
         return this.change;
     }
     
-    public void SolicitudAtencionDomicilio() {
+    public boolean isSimulacion() {
+		return simulacion;
+	}
+
+	public void SolicitudAtencionDomicilio() {
     	this.estado.SolicitudAtencionDomicilio();
     }
 
@@ -64,23 +70,26 @@ public class Ambulancia extends Observable implements IObservable {
     }
     
     /**
+     * Método para finalizar la simulacion, notifica a todos los hilos para que terminen de ejecutarse.
+     */
+    public void finalizaSimulacion() {
+    	this.simulacion = false;
+    	notifyAll();
+    }
+    
+    /**
 	 * Método sincronizado que se encarga de recibir las solicitudes (de tipo Atención a Domicilio) de los asociados,
 	 * en caso de no poder satisfacerlas se queda en espera hasta que la ambulancia esté disponible (se duermen los hilos).
 	 * <b>POST:</b> El estado de la ambulancia habrá cambiado.
      * @throws InterruptedException 
 	 */
 	public synchronized void solicitaAtencionADomicilio() throws InterruptedException {
-		while(this.estado.getNombre() != "Disponible" && this.estado.getNombre() != "Regresando sin paciente")
+		while(this.estado.getNombre() != "Disponible" && this.estado.getNombre() != "Regresando sin paciente" && this.simulacion)
 			wait();
 		
-		this.SolicitudAtencionDomicilio();
+		if(this.simulacion)
+			this.SolicitudAtencionDomicilio();
 		
-		Random random = new Random();
-		int tiempoDeEspera = random.nextInt(5000) + 1000;
-		
-		Thread.sleep(tiempoDeEspera);
-		
-		this.RetornoAutomaticoClinica();
 	}
 	
 	/**
@@ -91,17 +100,11 @@ public class Ambulancia extends Observable implements IObservable {
 	 */
 
 	public synchronized void solicitaTrasladoAClinica() throws InterruptedException {
-		while(this.estado.getNombre() != "Disponible" && this.estado.getNombre() != "Regresando sin paciente")
+		while(this.estado.getNombre() != "Disponible" && this.estado.getNombre() != "Regresando sin paciente"  && this.simulacion)
 			wait();
 		
-		this.SolicitudTrasladoClinica();
-		
-		Random random = new Random();
-		int tiempoDeEspera = random.nextInt(5000) + 1000;
-		
-		Thread.sleep(tiempoDeEspera);
-		
-		this.RetornoAutomaticoClinica();
+		if(this.simulacion)
+			this.SolicitudTrasladoClinica();
 	}
 
     /**
@@ -111,20 +114,28 @@ public class Ambulancia extends Observable implements IObservable {
      */
 
     public synchronized void IrATaller() throws InterruptedException {
-        while (this.estado.getNombre() != "Disponible") {
+        while (this.estado.getNombre() != "Disponible" && this.simulacion) {
             wait();
         }
-        this.SolicitudMantenimiento();
+        if(this.simulacion)
+        	this.SolicitudMantenimiento();
     }
 
+    /**
+     * Metodo sincronizado que se encarga de finalizar el mantenimiento.
+     * <b>Post:</b> El estado de la ambulancia habra cambiado.
+     */
     public synchronized void finalizarMantenimiento() {
-        this.SolicitudMantenimiento();
-        try{
-            Thread.sleep(3000); // Simula el tiempo que tarda en volver a la clinica desde el taller
-        } catch (InterruptedException e){
-            e.printStackTrace();
-        }
-    	this.RetornoAutomaticoClinica();
+        if(this.simulacion)
+        	this.SolicitudMantenimiento();
     }
-
+    
+    /**
+     * Metodo sincronizado que se encarga de retornar automaticamente la ambulancia a la clinica.
+     * <b>Post:</b> El estado de la ambulancia habra cambiado.
+     */
+    public synchronized void solicitudRetorno() {
+    	if(this.simulacion)
+    		this.RetornoAutomaticoClinica();
+    }
 }
