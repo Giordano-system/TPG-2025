@@ -22,14 +22,15 @@ public class ObservadorAsociados implements IObservador{
      * <b>Post:</b> El asociado habrá sido agregado a la lista de asociados observados.
      */
 
-    public void agregarAsociado(Asociado asociado) {
-        if (asociados.contains(asociado)) {
+    public void agregarObservado(IObservable asociado) {
+        Asociado asociadoCast = (Asociado) asociado;
+        if (asociados.contains(asociadoCast)) {
             assert (false) : "El asociado ya está en la lista de asociados observados.";
         }
-        if (asociado==null)
+        if (asociadoCast==null)
             assert (false) : "El asociado no puede ser nulo.";
-        this.asociados.add(asociado);
-        asociado.agregarObservador(this);
+        this.asociados.add(asociadoCast);
+        asociadoCast.agregarObservador(this);
     }
 
     /**
@@ -38,11 +39,13 @@ public class ObservadorAsociados implements IObservador{
      * @param asociado
      */
 
-    public void eliminarAsociado(Asociado asociado) {
-        if (!asociados.contains(asociado)) {
+    public void eliminarObservado(IObservable asociado) {
+        Asociado asociadoCast = (Asociado) asociado;
+        if (!asociados.contains(asociadoCast)) {
             assert (false) : "El asociado no está en la lista de asociados observados.";
         }
-        this.asociados.remove(asociado);
+        this.asociados.remove(asociadoCast);
+        asociadoCast.eliminarObservador(this);
     }
 
     public void eliminarTodosAsociados() {
@@ -68,5 +71,6 @@ public class ObservadorAsociados implements IObservador{
             controlador.actualizarVistaAsociado(evento);
         }
     }
+
 
 }

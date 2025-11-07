@@ -7,7 +7,6 @@ import Modelo.ModeloExcepciones.*;
 import Modelo.Negocio.clases.Ambulancia;
 import Modelo.Negocio.clases.Asociado;
 import Modelo.Negocio.clases.Operario;
-import Modelo.Negocio.clases.StateDisponible;
 import Patrones.Observer.ObservadorAmbulancia;
 import Patrones.Observer.ObservadorAsociados;
 import Patrones.Observer.ObservadorOperario;
@@ -86,6 +85,11 @@ public class Sistema {
         cargarHabitaciones();
     }
 
+    /**
+     * Método para bajar los asociados desde la base de datos.
+     * <b>Post:</b> La lista de asociados del sistema es actualizada con los datos de la base de datos.
+     */
+
     public void bajarAsociados(){
         try{
             conexionDB.inicializacion();
@@ -101,7 +105,16 @@ public class Sistema {
         }
     }
 
+    /**
+     * <b>Pre:</b> controlador no es nulo.
+     * Método para crear los observadores del sistema.
+     * <b>Post:</b> Los observadores del sistema son creados y asociados al controlador proporcionado.
+     */
+
     public void crearObservadores(Controlador controlador){
+        if (controlador == null) {
+            assert (false) : "El controlador no puede ser nulo.";
+        }
         this.obsAmbulancia = new ObservadorAmbulancia(controlador);
         this.obsOperario = new ObservadorOperario(controlador);
         this.obsAsociados = new ObservadorAsociados(controlador);
@@ -332,13 +345,32 @@ public class Sistema {
         this.moduloRegistros.addMedico(m, this.consultasMedicas);
     }
 
+    /**
+     * Método para obtener la lista de asociados del sistema.
+     * @return
+     * <b>Post:</b> Se devuelve la lista de asociados del sistema.
+     */
+
     public ArrayList<Asociado> getAsociados() {
         return asociados;
     }
 
+    /**
+     * Método para obtener el operario del sistema.
+     * @return
+     * <b>Post:</b> Se devuelve el operario del sistema.
+     */
+
     public Operario getOperario() {
         return operario;
     }
+
+    /**
+     * Método para configurar la simulación del sistema.
+     * @param numAsSociados
+     * @param numSolicitudes
+     * <b>Post:</b> La simulación del sistema es configurada con el número de asociados y solicitudes proporcionados. Y se inicia la simulación.
+     */
 
     public void configurarSimulacion(int numAsSociados, int numSolicitudes) {
         ambulancia.setSimulacion();
@@ -350,23 +382,47 @@ public class Sistema {
         } else {
             asociadosSimulacion.addAll(asociados);
         }
-        ambulancia.eliminarObservadores(); // Limpio el observador de la ambulancia para evitar dobles notificaciones.
-        this.obsAsociados.eliminarTodosAsociados(); //Limpio todos los asociados a los que miraba el observer anteriormente.
-        this.obsOperario.eliminarOperario(this.operario); //Limpio el operario que miraba el observer anteriormente.
+        eliminarObservadores();
         setObservadores();
         iniciarSimulacion(asociadosSimulacion, numSolicitudes);
     }
 
+    /**
+     * Método para establecer los observadores del sistema.
+     * <b>Post:</b> Los observadores del sistema son establecidos.
+     */
 
     public void setObservadores(){
-        obsAmbulancia.setAmbulancia(ambulancia);
-        obsOperario.agregarOperario(operario);
+        obsAmbulancia.agregarObservado(ambulancia);
+        obsOperario.agregarObservado(operario);
         for(Asociado a : asociados){
-            obsAsociados.agregarAsociado(a);
+            obsAsociados.agregarObservado(a);
         }
     }
 
+    /**
+     * Método para eliminar los observadores del sistema.
+     * <b>Post:</b> Los observadores del sistema son eliminados.
+     */
+
+    public void eliminarObservadores(){
+        obsAmbulancia.eliminarObservado(ambulancia);
+        obsOperario.eliminarObservado(operario);
+        obsAsociados.eliminarTodosAsociados();
+    }
+
+    /**
+     * Método para iniciar la simulación del sistema.
+     * <b>Pre:</b> a es una lista de asociados no nula y no vacía.
+     * @param a Lista de asociados que participarán en la simulación.
+     * @param numSolicitudes Número de solicitudes que cada asociado realizará durante la simulación.
+     * <b>Post:</b> La simulación del sistema es iniciada con los asociados y el operario proporcionados.
+     */
+
     public void iniciarSimulacion( ArrayList<Asociado> a,int numSolicitudes) {
+        if (a.isEmpty()) {
+            assert (false) : "Los asociados no están correctamente inicializados.";
+        }
         this.moduloSimulacion.iniciarSimulacion(a, operario, ambulancia, numSolicitudes);
     }
 
@@ -374,6 +430,10 @@ public class Sistema {
         this.moduloSimulacion.mandarAMantenimiento(operario, ambulancia);
     }
 
+    /**
+     * Método para reiniciar la base de datos del sistema.
+     * <b>Post:</b> La base de datos es reiniciada a su estado inicial y la lista de asociados del sistema es actualizada.
+     */
     public void reiniciarBD(){
         try{
             conexionDB.reiniciarBD();
@@ -385,24 +445,50 @@ public class Sistema {
         }
     }
 
+    /**
+     * Método para dar de alta un nuevo asociado en el sistema.
+     * <b>Pre:</b> Los datos del asociado deben ser válidos y no deben existir en el sistema.
+     * @param nombre
+     * @param apellido
+     * @param dni
+     * @param calle
+     * @param numero
+     * @param telefono
+     * @param ciudad
+     * @throws AsociadoExistenteException Si el asociado ya existe en la base de datos.
+     * * <b>Post:</b> Se crea un nuevo asociado con los datos proporcionados y se añade a la base de datos y a la lista de asociados del sistema. O se lanza una excepción si el asociado ya existe.
+     */
+
     public void altaAsociado(String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad) throws AsociadoExistenteException {
         Asociado a = new Asociado(nombre, apellido, dni, calle, numero, telefono, ciudad);
         conexionDB.altaBD(a);
         this.asociados.add(a);
     }
 
-        public void bajaAsociado(String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad ) throws AsociadoInexistenteException {
-            Asociado a = new Asociado(nombre, apellido, dni, calle, numero, telefono, ciudad);
-            conexionDB.bajaBD(a);
-            this.asociados.clear();
-            try {
-                this.asociados.addAll(conexionDB.getAsociados());
-            } catch (SQLException e) {
-                System.out.println("No se pudieron bajar los asociados de la base de datos");
-                e.printStackTrace();
-            }
+    /**
+     * @param nombre
+     * @param apellido
+     * @param dni DNI del asociado a dar de baja. Debe coincidir con un asociado existente. De otra manera lanzara excepcion
+     * @param calle
+     * @param numero
+     * @param telefono
+     * @param ciudad
+     * @throws AsociadoInexistenteException Si el asociado no existe en la base de datos.
+     * <b>Post:</b> El asociado con el DNI proporcionado es eliminado de la base de datos y de la lista de asociados del sistema. O se lanza una excepción si el asociado no existe.
+     */
 
+    public void bajaAsociado(String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad ) throws AsociadoInexistenteException {
+        Asociado a = new Asociado(nombre, apellido, dni, calle, numero, telefono, ciudad);
+        conexionDB.bajaBD(a);
+        this.asociados.clear();
+        try {
+            this.asociados.addAll(conexionDB.getAsociados());
+        } catch (SQLException e) {
+            System.out.println("No se pudieron bajar los asociados de la base de datos");
+            e.printStackTrace();
         }
+
+    }
 
     public void finalizarSimulacion(){
         this.moduloSimulacion.finalizarSimulacion(ambulancia);

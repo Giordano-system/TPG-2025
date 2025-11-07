@@ -50,4 +50,15 @@ public class ObservadorAmbulancia implements IObservador {
             controladorVista.actualizarEstadoAmbulancia(ambulancia.getEstado().getNombre(), ambulancia.isSimulacion());
         }
     }
+
+    @Override
+    public void agregarObservado(IObservable obj) {
+        this.ambulancia = (Ambulancia) obj;
+        obj.agregarObservador(this);
+    }
+
+    @Override
+    public void eliminarObservado(IObservable obj) {
+
+    }
 }

@@ -32,14 +32,16 @@ public class ObservadorOperario implements IObservador {
      * <b>Post:</b> El operario habrá sido agregado a la lista de operarios observados.
      */
 
-    public void agregarOperario(Operario operario) {
-        if (operarios.contains(operario)) {
+    public void agregarObservado(IObservable operario)
+    {
+        Operario operarioCast = (Operario) operario;
+        if (operarios.contains(operarioCast)) {
             assert (false) : "El operario ya está en la lista de operarios observados.";
         }
         if (operario == null)
             assert (false) : "El operario no puede ser nulo.";
-        this.operarios.add(operario);
-        operario.agregarObservador(this);
+        this.operarios.add(operarioCast);
+        operarioCast.agregarObservador(this);
     }
 
     /**
@@ -48,12 +50,13 @@ public class ObservadorOperario implements IObservador {
      * <b>Post:</b> El operario habrá sido eliminado de la lista de operarios observados.
      */
 
-    public void eliminarOperario(Operario operario) {
-        if (!operarios.contains(operario)) {
+    public void eliminarObservado(IObservable operario) {
+        Operario operarioCast = (Operario) operario;
+        if (!operarios.contains(operarioCast)) {
             assert (false) : "El operario no está en la lista de operarios observados.";
         }
-        operario.eliminarObservador(this);;
-        this.operarios.remove(operario);
+        operarioCast.eliminarObservador(this);;
+        this.operarios.remove(operarioCast);
     }
 
     /**
