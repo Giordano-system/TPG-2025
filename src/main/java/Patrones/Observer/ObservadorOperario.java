@@ -52,6 +52,7 @@ public class ObservadorOperario implements IObservador {
         if (!operarios.contains(operario)) {
             assert (false) : "El operario no está en la lista de operarios observados.";
         }
+        operario.eliminarObservador(this);;
         this.operarios.remove(operario);
     }
 
