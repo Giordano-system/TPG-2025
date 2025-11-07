@@ -15,7 +15,7 @@ public class ModuloSimulacion {
     }
 
 
-    public void iniciarSimulacion(ArrayList<Asociado> asociados, Operario operario, Ambulancia ambulancia) {
+    public void iniciarSimulacion(ArrayList<Asociado> asociados, Operario operario, Ambulancia ambulancia, int solicitudesPorAsociado) {
 
         if (asociados.isEmpty() || operario == null) {
             assert (false) : "Los asociados o el operario no están correctamente inicializados.";
@@ -25,7 +25,7 @@ public class ModuloSimulacion {
         // Convertir cada asociado en un hilo y tambien el operario
         Thread[] hilos = new Thread[asociados.size()];
         for (int i = 0; i < asociados.size(); i++) {
-            hilos[i] = new ThreadAsociado(asociados.get(i), ambulancia);
+            hilos[i] = new ThreadAsociado(asociados.get(i), ambulancia, solicitudesPorAsociado);
         }
 
         System.out.println("Iniciando Simulacion");

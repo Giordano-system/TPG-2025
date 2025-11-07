@@ -28,7 +28,7 @@ public class ThreadOperario extends Thread {
 	 */
     @Override
     public void run() {
-
+        ambulancia.arrancaAtencion();
         try {
                 if (ambulancia.isSimulacion()){
                     try {
@@ -60,7 +60,7 @@ public class ThreadOperario extends Thread {
 
         } catch (Exception e) {
             e.printStackTrace();
-
         }
+        ambulancia.terminaAtencion();
     }
 }

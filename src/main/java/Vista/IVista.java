@@ -45,8 +45,14 @@ public interface IVista {
 
     public void activarTaller();
 
+    void mostrarError(String mensaje);
+
+    void limpiarTextAreas();
+
     void setVisible(boolean b);
 
     void finalizarSimulacion();
+
+    void iniciarSimulacion();
 
 }

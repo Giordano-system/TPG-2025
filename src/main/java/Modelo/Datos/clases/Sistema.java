@@ -2,19 +2,20 @@ package Modelo.Datos.clases;
 
 
 import Controlador.Controlador;
-import Modelo.Datos.interfaces.Interfaz_Especialidad;
 import Modelo.Datos.interfaces.Interfaz_Medico;
 import Modelo.ModeloExcepciones.*;
 import Modelo.Negocio.clases.Ambulancia;
 import Modelo.Negocio.clases.Asociado;
 import Modelo.Negocio.clases.Operario;
+import Modelo.Negocio.clases.StateDisponible;
 import Patrones.Observer.ObservadorAmbulancia;
 import Patrones.Observer.ObservadorAsociados;
 import Patrones.Observer.ObservadorOperario;
-import Vista.IVista;
-import Vista.VistaConfig;
-import Vista.VistaSimulacion;
+import Persistencia.clases.BaseDeDatos;
+import Persistencia.excepciones.AsociadoExistenteException;
+import Persistencia.excepciones.AsociadoInexistenteException;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.time.LocalDate;
@@ -41,6 +42,7 @@ public class Sistema {
     private final ModuloInterna moduloInterna;
     private final ModuloEgresa moduloEgresa;
     private final ModuloSimulacion moduloSimulacion;
+    private final BaseDeDatos conexionDB;
     private final Ambulancia ambulancia;
     private final ArrayList<Asociado> asociados;
     private final Operario operario;
@@ -72,8 +74,31 @@ public class Sistema {
         this.ambulancia = new Ambulancia();
         this.operario = new Operario("Valentino", "Giordano", "46632600", "España", 1459, "5964847", "Tokio");
         this.asociados = new ArrayList<>();
+        this.conexionDB = new BaseDeDatos();
+        try {
+            conexionDB.conectar();
+        } catch (SQLException e) {
+            System.out.println("No se pudo conectar a la base de datos");
+            e.printStackTrace();
+        }
+        bajarAsociados();
         cargarMedicos();
         cargarHabitaciones();
+    }
+
+    public void bajarAsociados(){
+        try{
+            conexionDB.inicializacion();
+        } catch (SQLException e){
+            System.out.println("No se pudieron bajar los asociados de la base de datos");
+            e.printStackTrace();
+        }
+        try {
+            asociados.addAll(conexionDB.getAsociados());
+        } catch (SQLException e){
+            System.out.println("No se pudieron bajar los asociados de la base de datos");
+            e.printStackTrace();
+        }
     }
 
     public void crearObservadores(Controlador controlador){
@@ -315,19 +340,23 @@ public class Sistema {
         return operario;
     }
 
-    public void configurarSimulacion(int numAsSociados, int numSolicitudesPorAsociado) {
-        cargaInformal(numSolicitudesPorAsociado);
+    public void configurarSimulacion(int numAsSociados, int numSolicitudes) {
+        ambulancia.setSimulacion();
+        ArrayList<Asociado> asociadosSimulacion = new ArrayList<>();
+        if (numAsSociados <= asociados.size()) {
+            for (int i = 0; i < numAsSociados ; i++) {
+                asociadosSimulacion.add(asociados.get(i));
+            }
+        } else {
+            asociadosSimulacion.addAll(asociados);
+        }
+        ambulancia.eliminarObservadores(); // Limpio el observador de la ambulancia para evitar dobles notificaciones.
+        this.obsAsociados.eliminarTodosAsociados(); //Limpio todos los asociados a los que miraba el observer anteriormente.
+        this.obsOperario.eliminarOperario(this.operario); //Limpio el operario que miraba el observer anteriormente.
+        setObservadores();
+        iniciarSimulacion(asociadosSimulacion, numSolicitudes);
     }
 
-    public void cargaInformal(int numSolicitudesPorAsociado) {
-        Asociado a1 = new Asociado("Agustin", "Proia", "46112190", "Mendoza", 912, "1234567", "Tokio", numSolicitudesPorAsociado);
-        Asociado a2 = new Asociado("Pedro", "Gutierrez", "46112190", "Mendoza", 912, "1234567", "Tokio", numSolicitudesPorAsociado);
-        Asociado a3 = new Asociado("Lionel", "Messi", "46112190", "Mendoza", 912, "1234567", "Tokio", numSolicitudesPorAsociado);
-
-        asociados.add(a1);
-        asociados.add(a2);
-        asociados.add(a3);
-    }
 
     public void setObservadores(){
         obsAmbulancia.setAmbulancia(ambulancia);
@@ -337,13 +366,43 @@ public class Sistema {
         }
     }
 
-    public void iniciarSimulacion() {
-        this.moduloSimulacion.iniciarSimulacion(asociados, operario, ambulancia);
+    public void iniciarSimulacion( ArrayList<Asociado> a,int numSolicitudes) {
+        this.moduloSimulacion.iniciarSimulacion(a, operario, ambulancia, numSolicitudes);
     }
 
     public void mandarAMantenimiento() {
         this.moduloSimulacion.mandarAMantenimiento(operario, ambulancia);
     }
+
+    public void reiniciarBD(){
+        try{
+            conexionDB.reiniciarBD();
+            asociados.clear();
+            bajarAsociados();
+        } catch (SQLException e){
+            System.out.println("No se pudo reiniciar la base de datos");
+            e.printStackTrace();
+        }
+    }
+
+    public void altaAsociado(String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad) throws AsociadoExistenteException {
+        Asociado a = new Asociado(nombre, apellido, dni, calle, numero, telefono, ciudad);
+        conexionDB.altaBD(a);
+        this.asociados.add(a);
+    }
+
+        public void bajaAsociado(String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad ) throws AsociadoInexistenteException {
+            Asociado a = new Asociado(nombre, apellido, dni, calle, numero, telefono, ciudad);
+            conexionDB.bajaBD(a);
+            this.asociados.clear();
+            try {
+                this.asociados.addAll(conexionDB.getAsociados());
+            } catch (SQLException e) {
+                System.out.println("No se pudieron bajar los asociados de la base de datos");
+                e.printStackTrace();
+            }
+
+        }
 
     public void finalizarSimulacion(){
         this.moduloSimulacion.finalizarSimulacion(ambulancia);

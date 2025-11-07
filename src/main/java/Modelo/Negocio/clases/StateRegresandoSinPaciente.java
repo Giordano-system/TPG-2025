@@ -27,8 +27,8 @@ public class StateRegresandoSinPaciente implements StateAmbulancia {
     }
 
     @Override
-    public void SolicitudMantenimiento() throws AccionImposibleException {
-        throw new AccionImposibleException("Imposible realizar mantenimiento, regresando sin paciente");
+    public void SolicitudMantenimiento() {
+        this.ambulancia.setEstado(new StateEnTaller(this.ambulancia));
     }
     
     @Override

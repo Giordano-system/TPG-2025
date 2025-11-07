@@ -45,6 +45,13 @@ public class ObservadorAsociados implements IObservador{
         this.asociados.remove(asociado);
     }
 
+    public void eliminarTodosAsociados() {
+        for (Asociado asociado : asociados) {
+            asociado.eliminarObservador(this);
+        }
+        asociados.clear();
+    }
+
 
     /**
      * <b>Pre: El objeto debe ser una instancia de Asociado y ser un asociado observado.</b>

@@ -440,6 +440,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 		this.btnReiniciarDB.setFont(new Font("Arial", Font.BOLD, 11));
 		this.btnReiniciarDB.setBackground(new Color(255, 0, 0));
 		this.panel_17.add(this.btnReiniciarDB);
+        this.btnReiniciarDB.setEnabled(false);
 		
 		this.panelListadoAsoc = new JScrollPane();
 		this.panelListadoAsoc.setViewportBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Lista de Asociados", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -553,7 +554,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 	        valido = false;
 	    }
 
-	    if(!telefono.matches("\\d{7}")) {
+	    if(!telefono.matches("\\d{10}")) {
 	        valido = false;
 	    }
 
@@ -585,7 +586,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 	        valido = false;
 	    }
 
-	    btnReiniciarSim.setEnabled(valido);
+	    btnReiniciarSim.setEnabled(valido && !simulacionIniciada);
 	}
 
 
@@ -681,6 +682,9 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 
     public void finalizarSimulacion() {
         this.simulacionIniciada = false;
+        this.btnMantenimiento.setEnabled(false);
+        this.btnReiniciarDB.setEnabled(true);
+        this.btnFinalizarSim.setEnabled(false);
     }
 
     //Getters de los campos de texto para obtener los valores ingresados por el usuario
@@ -727,6 +731,22 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 
     public void activarTaller() {
         this.btnMantenimiento.setEnabled(true);
+    }
+
+    public void mostrarError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void iniciarSimulacion() {
+        this.simulacionIniciada = true;
+        this.btnReiniciarDB.setEnabled(false);
+        this.btnFinalizarSim.setEnabled(true);
+        activarTaller();
+    }
+
+    public void limpiarTextAreas() {
+        this.textAsociados.setText("");
+        this.textAreaAmbulancia.setText("");
     }
 
 }

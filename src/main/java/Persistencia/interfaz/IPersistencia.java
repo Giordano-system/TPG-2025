@@ -12,7 +12,7 @@ public interface IPersistencia
 	public void conectar() throws SQLException;
 	public void desconectar() throws SQLException;
 	public void inicializacion() throws SQLException;
-	public ArrayList<Asociado> getAsociados();
+	public ArrayList<Asociado> getAsociados() throws SQLException;
 	public void altaBD(Asociado a) throws AsociadoExistenteException;
 	public void bajaBD(Asociado a) throws AsociadoInexistenteException;
 }

@@ -2,6 +2,8 @@ package Controlador;
 
 import Modelo.Datos.clases.ModuloSimulacion;
 import Modelo.Datos.clases.Sistema;
+import Persistencia.excepciones.AsociadoExistenteException;
+import Persistencia.excepciones.AsociadoInexistenteException;
 import Vista.IVista;
 import Vista.VistaConfig;
 import prueba.PruebaVistas;
@@ -37,8 +39,14 @@ public class Controlador implements ActionListener {
      */
 
     public void actualizarEstadoAmbulancia(String estado, Boolean enSimulacion) {
+        vistaSim.actualizarEstadoAmb("");
         if(estado.equals("Regresando del taller") && enSimulacion){
             vistaSim.activarTaller();
+        }
+        if (!enSimulacion){
+            System.out.println("Finalizo la simulacion");
+            estado = "Simulacion finalizada.";
+            vistaSim.finalizarSimulacion();
         }
         vistaSim.actualizarEstadoAmb(estado);
     }
@@ -68,8 +76,6 @@ public class Controlador implements ActionListener {
             vistaSim.setVisible(true);
             vistaSim.setearListas(modelo.getAsociados());
             vistaSim.setearOpeario(modelo.getOperario());
-            modelo.setObservadores();
-            modelo.iniciarSimulacion();
         } else if (command.equals("Finalizar")) {
             vistaSim.finalizarSimulacion();
             vistaSim.desactivarTaller();
@@ -77,6 +83,48 @@ public class Controlador implements ActionListener {
         } else if(command.equals("Mantenimiento")){
             vistaSim.desactivarTaller(); //Para evitar multiples hilos de mantenimiento.
             modelo.mandarAMantenimiento();
+        } else if(command.equals("Reiniciar")){
+            int numAsociados = vistaConfig.getNumAsociados();
+            int numSolicitudes = vistaConfig.getNumSolicitudes();
+            modelo.configurarSimulacion(numAsociados, numSolicitudes);
+            vistaSim.setearListas(modelo.getAsociados());
+            vistaSim.setearOpeario(modelo.getOperario());
+            vistaSim.iniciarSimulacion();
+            vistaSim.limpiarTextAreas();
+            vistaSim.limpiarCampos();
+        } else if(command.equals("Reiniciar BD")) {
+            modelo.reiniciarBD();
+            vistaSim.setearListas(modelo.getAsociados());
+        } else if(command.equals("Alta de Asociado")){
+            String nombre = vistaSim.getNombreAsociado();
+            String apellido = vistaSim.getApellidoAsociado();
+            String dni = vistaSim.getDNIAsociado();
+            String calle = vistaSim.getCalleAsociado();
+            int numero = vistaSim.getNumeroAsociado();
+            String ciudad = vistaSim.getCiudadAsociado();
+            String telefono = vistaSim.getTelefonoAsociado();
+            try {
+                modelo.altaAsociado(nombre, apellido, dni, calle, numero, telefono, ciudad);
+                vistaSim.mensajeAsociado("Asociado dado de alta correctamente.");
+                vistaSim.setearListas(modelo.getAsociados());
+            } catch (AsociadoExistenteException ex) {
+                vistaSim.mensajeAsociado("Error al dar de alta el asociado." + "El asociado con DNI: " + ex.getA().getDni() + " ya existe en la base de datos.");
+            }
+        } else if (command.equals("Baja de Asociado")) {
+            String nombre = vistaSim.getNombreAsociado();
+            String apellido = vistaSim.getApellidoAsociado();
+            String dni = vistaSim.getDNIAsociado();
+            String calle = vistaSim.getCalleAsociado();
+            int numero = vistaSim.getNumeroAsociado();
+            String ciudad = vistaSim.getCiudadAsociado();
+            String telefono = vistaSim.getTelefonoAsociado();
+            try {
+                modelo.bajaAsociado(nombre, apellido, dni, calle, numero, telefono, ciudad);
+                vistaSim.mensajeAsociado("Asociado dado de baja correctamente.");
+                vistaSim.setearListas(modelo.getAsociados());
+            } catch (AsociadoInexistenteException ex) {
+                vistaSim.mensajeAsociado("Error al dar de baja el asociado." + "El asociado con DNI: " + ex.getA().getDni() + " no existe en la base de datos.");
+            }
         }
     }
 

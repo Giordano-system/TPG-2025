@@ -13,13 +13,12 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class Asociado extends Persona implements IObservable {
-	
-	private int solicitudes;
+
     private ArrayList<IObservador> observadores ;
 
 	/**
      * Constructor de la clase Asociado.
-     * <b>PRE:</b> nombre!=null, nombre!="", apellido!=null, apellido!="", dni!=null, dni!="", calle!=null, calle!="", telefono!=null, telefono!="", ciudad!=null, ciudad!="", numero > 0, solicitudes > 0
+     * <b>PRE:</b> nombre!=null, nombre!="", apellido!=null, apellido!="", dni!=null, dni!="", calle!=null, calle!="", telefono!=null, telefono!="", ciudad!=null, ciudad!="", numero > 0.
      * @param nombre Nombre del asociado.
      * @param apellido Apellido del asociado.
      * @param dni Documento del asociado.
@@ -27,17 +26,12 @@ public class Asociado extends Persona implements IObservable {
      * @param numero Numero de la calle (Domicilio)
      * @param telefono Numero de telefono del asociado.
      * @param ciudad Ciudad del asociado.
-     * @param solicitudes Cantidad de solicitudes del asociado a la ambulancia.
      */
-	public Asociado(String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad, int solicitudes) {
+	public Asociado(String nombre, String apellido, String dni, String calle, int numero, String telefono, String ciudad) {
 		super(nombre, apellido, dni, calle, numero, telefono, ciudad);
-		this.solicitudes = solicitudes;
         this.observadores = new ArrayList<>();
 	}
 
-	public int getSolicitudes() {
-		return solicitudes;
-	}
 
     public String toString() {
     	return "Asociado: " + nombre;

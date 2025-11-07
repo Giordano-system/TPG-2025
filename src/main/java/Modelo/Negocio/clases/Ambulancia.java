@@ -12,7 +12,7 @@ public class Ambulancia extends Observable implements IObservable {
     private StateAmbulancia estado;
     private boolean change = false;
     private boolean simulacion = true;
-    
+    private int contadorAtenciones = 0;
 
     public Ambulancia() {
         super();
@@ -116,7 +116,7 @@ public class Ambulancia extends Observable implements IObservable {
      */
 
     public synchronized void IrATaller() throws InterruptedException {
-        while (this.estado.getNombre() != "Disponible" && this.simulacion) {
+        while (this.estado.getNombre() != "Disponible" && this.estado.getNombre() != "Regresando sin paciente"  && this.simulacion) {
             wait();
         }
         if(this.simulacion)
@@ -140,4 +140,25 @@ public class Ambulancia extends Observable implements IObservable {
     public synchronized void solicitudRetorno() {
         this.RetornoAutomaticoClinica();
     }
+
+    public void arrancaAtencion() {
+    	contadorAtenciones++;
+    }
+
+    public void terminaAtencion() {
+    	contadorAtenciones--;
+        if (contadorAtenciones==0){
+            this.simulacion = false;
+        }
+        notificarObservadores("Termine las atenciones");
+    }
+
+    public void setSimulacion(){
+        	this.simulacion = true;
+    }
+
+    public void eliminarObservadores(){
+        this.observadores.clear();
+    }
+
 }

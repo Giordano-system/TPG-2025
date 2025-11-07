@@ -10,23 +10,26 @@ import java.util.Random;
  */
 public class ThreadAsociado extends Thread {
 
+    private int solicitudes;
 	private Asociado asociado;
 	private Ambulancia ambulancia;
 	
 	/**
      * Constructor de la clase ThreadAsociado.
-     * <b>Pre:</b> asociado != null, ambulancia != null
+     * <b>Pre:</b> asociado != null, ambulancia != null, solicitudes => 0.
      * @param asociado Asociado que solicita la ambulancia.
      * @param ambulancia Ambulancia de la clínica, recurso compartido por los asociados.
+     * @param solicitudes Cantidad de solicitudes que realizará el asociado.
      * <b>Post:</b> Se crea la instancia del ThreadAsociado con el asociado y la ambulancia pasada como parametro.
      */
-	public ThreadAsociado(Asociado asociado, Ambulancia ambulancia) {
+	public ThreadAsociado(Asociado asociado, Ambulancia ambulancia, int solicitudes) {
 		super();
 		if (asociado == null || ambulancia == null) {
             assert (false) : "El asociado o la ambulancia no pueden ser nulos.";
         }
         this.asociado = asociado;
         this.ambulancia = ambulancia;
+        this.solicitudes = solicitudes;
 	}
 
 	/**
@@ -37,8 +40,9 @@ public class ThreadAsociado extends Thread {
 	@Override
 	public void run() {
 		try {
-            int n = this.asociado.getSolicitudes();
+            int n = solicitudes;
             Random random = new Random();
+            ambulancia.arrancaAtencion();
             int i=0;
             while(i<n && ambulancia.isSimulacion()) {
 
@@ -82,5 +86,7 @@ public class ThreadAsociado extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("ThreadAsociado finalizado");
+        ambulancia.terminaAtencion();
     }
 }
