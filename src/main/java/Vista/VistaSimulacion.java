@@ -327,6 +327,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 		this.panel_8.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		this.panel_10 = new JPanel();
+		this.panel_10.setBorder(new EmptyBorder(25, 0, 0, 0));
 		this.panel_8.add(this.panel_10);
 		
 		this.btnAlta = new JButton("Alta de Asociado");
@@ -336,6 +337,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 		this.panel_10.add(this.btnAlta);
 		
 		this.panel_11 = new JPanel();
+		this.panel_11.setBorder(new EmptyBorder(17, 0, 0, 0));
 		this.panel_8.add(this.panel_11);
 		
 		this.btnBaja = new JButton("Baja de Asociado");
@@ -345,6 +347,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 		this.panel_11.add(this.btnBaja);
 		
 		this.panel_12 = new JPanel();
+		this.panel_12.setBorder(new EmptyBorder(10, 0, 0, 0));
 		this.panel_8.add(this.panel_12);
 		
 		this.btnModificacion = new JButton("Limpiar Campos");
