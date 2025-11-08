@@ -43,27 +43,22 @@ public class Controlador implements ActionListener {
         if(estado.equals("Regresando del taller") && enSimulacion){
             vistaSim.activarTaller();
         }
+
+        vistaSim.actualizarEstadoAmb(estado);
+    }
+
+    public void finalizarSim(String estado, Boolean enSimulacion) {
         if (!enSimulacion){
             System.out.println("Finalizo la simulacion");
             estado = "Simulacion finalizada.";
             vistaSim.finalizarSimulacion();
+            vistaSim.actualizarEstadoAmb(estado);
         }
-        vistaSim.actualizarEstadoAmb(estado);
     }
 
     public void actualizarVistaAsociado(String mensaje) {
         vistaSim.mensajeAsociado(mensaje);
     }
-
-    /**
-     * <b>Post: Los hilos se van a terminar de ejecutar.</b>
-     */
-
-    public void finalizarSimulacion(){
-        vistaSim.finalizarSimulacion();
-        vistaSim.mensajeAsociado("Simulacion Finalizada con exito.");
-    }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -77,21 +72,23 @@ public class Controlador implements ActionListener {
             vistaSim.setearListas(modelo.getAsociados());
             vistaSim.setearOpeario(modelo.getOperario());
         } else if (command.equals("Finalizar")) {
-            vistaSim.finalizarSimulacion();
             vistaSim.desactivarTaller();
             modelo.finalizarSimulacion();
         } else if(command.equals("Mantenimiento")){
             vistaSim.desactivarTaller(); //Para evitar multiples hilos de mantenimiento.
             modelo.mandarAMantenimiento();
         } else if(command.equals("Reiniciar")){
-            int numAsociados = vistaConfig.getNumAsociados();
-            int numSolicitudes = vistaConfig.getNumSolicitudes();
-            modelo.configurarSimulacion(numAsociados, numSolicitudes);
-            vistaSim.setearListas(modelo.getAsociados());
-            vistaSim.setearOpeario(modelo.getOperario());
+
             vistaSim.iniciarSimulacion();
             vistaSim.limpiarTextAreas();
             vistaSim.limpiarCampos();
+            vistaSim.setearListas(modelo.getAsociados());
+            vistaSim.setearOpeario(modelo.getOperario());
+
+            int numAsociados = vistaSim.getNumAsociados();
+            int numSolicitudes = vistaSim.getNumSolicitudes();
+            modelo.configurarSimulacion(numAsociados, numSolicitudes);
+
         } else if(command.equals("Reiniciar BD")) {
             modelo.reiniciarBD();
             vistaSim.setearListas(modelo.getAsociados());
@@ -125,6 +122,8 @@ public class Controlador implements ActionListener {
             } catch (AsociadoInexistenteException ex) {
                 vistaSim.mensajeAsociado("Error al dar de baja el asociado." + "El asociado con DNI: " + ex.getA().getDni() + " no existe en la base de datos.");
             }
+        } else if(command.equals("Limpiar Campos")){
+            vistaSim.limpiarCampos();
         }
     }
 

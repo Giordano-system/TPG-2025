@@ -93,9 +93,9 @@ public class BaseDeDatos implements IPersistencia
             s.close();
         } else {
             s.execute("insert into asociados(dni, nombre, apellido, calle, numero, telefono, ciudad) \r\n"
-                    + "values ('47256279', 'Gian Luca', 'Distefano', 'Constitucion', 6150, '2235376209', 'Mar del Plata'),\r\n"
-                    + "	('46054123', 'Santiago', 'Yanosky', 'Matheu', 5102, '2236556561', 'Mar del Plata'),\r\n"
-                    + "	('45265789', 'Valentino', 'Giordano', 'San Juan', 2315, '2236851429', 'Mar del Plata'), \r\n"
+                   + "values ('47256279', 'Gian Luca', 'Distefano', 'Constitucion', 6150, '2235376209', 'Mar del Plata'),\r\n"
+                  + "	('46054123', 'Santiago', 'Yanosky', 'Matheu', 5102, '2236556561', 'Mar del Plata'),\r\n"
+                   + "	('45265789', 'Valentino', 'Giordano', 'San Juan', 2315, '2236851429', 'Mar del Plata'), \r\n"
                     + "	('47015236', 'Juan', 'Aldana', 'Ratery', 5013, '2236884563', 'Mar del Plata'), \r\n"
                     + "	('46025175', 'Agustin', 'Proia', 'Juan b Justo', 982, '2236841257', 'Mar del Plata');");
         }

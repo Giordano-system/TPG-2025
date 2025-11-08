@@ -347,7 +347,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 		this.panel_12 = new JPanel();
 		this.panel_8.add(this.panel_12);
 		
-		this.btnModificacion = new JButton("Modificacion de Asociado");
+		this.btnModificacion = new JButton("Limpiar Campos");
 		this.btnModificacion.setFont(new Font("Arial", Font.BOLD, 13));
 		this.btnModificacion.setEnabled(false);
 		this.btnModificacion.setBackground(new Color(255, 255, 128));
@@ -681,10 +681,13 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
     }
 
     public void finalizarSimulacion() {
+
         this.simulacionIniciada = false;
         this.btnMantenimiento.setEnabled(false);
         this.btnReiniciarDB.setEnabled(true);
         this.btnFinalizarSim.setEnabled(false);
+        System.out.println("Botones re-activados");
+
     }
 
     //Getters de los campos de texto para obtener los valores ingresados por el usuario
@@ -738,10 +741,14 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
     }
 
     public void iniciarSimulacion() {
+        if (!simulacionIniciada) {
+            System.out.println("Simulacion iniciada cuando no tendria que estar iniciada?.");
+        }
         this.simulacionIniciada = true;
         this.btnReiniciarDB.setEnabled(false);
         this.btnFinalizarSim.setEnabled(true);
         activarTaller();
+
     }
 
     public void limpiarTextAreas() {

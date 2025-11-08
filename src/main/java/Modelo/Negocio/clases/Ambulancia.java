@@ -22,7 +22,7 @@ public class Ambulancia extends Observable implements IObservable {
     @Override
     public void notificarObservadores(String evento) {
         for (IObservador observador : this.observadores) {
-            observador.update(this, "Ambulancia");
+            observador.update(this, evento);
         }
     }
 
@@ -75,6 +75,7 @@ public class Ambulancia extends Observable implements IObservable {
 
     public synchronized void finalizaSimulacion() {
     	this.simulacion = false;
+        notificarObservadores("Termino la simulacion");
     	notifyAll();
     }
     
@@ -149,16 +150,15 @@ public class Ambulancia extends Observable implements IObservable {
     	contadorAtenciones--;
         if (contadorAtenciones==0){
             this.simulacion = false;
+            notificarObservadores("Termino la simulacion");
         }
-        notificarObservadores("Termine las atenciones");
+
     }
 
     public void setSimulacion(){
         	this.simulacion = true;
+            contadorAtenciones = 0;
     }
 
-    public void eliminarObservadores(){
-        this.observadores.clear();
-    }
 
 }

@@ -382,6 +382,7 @@ public class Sistema {
         } else {
             asociadosSimulacion.addAll(asociados);
         }
+        System.out.println("AsociadosSimulacion: " + asociadosSimulacion);
         eliminarObservadores();
         setObservadores();
         iniciarSimulacion(asociadosSimulacion, numSolicitudes);
@@ -421,9 +422,11 @@ public class Sistema {
 
     public void iniciarSimulacion( ArrayList<Asociado> a,int numSolicitudes) {
         if (a.isEmpty()) {
-            assert (false) : "Los asociados no están correctamente inicializados.";
+            this.moduloSimulacion.finalizarSimulacion(ambulancia);
+        } else {
+            this.moduloSimulacion.iniciarSimulacion(a, operario, ambulancia, numSolicitudes);
         }
-        this.moduloSimulacion.iniciarSimulacion(a, operario, ambulancia, numSolicitudes);
+
     }
 
     public void mandarAMantenimiento() {

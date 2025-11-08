@@ -30,7 +30,7 @@ public class Operario extends Persona implements IObservable {
     }
 
     /**
-     * <b>Pre:</b> El observador no debe estar en la lista de observadores. Ni ser nulo.
+     * <b>Pre:</b> El observador no debe ser nulo.
      * Agrega un observador a la lista de observadores.
      * @param observador
      * <b>Post:</b> El observador habrá sido agregado a la lista de observadores.
@@ -38,9 +38,6 @@ public class Operario extends Persona implements IObservable {
 
     @Override
     public void agregarObservador(IObservador observador) {
-        if (observadores.contains(observador)) {
-            assert (false) : "El observador ya está en la lista de observadores.";
-        }
         if (observador == null) {
             assert (false) : "El observador no puede ser nulo.";
         }
@@ -48,7 +45,6 @@ public class Operario extends Persona implements IObservable {
     }
 
     /**
-     * <b>Pre:</b> El observador debe estar en la lista de observadores.
      * Elimina un observador de la lista de observadores.
      * @param observador
      * <b>Post:</b> El observador habrá sido eliminado de la lista de observadores.
@@ -56,9 +52,6 @@ public class Operario extends Persona implements IObservable {
 
     @Override
     public void eliminarObservador(IObservador observador) {
-        if (!observadores.contains(observador)) {
-            assert (false) : "El observador no está en la lista de observadores.";
-        }
         observadores.remove(observador);
     }
 

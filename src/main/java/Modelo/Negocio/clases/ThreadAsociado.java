@@ -72,21 +72,26 @@ public class ThreadAsociado extends Thread {
                         e.printStackTrace();
                     }
 
-                tiempoDeEspera = random.nextInt(5000) + 1000;
-                try {
-                    Thread.sleep(tiempoDeEspera);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if (ambulancia.isSimulacion()){
+                    tiempoDeEspera = random.nextInt(5000) + 1000;
+                    try {
+                        Thread.sleep(tiempoDeEspera);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
                 
                 ambulancia.solicitudRetorno();
 
                 i++;
             }
+            System.out.println("ThreadAsociado finalizado");
+            if (ambulancia.isSimulacion()){
+                ambulancia.terminaAtencion();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("ThreadAsociado finalizado");
-        ambulancia.terminaAtencion();
+
     }
 }
