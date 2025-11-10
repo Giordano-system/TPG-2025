@@ -4,10 +4,11 @@ import Controlador.Controlador;
 import Modelo.Negocio.clases.Ambulancia;
 
 import javax.swing.text.html.ObjectView;
+import java.util.ArrayList;
 
 public class ObservadorAmbulancia implements IObservador {
 
-    private Ambulancia ambulancia;
+    private ArrayList<Ambulancia> ambulancias;
     private Controlador controladorVista;
 
     /**
@@ -22,14 +23,7 @@ public class ObservadorAmbulancia implements IObservador {
             assert (false) : "El controlador no pueden ser nulos.";
         }
         controladorVista = controlador;
-    }
-
-    public void setAmbulancia(Ambulancia ambulancia) {
-        if (ambulancia == null) {
-            assert (false) : "La ambulancia no puede ser nula.";
-        }
-        this.ambulancia = ambulancia;
-        ambulancia.agregarObservador(this);
+        ambulancias = new ArrayList<>();
     }
 
     /**
@@ -43,9 +37,10 @@ public class ObservadorAmbulancia implements IObservador {
 
     @Override
     public void update(IObservable obj, String evento) {
-        if (obj != this.ambulancia) {
+        if (!ambulancias.contains(obj)) {
             assert (false) : "El objeto observado no es la ambulancia asociada a este observador.";
         }
+        Ambulancia ambulancia = (Ambulancia) obj;
         if (controladorVista != null) {
             if (evento.equals("Termino la simulacion"))
                 controladorVista.finalizarSim("Simulacion Finalizada", ambulancia.isSimulacion());
@@ -56,13 +51,14 @@ public class ObservadorAmbulancia implements IObservador {
 
     @Override
     public void agregarObservado(IObservable obj) {
-        this.ambulancia = (Ambulancia) obj;
+        Ambulancia ambulancia = (Ambulancia) obj;
+        ambulancias.add(ambulancia);
         obj.agregarObservador(this);
     }
 
     @Override
     public void eliminarObservado(IObservable obj) {
         obj.eliminarObservador(this);
-        this.ambulancia = null;
+        ambulancias.remove(obj);
     }
 }
