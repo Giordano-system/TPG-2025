@@ -73,7 +73,7 @@ public class Sistema {
         this.ambulancia = new Ambulancia();
         this.operario = new Operario("Valentino", "Giordano", "46632600", "España", 1459, "5964847", "Tokio");
         this.asociados = new ArrayList<>();
-        this.conexionDB = new BaseDeDatos();
+        this.conexionDB = BaseDeDatos.getInstance();
         try {
             conexionDB.conectar();
         } catch (SQLException e) {

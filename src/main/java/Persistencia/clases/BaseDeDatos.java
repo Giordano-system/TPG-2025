@@ -13,10 +13,17 @@ import Persistencia.interfaz.IPersistencia;
 
 public class BaseDeDatos implements IPersistencia
 {
-
+    private static BaseDeDatos instance = null;
 	private Connection con = null;
 
-	public BaseDeDatos()
+    public static BaseDeDatos getInstance(){
+        if (instance == null){
+            instance = new BaseDeDatos();
+        }
+        return instance;
+    }
+
+	private BaseDeDatos()
 	{
 	}
 
