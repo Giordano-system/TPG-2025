@@ -10,18 +10,21 @@ import prueba.PruebaVistas;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 
-public class Controlador implements ActionListener {
+public class Controlador extends WindowAdapter implements ActionListener {
     IVista vistaSim;
     VistaConfig vistaConfig;
     Sistema modelo;
 
 
     public Controlador(IVista vistaSim, VistaConfig vistaConfig, Sistema modelo) {
+        super();
         this.modelo = modelo;
         this.vistaSim = vistaSim;
         this.modelo.crearObservadores(this);
         vistaSim.setActionListener(this);
+        vistaSim.setWindowListener(this);
         this.vistaConfig = vistaConfig;
         vistaConfig.setActionListener(this);
         vistaSim.setVisible(false);
@@ -124,6 +127,22 @@ public class Controlador implements ActionListener {
             }
         } else if(command.equals("Limpiar Campos")){
             vistaSim.limpiarCampos();
+        }
+    }
+
+    @Override
+    public void windowClosing(java.awt.event.WindowEvent e) {
+        System.out.println("Controlador: Recibida orden de cierre.");
+
+        try {
+            // 1. Le pide al Modelo que cierre la conexión
+            this.modelo.cerrarConexionDB();
+
+        } catch (Exception ex) {
+            System.err.println("Error al cerrar la BD: " + ex.getMessage());
+        } finally {
+            // 2. Cierra la aplicación
+            System.exit(0);
         }
     }
 

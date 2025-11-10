@@ -25,6 +25,7 @@ import javax.swing.border.EtchedBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.CardLayout;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
 public class VistaSimulacion extends JFrame implements DocumentListener, IVista {
@@ -474,7 +475,9 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 		agregarListenerSimulacion(textFieldNumSolicitudes);
 
         this.listAsociados.setModel(listModel);
+
         agregarListenerSeleccionAsociado();
+
 	}
 
 	@Override
@@ -603,6 +606,18 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
         this.btnFinalizarSim.addActionListener(this.actionListener);
         this.btnReiniciarDB.addActionListener(this.actionListener);
         this.btnMantenimiento.addActionListener(this.actionListener);
+
+
+    }
+
+    /**
+     *
+     * Agrega un listener para el evento de cierre de la ventana.
+     * @param listener
+     */
+    public void setWindowListener(WindowListener listener) {
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(listener);
     }
 
     /**

@@ -497,4 +497,13 @@ public class Sistema {
         this.moduloSimulacion.finalizarSimulacion(ambulancia);
     }
 
+    public void cerrarConexionDB(){
+        try {
+            conexionDB.desconectar();
+        } catch (SQLException e) {
+            System.out.println("No se pudo cerrar la conexion a la base de datos");
+            e.printStackTrace();
+        }
+    }
+
 }

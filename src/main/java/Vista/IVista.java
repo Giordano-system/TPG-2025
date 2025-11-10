@@ -3,11 +3,14 @@ package Vista;
 import Modelo.Negocio.clases.*;
 
 import java.awt.event.ActionListener;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
 public interface IVista {
 
     void setActionListener (ActionListener actionListener);
+
+    void setWindowListener (WindowListener windowListener);
 
     void actualizarCampos(Asociado asociado);
 
