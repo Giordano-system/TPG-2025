@@ -35,6 +35,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 	private JPanel contentPane;
 	private JPanel PanelABM;
 	private JScrollPane panelListadoAsoc;
+	private JScrollPane panelInfoAsociados;
 	private JList<Asociado> listAsociados;
 	private JPanel panelInfoAsoc;
 	private JPanel panel;
@@ -366,10 +367,25 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 		this.panelManejoSim.add(this.panelInfoSim);
 		this.panelInfoSim.setLayout(new BorderLayout(0, 0));
 		
+		this.panelInfoAsociados = new JScrollPane();
+		this.panelInfoSim.add(this.panelInfoAsociados, BorderLayout.CENTER);
+		
+		
+        //this.scrollPane = new JScrollPane();
+        //this.scrollPane.setViewportBorder(new TitledBorder(null, "Movimientos Ambulancia", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        //this.panelInformacion.add(this.scrollPane);
+        
+        //this.textAreaAmbulancia = new JTextArea();
+        //this.scrollPane.setViewportView(this.textAreaAmbulancia);
+		
+		
 		this.textAsociados = new JTextArea();
 		this.textAsociados.setFont(new Font("Arial", Font.PLAIN, 11));
 		this.textAsociados.setEditable(false);
-		this.panelInfoSim.add(this.textAsociados);
+		this.panelInfoAsociados.setViewportView(this.textAsociados);
+		
+		
+		
 		
 		this.panelCondicionesSim = new JPanel();
 		this.panelManejoSim.add(this.panelCondicionesSim);
