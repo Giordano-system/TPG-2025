@@ -6,6 +6,14 @@ import Modelo.Negocio.clases.Ambulancia;
 import javax.swing.text.html.ObjectView;
 import java.util.ArrayList;
 
+/**
+ * Clase ObservadorAmbulancia que implementa la interfaz IObservador.
+ * Esta clase observa los cambios en el estado de una ambulancia y notifica al controlador de
+ * la vista para actualizar la interfaz de usuario en consecuencia.
+ * @author Grupo 9 - POO
+ * @version 2.0
+ */
+
 public class ObservadorAmbulancia implements IObservador {
 
     private ArrayList<Ambulancia> ambulancias;
@@ -49,15 +57,38 @@ public class ObservadorAmbulancia implements IObservador {
         }
     }
 
+    /**
+     * <b>Pre: El objeto observado debe ser una instancia de Ambulancia y no debe estar ya en la lista de ambulancias observadas.</b>
+     * Agrega una ambulancia a la lista de ambulancias observadas.
+     * @param obj
+     * <b>Post:</b> La ambulancia habrá sido agregada a la lista de ambulancias observadas.
+     */
+
     @Override
     public void agregarObservado(IObservable obj) {
+        if (obj == null) {
+            assert (false) : "El objeto observado no puede ser nulo.";
+        }
+        if (ambulancias.contains(obj)) {
+            assert (false) : "La ambulancia ya está en la lista de ambulancias observadas.";
+        }
         Ambulancia ambulancia = (Ambulancia) obj;
         ambulancias.add(ambulancia);
         obj.agregarObservador(this);
     }
 
+    /**
+     * <b>Pre: El objeto observado debe estar en la lista de ambulancias observadas</b>
+     * Elimina una ambulancia de la lista de ambulancias observadas.
+     * @param obj
+     * <b>Post:</b> La ambulancia habrá sido eliminada de la lista de ambulancias observadas.
+     */
+
     @Override
     public void eliminarObservado(IObservable obj) {
+        if (!ambulancias.contains(obj)) {
+            assert (false) : "La ambulancia no está en la lista de ambulancias observadas.";
+        }
         obj.eliminarObservador(this);
         ambulancias.remove(obj);
     }

@@ -5,6 +5,13 @@ import Modelo.Negocio.clases.Asociado;
 
 import java.util.ArrayList;
 
+/**
+ * Clase que representa un observador de asociados.
+ * Implementa la interfaz IObservador.
+ * @author Grupo 9 - POO
+ * @version 2.0
+ */
+
 public class ObservadorAsociados implements IObservador{
 
     private Controlador controlador;
@@ -37,6 +44,7 @@ public class ObservadorAsociados implements IObservador{
      * <b>Pre:</b> El asociado debe estar en la lista de asociados observados. Ademas de ser una instancia de Asociado.
      * Elimina un asociado de la lista de asociados observados.
      * @param asociado
+     * <b>Post:</b> El asociado habrá sido eliminado de la lista de asociados observados.
      */
 
     public void eliminarObservado(IObservable asociado) {
@@ -47,6 +55,11 @@ public class ObservadorAsociados implements IObservador{
         this.asociados.remove(asociadoCast);
         asociadoCast.eliminarObservador(this);
     }
+
+    /**
+     * Elimina todos los asociados de la lista de asociados observados.
+     * <b>Post:</b> La lista de asociados observados estará vacia.
+     */
 
     public void eliminarTodosAsociados() {
         for (Asociado asociado : asociados) {

@@ -6,6 +6,13 @@ import Modelo.Negocio.clases.Operario;
 
 import java.util.ArrayList;
 
+/**
+ * Clase que representa un observador de operarios.
+ * Implementa la interfaz IObservador.
+ * @author Grupo 9 - POO
+ * @version 2.0
+ */
+
 public class ObservadorOperario implements IObservador {
 
     private Controlador controlador;
