@@ -6,7 +6,7 @@ import java.util.Random;
  * Clase que representa a un Hilo de un Asociado.
  * Hereda de la clase Thread.
  * @author Grupo 9 - POO
- * @version 1.0
+ * @version 2.0
  */
 public class ThreadAsociado extends Thread {
 

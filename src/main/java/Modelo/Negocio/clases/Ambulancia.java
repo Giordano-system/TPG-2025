@@ -7,6 +7,14 @@ import Patrones.Observer.IObservable;
 import Patrones.Observer.IObservador;
 import Patrones.Observer.Observable;
 
+/**
+ * Clase que representa una ambulancia en el sistema de gestión de emergencias médicas.
+ * Implementa la interfaz IObservable para permitir la observación de cambios en su estado.
+ * Utiliza el patrón de estado para manejar diferentes estados de la ambulancia.
+ * @author Grupo 9 - POO
+ * @version 2.0
+ */
+
 public class Ambulancia extends Observable implements IObservable {
 
     private StateAmbulancia estado;
@@ -19,6 +27,12 @@ public class Ambulancia extends Observable implements IObservable {
         this.estado = new StateDisponible(this);
     }
 
+    /**
+     * Notifica a todos los observadores sobre un evento específico.
+     * @param evento
+     * <b>Post:</b> Todos los observadores habrán sido notificados del evento.
+     */
+
     @Override
     public void notificarObservadores(String evento) {
         for (IObservador observador : this.observadores) {
@@ -30,6 +44,11 @@ public class Ambulancia extends Observable implements IObservable {
         return this.estado;
     }
 
+    /**
+     * Establece el estado actual de la ambulancia.
+     * @param estado
+     * <b>Post:</b> El estado de la ambulancia habrá sido actualizado y los observadores notificados.
+     */
     public void setEstado(StateAmbulancia estado) {
         this.estado = estado;
         setChanged();

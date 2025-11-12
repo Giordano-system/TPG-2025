@@ -2,6 +2,12 @@ package Modelo.Negocio.clases;
 
 import java.util.Random;
 
+/**
+ * Hilo que representa la tarea de un operario realizando mantenimiento en una ambulancia.
+ * @author Grupo 9 - POO
+ * @version 2.0
+ */
+
 public class ThreadOperario extends Thread {
 
     private Operario operario;

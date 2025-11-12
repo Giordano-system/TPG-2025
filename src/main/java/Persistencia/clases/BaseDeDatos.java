@@ -29,7 +29,6 @@ public class BaseDeDatos implements IPersistencia
 
 	public void conectar() throws SQLException
 	{
-
 		String url = "jdbc:mysql://127.0.0.1:3306/";
 		String bd = "grupo_9";
 		String usuario = "root";
@@ -50,7 +49,6 @@ public class BaseDeDatos implements IPersistencia
                 serverCon.close();
             }
         }
-
         // 3. Ahora sí, nos conectamos a nuestra base de datos "grupo_9"
         //    (que sabemos que ya existe)
         this.con = DriverManager.getConnection(url + bd, usuario, password);

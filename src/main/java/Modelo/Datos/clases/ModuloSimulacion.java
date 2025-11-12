@@ -8,6 +8,12 @@ import Patrones.Observer.ObservadorOperario;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * Clase ModuloSimulacion que se encarga de gestionar la simulacion de la ambulancia y los asociados.
+ * @author Grupo 9 - POO
+ * @version 2.0
+ */
+
 public class ModuloSimulacion {
 
 
@@ -15,6 +21,15 @@ public class ModuloSimulacion {
     }
 
 
+    /**
+     * <b>Pre:</b> La lista de asociados y el operario deben estar correctamente inicializados.
+     * Inicia la simulacion creando un hilo por cada asociado y el operario.
+     * @param asociados
+     * @param operario
+     * @param ambulancia
+     * @param solicitudesPorAsociado
+     * <b>Post:</b> La simulacion habra comenzado con los hilos de los asociados y el operario.
+     */
     public void iniciarSimulacion(ArrayList<Asociado> asociados, Operario operario, Ambulancia ambulancia, int solicitudesPorAsociado) {
 
         if (asociados.isEmpty() || operario == null) {
@@ -52,7 +67,16 @@ public class ModuloSimulacion {
         threadOperario.start();
     }
 
+    /**
+     * <b>Pre:</b> La ambulancia debe estar correctamente inicializada.
+     * Finaliza la simulacion de la ambulancia.
+     * <b>Post:</b> La simulacion habra finalizado.
+     */
+
     public void finalizarSimulacion(Ambulancia ambulancia) {
+        if (ambulancia == null) {
+            assert (false) : "La ambulancia no está correctamente inicializada.";
+        }
         ambulancia.finalizaSimulacion();
     }
 

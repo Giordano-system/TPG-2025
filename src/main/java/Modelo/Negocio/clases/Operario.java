@@ -7,6 +7,13 @@ import Patrones.Observer.IObservador;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Clase que representa a un Operario.
+ * Hereda de la clase Persona.
+ * @author Grupo 9 - POO
+ * @version 2.0
+ */
+
 public class Operario extends Persona implements IObservable {
 
     private ArrayList<IObservador> observadores ;

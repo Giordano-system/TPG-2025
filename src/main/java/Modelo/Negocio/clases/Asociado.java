@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Clase que representa a un Asociado.
  * Hereda de la clase Persona.
  * @author Grupo 9 - POO
- * @version 1.0
+ * @version 2.0
  */
 public class Asociado extends Persona implements IObservable {
 

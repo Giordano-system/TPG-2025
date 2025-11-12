@@ -12,6 +12,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 
+/**
+ * Controlador de la aplicacion. Se encarga de recibir los eventos de la vista y actualizar el modelo y la vista en consecuencia.
+ * @author Grupo 9 - POO
+ * @version 2.0
+ */
+
 public class Controlador extends WindowAdapter implements ActionListener {
     IVista vistaSim;
     VistaConfig vistaConfig;
@@ -30,6 +36,12 @@ public class Controlador extends WindowAdapter implements ActionListener {
         vistaSim.setVisible(false);
         vistaConfig.setVisible(true);
     }
+
+    /**
+     * Actualiza el area de texto del operario en la vista de simulacion.
+     * @param mensaje Mensaje a mostrar en el area de texto del operario.
+     * <b>Post: Se actualiza el area de texto del operario en la interfaz</b>
+     */
 
     public void actualizarAreaOperario(String mensaje) {
         vistaSim.mensajeOperarioAmbulancia(mensaje);
@@ -50,6 +62,13 @@ public class Controlador extends WindowAdapter implements ActionListener {
         vistaSim.actualizarEstadoAmb(estado);
     }
 
+    /**
+     * Finaliza la simulacion en la vista de simulacion.
+     * @param estado Estado final de la simulacion.
+     * @param enSimulacion Booleano que indica si la simulacion sigue en curso.
+     * <b>Post: Se finaliza la simulacion en la interfaz</b>
+     */
+
     public void finalizarSim(String estado, Boolean enSimulacion) {
         if (!enSimulacion){
             System.out.println("Finalizo la simulacion");
@@ -59,9 +78,21 @@ public class Controlador extends WindowAdapter implements ActionListener {
         }
     }
 
+    /**
+     * Actualiza la vista del asociado en la vista de simulacion.
+     * @param mensaje Mensaje a mostrar en la vista del asociado.
+     * <b>Post: Se actualiza la vista del asociado en la interfaz</b>
+     */
+
     public void actualizarVistaAsociado(String mensaje) {
         vistaSim.mensajeAsociado(mensaje);
     }
+
+    /**
+     * Procesa los eventos generados por la vista.
+     * @param e the event to be processed
+     * <b>Post: Se procesa el evento generado por la vista</b>
+     */
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -129,6 +160,11 @@ public class Controlador extends WindowAdapter implements ActionListener {
             vistaSim.limpiarCampos();
         }
     }
+
+    /**
+     * Procesa el evento de cierre de la ventana.
+     * @param e the event to be processed
+     */
 
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
