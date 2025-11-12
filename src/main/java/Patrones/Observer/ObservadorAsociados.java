@@ -69,6 +69,8 @@ public class ObservadorAsociados implements IObservador{
         Asociado asociadoActualizado = (Asociado) obj;
         if (asociados.contains(asociadoActualizado)) {
             controlador.actualizarVistaAsociado(evento);
+        } else {
+        	assert(false) : "El observado no esta en la lista de observados en el ojo ";
         }
     }
 
