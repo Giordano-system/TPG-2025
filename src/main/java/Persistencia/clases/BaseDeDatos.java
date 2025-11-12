@@ -31,8 +31,8 @@ public class BaseDeDatos implements IPersistencia
 	{
 		String url = "jdbc:mysql://127.0.0.1:3306/";
 		String bd = "grupo_9";
-		String usuario = "root";
-		String password = "root";
+		String usuario = "progra_c";
+		String password = "progra_c";
 
         // 1. Conexión al servidor (sin BD) para asegurar que la BD exista
         Connection serverCon = null;

@@ -720,8 +720,6 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
         this.btnMantenimiento.setEnabled(false);
         this.btnReiniciarDB.setEnabled(true);
         this.btnFinalizarSim.setEnabled(false);
-        System.out.println("Botones re-activados");
-
     }
 
     //Getters de los campos de texto para obtener los valores ingresados por el usuario
@@ -776,7 +774,7 @@ public class VistaSimulacion extends JFrame implements DocumentListener, IVista 
 
     public void iniciarSimulacion() {
         if (!simulacionIniciada) {
-            System.out.println("Simulacion iniciada cuando no tendria que estar iniciada?.");
+            System.out.println("Simulacion iniciada cuando no tendria que estar iniciada.");
         }
         this.simulacionIniciada = true;
         this.btnReiniciarDB.setEnabled(false);

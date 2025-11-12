@@ -85,7 +85,6 @@ public class ThreadAsociado extends Thread {
 
                 i++;
             }
-            System.out.println("ThreadAsociado finalizado");
             if (ambulancia.isSimulacion()){
                 ambulancia.terminaAtencion();
             }

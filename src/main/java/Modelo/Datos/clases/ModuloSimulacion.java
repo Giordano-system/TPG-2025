@@ -43,8 +43,6 @@ public class ModuloSimulacion {
             hilos[i] = new ThreadAsociado(asociados.get(i), ambulancia, solicitudesPorAsociado);
         }
 
-        System.out.println("Iniciando Simulacion");
-
         // Iniciar todos los hilos
         for (Thread hilo : hilos) {
             hilo.start();

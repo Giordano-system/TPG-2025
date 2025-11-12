@@ -149,7 +149,8 @@ public class Ambulancia extends Observable implements IObservable {
      */
 
     public synchronized void finalizarMantenimiento() {
-        	this.SolicitudMantenimiento();
+        	if(this.estado.getNombre() == "En taller")
+        		this.SolicitudMantenimiento();
     }
     
     /**

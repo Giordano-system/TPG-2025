@@ -71,7 +71,6 @@ public class Controlador extends WindowAdapter implements ActionListener {
 
     public void finalizarSim(String estado, Boolean enSimulacion) {
         if (!enSimulacion){
-            System.out.println("Finalizo la simulacion");
             estado = "Simulacion finalizada.";
             vistaSim.finalizarSimulacion();
             vistaSim.actualizarEstadoAmb(estado);
@@ -168,7 +167,6 @@ public class Controlador extends WindowAdapter implements ActionListener {
 
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
-        System.out.println("Controlador: Recibida orden de cierre.");
 
         try {
             // 1. Le pide al Modelo que cierre la conexión

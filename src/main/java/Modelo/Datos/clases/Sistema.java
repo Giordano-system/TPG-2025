@@ -382,7 +382,6 @@ public class Sistema {
         } else {
             asociadosSimulacion.addAll(asociados);
         }
-        System.out.println("AsociadosSimulacion: " + asociadosSimulacion);
         eliminarObservadores();
         setObservadores();
         iniciarSimulacion(asociadosSimulacion, numSolicitudes);
