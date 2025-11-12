@@ -115,12 +115,14 @@ public class Controlador extends WindowAdapter implements ActionListener {
             vistaSim.iniciarSimulacion();
             vistaSim.limpiarTextAreas();
             vistaSim.limpiarCampos();
+            
             vistaSim.setearListas(modelo.getAsociados());
             vistaSim.setearOpeario(modelo.getOperario());
 
             int numAsociados = vistaSim.getNumAsociados();
             int numSolicitudes = vistaSim.getNumSolicitudes();
             modelo.configurarSimulacion(numAsociados, numSolicitudes);
+            vistaSim.limpiarCamposSim();
 
         } else if(command.equals("Reiniciar BD")) {
             modelo.reiniciarBD();

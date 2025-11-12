@@ -25,6 +25,8 @@ public interface IVista {
     void setearOpeario(Operario operario);
 
     void setearListas(ArrayList<Asociado> lista);
+    
+    void limpiarCamposSim();
 
     public int getNumAsociados();
 
