@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class ObservadorOperario implements IObservador {
 
     private Controlador controlador;
-    private ArrayList<Operario> operarios;
+    private ArrayList<IObservable> operarios;
 
     /**
      * <b>Pre: Controlador !=null</b>
@@ -25,9 +25,9 @@ public class ObservadorOperario implements IObservador {
      */
 
     public ObservadorOperario(Controlador controlador) {
-        if (controlador == null) {
-            assert (false) : "El controlador no puede ser nulo.";
-        }
+    	
+    	assert controlador!=null : "El controlador no puede ser nulo.";
+    	
         this.controlador = controlador;
         this.operarios = new ArrayList<>();
     }
@@ -41,14 +41,13 @@ public class ObservadorOperario implements IObservador {
 
     public void agregarObservado(IObservable operario)
     {
-        Operario operarioCast = (Operario) operario;
-        if (operarios.contains(operarioCast)) {
-            assert (false) : "El operario ya está en la lista de operarios observados.";
-        }
-        if (operario == null)
-            assert (false) : "El operario no puede ser nulo.";
-        this.operarios.add(operarioCast);
-        operarioCast.agregarObservador(this);
+        
+        assert operarios.contains(operario)==false: "El operario ya está en la lista de operarios observados.";
+        
+        assert operario != null : "El operario no puede ser nulo.";
+        
+        this.operarios.add(operario);
+        operario.agregarObservador(this);
     }
 
     /**
@@ -58,12 +57,11 @@ public class ObservadorOperario implements IObservador {
      */
 
     public void eliminarObservado(IObservable operario) {
-        Operario operarioCast = (Operario) operario;
-        if (!operarios.contains(operarioCast)) {
-            assert (false) : "El operario no está en la lista de operarios observados.";
-        }
-        operarioCast.eliminarObservador(this);;
-        this.operarios.remove(operarioCast);
+        
+    	assert operarios.contains(operario)==true : "El operario no está en la lista de operarios observados.";
+    	
+        operario.eliminarObservador(this);;
+        this.operarios.remove(operario);
     }
 
     /**
@@ -75,18 +73,13 @@ public class ObservadorOperario implements IObservador {
      */
 
     public void update(IObservable obj, String evento) {
-        if (obj == null){
-            assert (false) : "El objeto observado no puede ser nulo.";
-        }
-        Operario operarioActualizado = (Operario) obj;
-        if (operarios.contains(operarioActualizado)) {
+    	
+    	assert obj != null : "El objeto observado no puede ser nulo.";
+    	
+    	assert operarios.contains(obj)==true :  "El operario observado no está en la lista de operarios observados.";
+    	
+        if (operarios.contains(obj)) {
             controlador.actualizarAreaOperario(evento);
-        } else {
-            assert (false) : "El operario observado no está en la lista de operarios observados.";
         }
     }
-
-
-
-
 }

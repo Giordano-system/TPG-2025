@@ -16,7 +16,7 @@ public class ThreadAsociado extends Thread {
 	
 	/**
      * Constructor de la clase ThreadAsociado.
-     * <b>Pre:</b> asociado != null, ambulancia != null, solicitudes => 0.
+     * <b>Pre:</b> asociado != null, ambulancia != null, solicitudes >= 0.
      * @param asociado Asociado que solicita la ambulancia.
      * @param ambulancia Ambulancia de la clínica, recurso compartido por los asociados.
      * @param solicitudes Cantidad de solicitudes que realizará el asociado.
@@ -24,9 +24,9 @@ public class ThreadAsociado extends Thread {
      */
 	public ThreadAsociado(Asociado asociado, Ambulancia ambulancia, int solicitudes) {
 		super();
-		if (asociado == null || ambulancia == null) {
-            assert (false) : "El asociado o la ambulancia no pueden ser nulos.";
-        }
+		
+		assert asociado!=null && ambulancia!=null && solicitudes >= 0 : "El asociado o la ambulancia no pueden ser nulos. Las solicitudes deberían ser mayor o igual a 0";
+		
         this.asociado = asociado;
         this.ambulancia = ambulancia;
         this.solicitudes = solicitudes;

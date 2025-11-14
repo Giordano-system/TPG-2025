@@ -45,10 +45,9 @@ public class Asociado extends Persona implements IObservable {
      */
 
     @Override
-    public void agregarObservador(IObservador observador) {
-        if (observador == null) {
-            assert (false) : "El observador no puede ser nulo.";
-        }
+    public void agregarObservador(IObservador observador) {	
+    	
+    	assert observador!=null : "El observador no puede ser nulo.";
         observadores.add(observador);
     }
 

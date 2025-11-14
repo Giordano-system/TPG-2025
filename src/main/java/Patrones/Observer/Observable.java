@@ -25,9 +25,9 @@ public abstract class Observable {
      */
 
     public void agregarObservador(IObservador observador) {
-        if (observador == null) {
-            assert (false) : "El observador no puede ser nulo.";
-        }
+    	
+    	assert observador!=null : "El observador no puede ser nulo.";
+    	
         this.observadores.add(observador);
     }
 

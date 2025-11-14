@@ -21,9 +21,8 @@ public class ThreadOperario extends Thread {
      */
 
     public ThreadOperario(Operario operario, Ambulancia ambulancia) {
-        if (operario == null || ambulancia == null) {
-            assert (false) : "El operario o la ambulancia no pueden ser nulos.";
-        }
+    	assert operario!=null && ambulancia!=null : "El operario o la ambulancia no pueden ser nulos.";
+    	
         this.operario = operario;
         this.ambulancia = ambulancia;
     }

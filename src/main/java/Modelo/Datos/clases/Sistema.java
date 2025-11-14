@@ -112,9 +112,9 @@ public class Sistema {
      */
 
     public void crearObservadores(Controlador controlador){
-        if (controlador == null) {
-            assert (false) : "El controlador no puede ser nulo.";
-        }
+    	
+    	assert controlador!=null : "El controlador no puede ser nulo.";
+    	
         this.obsAmbulancia = new ObservadorAmbulancia(controlador);
         this.obsOperario = new ObservadorOperario(controlador);
         this.obsAsociados = new ObservadorAsociados(controlador);
@@ -382,9 +382,14 @@ public class Sistema {
         } else {
             asociadosSimulacion.addAll(asociados);
         }
-        eliminarObservadores();
+        
         setObservadores();
         iniciarSimulacion(asociadosSimulacion, numSolicitudes);
+    }
+    
+    public void reiniciarSimulacion(int numAsSociados, int numSolicitudes) {
+    	this.eliminarObservadores();
+    	this.configurarSimulacion(numAsSociados, numSolicitudes);
     }
 
     /**

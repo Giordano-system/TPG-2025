@@ -21,9 +21,9 @@ import java.util.ArrayList;
 @SuppressWarnings("unused")
 public class Prueba
 {
-
     public static void main(String[] args) {
-        /*Facturacion factura1 = null;
+    	/*
+        Facturacion factura1 = null;
         Facturacion factura2 = null;
         Facturacion factura3 = null;
         Sistema sistema = new Sistema();
@@ -118,16 +118,9 @@ public class Prueba
         	System.out.println(factura3.toString());
 		} catch (Exception e) {
 			System.out.println("Error: " + e.getMessage());
-		}*/
-
-
-
-
-
-
-
-
-
+		}
+        
+        */
     }
 
 }

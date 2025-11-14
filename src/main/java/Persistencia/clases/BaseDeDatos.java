@@ -11,11 +11,22 @@ import Persistencia.excepciones.AsociadoExistenteException;
 import Persistencia.excepciones.AsociadoInexistenteException;
 import Persistencia.interfaz.IPersistencia;
 
+/*
+ * Clase que se encarga de la conexión a la Base de Datos. 
+ * (Modificación de esta).
+ * @author Grupo 9
+ * @version 2.0
+ */
+
 public class BaseDeDatos implements IPersistencia
 {
     private static BaseDeDatos instance = null;
 	private Connection con = null;
 
+	/**
+     * Patron Singleton (Una única instancia de BD).
+     */
+	
     public static BaseDeDatos getInstance(){
         if (instance == null){
             instance = new BaseDeDatos();
@@ -27,6 +38,11 @@ public class BaseDeDatos implements IPersistencia
 	{
 	}
 
+	
+	/**
+     * Conectarse a la Base de Datos.
+     */
+	
 	public void conectar() throws SQLException
 	{
 		String url = "jdbc:mysql://127.0.0.1:3306/";
@@ -52,16 +68,22 @@ public class BaseDeDatos implements IPersistencia
         // 3. Ahora sí, nos conectamos a nuestra base de datos "grupo_9"
         //    (que sabemos que ya existe)
         this.con = DriverManager.getConnection(url + bd, usuario, password);
-        //this.con = DriverManager.getConnection(url + bd, usuario, password);
     }
 
 
-
+	/**
+     * Desconectarse de la Base de Datos.
+     */
+	
 	public void desconectar() throws SQLException
 	{
 		this.con.close();
 	}
 
+	/**
+     * Crear Tabla de Asociados + Agregar valores iniciales.
+     */
+	
 	private void crearTablaValores(java.sql.Statement s) throws SQLException
 	{
 		s.execute("CREATE TABLE asociados(\r\n" + "	dni varchar(8) primary key not null,\r\n"
@@ -79,6 +101,10 @@ public class BaseDeDatos implements IPersistencia
 				+ "	('46025175', 'Agustin', 'Proia', 'Juan b Justo', 982, '2236841257', 'Mar del Plata');");
 	}
 
+	/**
+     * Crear Tabla de Asociados + Agregar valores iniciales si la tabla no existe.
+     */
+	
 	public void inicializacion() throws SQLException
 	{
 		
@@ -112,6 +138,11 @@ public class BaseDeDatos implements IPersistencia
         crearTablaValores(s);
     }
 
+    /**
+     * Obtener Asociados de la BD.
+     * @return ArrayList con los Asociados de la BD
+     */
+    
 	public ArrayList<Asociado> getAsociados() throws SQLException
 	{
 
@@ -132,18 +163,24 @@ public class BaseDeDatos implements IPersistencia
 				numero = rs.getInt("numero");
 				telefono = rs.getString("telefono");
 				ciudad = rs.getString("ciudad");
-
+				
 				Asociado a = new Asociado(nombre, apellido, dni, calle, numero, telefono, ciudad);
-				// System.out.println(a);
 				listado.add(a);
             }
 
 		return listado;
 	}
 
-	// el asociado debe ser distinto de null
+	/**
+     * Dar de Alta un Asociado en la BD.
+     * <b>PRE:</b> a!=null.
+     * @param a Asociado a dar de Alta.
+     */
+	
 	public void altaBD(Asociado a) throws AsociadoExistenteException
 	{
+		assert a!=null : "El Asociado no debería ser null";
+		
 		try
 		{
 			java.sql.Statement s = this.con.createStatement();
@@ -152,10 +189,10 @@ public class BaseDeDatos implements IPersistencia
 					.executeQuery("select * from asociados where dni = '" + a.getDni() + "';");
 
 			if (rs.next())
-			{ // existe el associado en la BD
+			{ // Existe el Asociado en la BD
 				throw new AsociadoExistenteException(a);
 			} else
-			{ // agregar a la BD
+			{ // Agregar Asociado a la BD
 				s.execute("INSERT INTO asociados (dni, nombre, apellido, calle, numero, telefono, ciudad)" + " VALUES('"
 						+ a.getDni() + "', '" + a.getNombre() + "', '" + a.getApellido() + "', '"
 						+ a.getDomicilio().getCalle() + "', " + a.getDomicilio().getNumero() + ", '" + a.getTelefono()
@@ -168,30 +205,31 @@ public class BaseDeDatos implements IPersistencia
 		}
 	}
 
-	// el asociado debe ser distinto de null
+	/**
+     * Dar de Baja un Asociado en la BD.
+     * <b>PRE:</b> a!=null.
+     * @param a Asociado a dar de Baja.
+     */
+	
 	public void bajaBD(Asociado a) throws AsociadoInexistenteException
 	{
-
+		assert a!=null : "El Asociado no debería ser null";
 		try
 		{
 			java.sql.Statement s = this.con.createStatement();
 			ResultSet rs = ((java.sql.Statement) s)
 					.executeQuery("select * from asociados where dni = '" + a.getDni() + "';");
-
 			if (rs.next())
-			{ // eliminar de la BD
+			{ // Eliminar de la BD
 				s.execute("delete from asociados where dni = '" + a.getDni() + "';");
 			} else
-			{ // no existe en la BD
+			{ // No Existe un Asociado con ese DNI en la BD
 				throw new AsociadoInexistenteException(a);
 			}
-
 		} catch (SQLException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
-
 }

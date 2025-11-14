@@ -27,9 +27,9 @@ public class ObservadorAmbulancia implements IObservador {
      */
 
     public ObservadorAmbulancia(Controlador controlador) {
-        if (controladorVista == null) {
-            assert (false) : "El controlador no pueden ser nulos.";
-        }
+    	
+    	assert controladorVista==null : "El controlador no pueden ser nulos.";
+    	
         controladorVista = controlador;
         ambulancias = new ArrayList<>();
     }
@@ -45,9 +45,9 @@ public class ObservadorAmbulancia implements IObservador {
 
     @Override
     public void update(IObservable obj, String evento) {
-        if (!ambulancias.contains(obj)) {
-            assert (false) : "El objeto observado no es la ambulancia asociada a este observador.";
-        }
+    	
+    	assert ambulancias.contains(obj)==true : "El objeto observado no es la ambulancia asociada a este observador.";
+    	
         Ambulancia ambulancia = (Ambulancia) obj;
         if (controladorVista != null) {
             if (evento.equals("Termino la simulacion"))
@@ -66,12 +66,11 @@ public class ObservadorAmbulancia implements IObservador {
 
     @Override
     public void agregarObservado(IObservable obj) {
-        if (obj == null) {
-            assert (false) : "El objeto observado no puede ser nulo.";
-        }
-        if (ambulancias.contains(obj)) {
-            assert (false) : "La ambulancia ya está en la lista de ambulancias observadas.";
-        }
+    	
+    	assert obj!=null : "El objeto observado no puede ser nulo.";
+    	
+    	assert ambulancias.contains(obj)==false : "La ambulancia ya está en la lista de ambulancias observadas.";
+    	
         Ambulancia ambulancia = (Ambulancia) obj;
         ambulancias.add(ambulancia);
         obj.agregarObservador(this);
@@ -86,9 +85,9 @@ public class ObservadorAmbulancia implements IObservador {
 
     @Override
     public void eliminarObservado(IObservable obj) {
-        if (!ambulancias.contains(obj)) {
-            assert (false) : "La ambulancia no está en la lista de ambulancias observadas.";
-        }
+    	
+    	assert ambulancias.contains(obj)==true : "La ambulancia no está en la lista de ambulancias observadas.";
+    	
         obj.eliminarObservador(this);
         ambulancias.remove(obj);
     }

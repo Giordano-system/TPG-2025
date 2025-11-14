@@ -6,7 +6,7 @@ public class AsociadoExistenteException extends Exception
 {
 
 	/**
-	 * 
+	 *  Exception: Asociados ya existe en la BD
 	 */
 	private static final long serialVersionUID = 1L;
 	

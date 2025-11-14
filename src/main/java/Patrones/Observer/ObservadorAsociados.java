@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class ObservadorAsociados implements IObservador{
 
     private Controlador controlador;
-    private ArrayList<Asociado> asociados;
+    private ArrayList<IObservable> asociados;
 
     public ObservadorAsociados(Controlador controlador) {
         this.controlador = controlador;
@@ -30,14 +30,14 @@ public class ObservadorAsociados implements IObservador{
      */
 
     public void agregarObservado(IObservable asociado) {
-        Asociado asociadoCast = (Asociado) asociado;
-        if (asociados.contains(asociadoCast)) {
-            assert (false) : "El asociado ya está en la lista de asociados observados.";
-        }
-        if (asociadoCast==null)
-            assert (false) : "El asociado no puede ser nulo.";
-        this.asociados.add(asociadoCast);
-        asociadoCast.agregarObservador(this);
+       
+        
+        assert asociados.contains(asociado)==false : "El asociado ya está en la lista de asociados observados.";
+        
+        assert asociado!=null : "El asociado no puede ser nulo.";
+        
+        this.asociados.add(asociado);
+        asociado.agregarObservador(this);
     }
 
     /**
@@ -48,12 +48,11 @@ public class ObservadorAsociados implements IObservador{
      */
 
     public void eliminarObservado(IObservable asociado) {
-        Asociado asociadoCast = (Asociado) asociado;
-        if (!asociados.contains(asociadoCast)) {
-            assert (false) : "El asociado no está en la lista de asociados observados.";
-        }
-        this.asociados.remove(asociadoCast);
-        asociadoCast.eliminarObservador(this);
+        
+        assert asociados.contains(asociado)==true : "El asociado no está en la lista de asociados observados.";
+        
+        this.asociados.remove(asociado);
+        asociado.eliminarObservador(this);
     }
 
     /**
@@ -62,7 +61,7 @@ public class ObservadorAsociados implements IObservador{
      */
 
     public void eliminarTodosAsociados() {
-        for (Asociado asociado : asociados) {
+        for (IObservable asociado : asociados) {
             asociado.eliminarObservador(this);
         }
         asociados.clear();
@@ -79,11 +78,11 @@ public class ObservadorAsociados implements IObservador{
 
     @Override
     public void update(IObservable obj, String evento) {
-        Asociado asociadoActualizado = (Asociado) obj;
-        if (asociados.contains(asociadoActualizado)) {
+    	
+    	assert asociados.contains(obj) == true : "El observado no esta en la lista de observados en el ojo ";
+        
+        if (asociados.contains(obj)) {
             controlador.actualizarVistaAsociado(evento);
-        } else {
-        	assert(false) : "El observado no esta en la lista de observados en el ojo ";
         }
     }
 
