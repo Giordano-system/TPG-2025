@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class ObservadorAmbulancia implements IObservador {
 
-    private ArrayList<Ambulancia> ambulancias;
+    private ArrayList<IObservable> ambulancias;
     private Controlador controladorVista;
 
     /**

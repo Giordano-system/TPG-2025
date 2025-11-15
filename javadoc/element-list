@@ -1,4 +1,12 @@
-clases
-excepciones
-interfaces
+Controlador
+Modelo.Datos.clases
+Modelo.Datos.interfaces
+Modelo.ModeloExcepciones
+Modelo.Negocio.clases
+Modelo.Negocio.interfaces
+Patrones.Observer
+Persistencia.clases
+Persistencia.excepciones
+Persistencia.interfaz
 prueba
+Vista
